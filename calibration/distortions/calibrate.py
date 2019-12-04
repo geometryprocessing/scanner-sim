@@ -130,6 +130,7 @@ if __name__ == "__main__":
     plt.title("Camera Calibration Reprojection Errors")
     plt.xlabel("Image #")
     plt.ylabel("Error, pixels")
+    plt.ylim([0, 1.1*np.max(errors)])
     plt.legend()
 
     h, w = img.shape[:2]
