@@ -1,4 +1,5 @@
 import time
+import json
 import ctypes
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,36 +21,36 @@ Reset = '\u001b[39m'
 @callback_function.device.on_buffer
 def on_buffer(buffer, *args, **kwargs):
     status = Red + "incomplete" + Reset if buffer.is_incomplete else Green + "complete" + Reset
-    print("\nGot %s buffer at %.3f" % (status, kwargs['now']()))
+    print("Got %s buffer at %.3f sec" % (status, kwargs['now']()))
 
     cam = kwargs['camera']
     cam.received_at.append(kwargs['now']())
 
     # ~ 20-30 ms (depends on pixel format)
-    p = ctypes.cast(buffer.pdata, ctypes.POINTER(ctypes.c_uint8 if cam.pixel_format == "Mono8" else ctypes.c_uint16))
-    cam.img = np.copy(np.ctypeslib.as_array(p, (buffer.height, buffer.width)))
-    cam.img[3123, 2862] = cam.img[3123, 2862+1]  # broken pixel
+    if buffer.is_incomplete:
+        cam.img = None
+    else:
+        p = ctypes.cast(buffer.pdata, ctypes.POINTER(ctypes.c_uint8 if cam.pixel_format == "Mono8" else ctypes.c_uint16))
+        cam.img = np.copy(np.ctypeslib.as_array(p, (buffer.height, buffer.width)))
 
     # ~ 50 ms
     # cam.buf = BufferFactory.copy(buffer)
 
-    cam.is_incomplete = buffer.is_incomplete
     cam.was_incomplete.append(buffer.is_incomplete)
     cam.got_buffer = True
 
 
 class Camera:
-
+    # Arena SDK wrapper
     def __init__(self):
         self.device = None
         self.handle = None
         self.t0 = time.time()
 
-        self.width = self.height = 0
+        self.roi = (0, 0, 0, 0)
         self.pixel_format = ""
 
         self.got_buffer = False
-        self.is_incomplete = False
         self.img = None
         # self.buf = None
 
@@ -62,7 +63,7 @@ class Camera:
     def now(self):
         return time.time() - self.t0
 
-    def open(self, id=0):
+    def open(self, device_id=0):
         self.device = None
         self.time_zero()
 
@@ -70,7 +71,7 @@ class Camera:
         print(f'Created {len(devices)} device(s)')
 
         try:
-            device = devices[id]
+            device = devices[device_id]
         except IndexError as ie:
             if len(devices) == 0:
                 print(Red + 'No device found!' + Reset)
@@ -92,21 +93,23 @@ class Camera:
             self.handle = None
         system.destroy_device()
         self.device = None
-        print("\nDestroyed devices at %.3f" % self.now())
+        print("\nDestroyed devices at %.3f sec" % self.now())
 
-    def init(self, width=None, height=None, pixel_format="Mono8"):
+    # roi = (Width, Height, OffsetX, OffsetY)
+    def init(self, roi=None, pixel_format="Mono8"):
         if self.device:
             nm = self.device.nodemap
 
-            nm['Width'].value = nm['Width'].max if not width else width
-            nm['Height'].value = nm['Height'].max if not height else height
+            nm['Width'].value = nm['Width'].max if not roi else roi[0]
+            nm['Height'].value = nm['Height'].max if not roi else roi[1]
+            nm['OffsetX'].value = nm['OffsetX'].min if not roi else roi[2]
+            nm['OffsetY'].value = nm['OffsetY'].min if not roi else roi[3]
             nm['PixelFormat'].value = pixel_format
 
-            self.width = nm['Width'].value
-            self.height = nm['Height'].value
+            self.roi = (nm['Width'].value, nm['Height'].value, nm['OffsetX'].value, nm['OffsetY'].value)
             self.pixel_format = nm['PixelFormat'].value
 
-            print("\nFrame Format:\n\t%d x %d %s" % (self.width, self.height, self.pixel_format))
+            print("\nFrame Format:\n\t", self.roi, self.pixel_format)
 
             nm['TriggerMode'].value = 'On'
             nm['TriggerSource'].value = 'Software'
@@ -141,13 +144,12 @@ class Camera:
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.device:
             self.device.stop_stream()
-            print("\nStopped stream at %.3f" % self.now())
+            print("\nStopped stream at %.3f sec" % self.now())
             self.stopped_at = self.now()
 
-    # exposure in seconds
+    # non-blocking, exposure in seconds
     def start_frame(self, exposure):
         self.got_buffer = False
-        self.is_incomplete = False
         self.img = None
 
         if self.device:
@@ -158,7 +160,7 @@ class Camera:
             # ~ a few ms delay if you disabled AcquisitionFrameRate right after trigger (~ 1/FrameRate otherwise!)
             while not nm['TriggerArmed'].value:
                 time.sleep(0.001)
-            print("\nTrigger armed at %.3f" % self.now())
+            print("\nTrigger armed at %.3f sec" % self.now())
             self.armed_at.append(self.now())
 
             # bug with ExposureTime limit (1/FrameRate even if AcquisitionFrameRate is disabled)
@@ -174,7 +176,7 @@ class Camera:
             # trigger exposure
             nm['TriggerSoftware'].execute()
             # ~ 40-50 ms delay since armed
-            print("Triggered at %.3f (%.3f ms exposure @ %.3f fps)" % (self.now(), 0.001 * real_exp, real_fps))
+            print("Triggered at %.3f sec (%.3f ms exposure @ %.3f fps)" % (self.now(), 0.001 * real_exp, real_fps))
             self.triggered_at.append(self.now())
 
             # bug with TriggerArmed (delay of ~1/FrameRate if don't disable)
@@ -189,7 +191,22 @@ class Camera:
         return self.got_buffer
 
     def retrieve_frame(self):
-        return None if self.is_incomplete else self.img
+        return self.img
+
+    # blocking, exposure in seconds
+    def capture_frame(self, exposure, recapture_incomplete=True):
+        real_exp = self.start_frame(exposure)
+
+        while self.img is None:
+            while not self.got_buffer:
+                time.sleep(0.001)
+            if not recapture_incomplete:
+                break
+            if self.img is None:
+                print(Yellow + "Image is missing data! Recapturing..." + Reset)
+                self.start_frame(exposure)
+
+        return real_exp, self.img
 
     def plot_timeline(self):
         if len(self.received_at) == 0:
@@ -211,32 +228,44 @@ class Camera:
 
 
 if __name__ == "__main__":
-    camera = Camera()
+    path = "gamma/"
+    # path = "hdr/"
+    # path = "spurious/"
 
+    target_exposures = np.logspace(-4, 1, 300)
+    # target_exposures = [0.001, 0.004, 0.01, 0.04, 0.1, 0.4, 1, 2, 4, 8, 10]
+    # target_exposures = [0.1, 0.3, 0.6, 1, 2, 3.5, 5, 6.5, 8, 10]
+    print("Total exposure time:\n\t", np.sum(target_exposures), "seconds")
+    actual_exposures = []
+
+    camera = Camera()
     camera.open()
-    camera.init(pixel_format="Mono12")
+    camera.init((300, 300, 1000, 3000), pixel_format="Mono12")
+    # camera.init(None, pixel_format="Mono12")
 
     with camera as cam:
-        for i, exp in enumerate([0.1, 0.5, 1]):
-            cam.start_frame(exp)
-
-            t0 = cam.now()
-            while not cam.frame_ready():
-                if cam.now() - t0 > 0.1:
-                    print(".", end='')
-                    t0 = cam.now()
-                time.sleep(0.01)
-
-            img = cam.retrieve_frame()
+        for i, exp in enumerate(target_exposures):
+            real_exp, img = cam.capture_frame(exp, recapture_incomplete=True)
+            actual_exposures.append(real_exp)
 
             if img is not None:
-                plt.figure(str(exp))
-                plt.imshow(img)
+                np.save(path + str(i), img)
+
+                plt.figure(str(exp) + " sec")
+                # plt.get_current_fig_manager().window.state('zoomed')
+                plt.imshow(img, vmin=0, vmax=2**8 if cam.pixel_format == "Mono8" else 2**12)
+                plt.title(str(exp) + " sec")
+                plt.colorbar()
+                plt.tight_layout()
+                plt.savefig(path + str(i) + '.png', dpi=300, bbox_inches='tight')
             else:
                 print("Image %d is missing data!" % i)
+
+    with open(path + "exposures.json", "w") as f:
+        json.dump(list(zip(target_exposures, actual_exposures)), f)
 
     camera.plot_timeline()
     camera.close()
 
-    plt.show()
+    # plt.show()
     print('Done')
