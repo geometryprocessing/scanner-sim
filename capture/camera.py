@@ -1,3 +1,4 @@
+import os
 import time
 import json
 import ctypes
@@ -68,7 +69,7 @@ class Camera:
         self.time_zero()
 
         devices = system.create_device()
-        print(f'Created {len(devices)} device(s)')
+        print(f'\nCreated {len(devices)} device(s)')
 
         try:
             device = devices[device_id]
@@ -227,22 +228,18 @@ class Camera:
         plt.legend()
 
 
-if __name__ == "__main__":
-    path = "gamma/"
-    # path = "hdr/"
-    # path = "spurious/"
-
-    target_exposures = np.logspace(-4, 1, 300)
-    # target_exposures = [0.001, 0.004, 0.01, 0.04, 0.1, 0.4, 1, 2, 4, 8, 10]
-    # target_exposures = [0.1, 0.3, 0.6, 1, 2, 3.5, 5, 6.5, 8, 10]
-    print("Total exposure time:\n\t", np.sum(target_exposures), "seconds")
-    actual_exposures = []
+def capture_batch(path, exposures, roi=None, pixel_format="Mono12", save_preview=True, plot=True):
+    if not os.path.exists(path):
+        os.makedirs(path, exist_ok=True)
 
     camera = Camera()
     camera.open()
-    camera.init((300, 300, 1000, 3000), pixel_format="Mono12")
-    # camera.init(None, pixel_format="Mono12")
+    camera.init(roi, pixel_format)
 
+    target_exposures = exposures
+    actual_exposures = []
+
+    print("\nTotal exposure time:\n\t", np.sum(target_exposures), "seconds")
     with camera as cam:
         for i, exp in enumerate(target_exposures):
             real_exp, img = cam.capture_frame(exp, recapture_incomplete=True)
@@ -251,21 +248,58 @@ if __name__ == "__main__":
             if img is not None:
                 np.save(path + str(i), img)
 
-                plt.figure(str(exp) + " sec")
-                # plt.get_current_fig_manager().window.state('zoomed')
-                plt.imshow(img, vmin=0, vmax=2**8 if cam.pixel_format == "Mono8" else 2**12)
-                plt.title(str(exp) + " sec")
-                plt.colorbar()
-                plt.tight_layout()
-                plt.savefig(path + str(i) + '.png', dpi=300, bbox_inches='tight')
+                if save_preview:
+                    plt.figure(str(exp) + " sec", (16, 9))
+                    plt.imshow(img, vmin=1, vmax=2**8 if cam.pixel_format == "Mono8" else 2**12)
+                    plt.title(str(exp) + " sec")
+                    plt.colorbar()
+                    plt.tight_layout()
+                    plt.savefig(path + str(i) + '.png', dpi=100, bbox_inches='tight')
             else:
                 print("Image %d is missing data!" % i)
 
     with open(path + "exposures.json", "w") as f:
         json.dump(list(zip(target_exposures, actual_exposures)), f)
 
-    camera.plot_timeline()
+    if plot:
+        camera.plot_timeline()
+
     camera.close()
 
-    # plt.show()
+
+def capture_dark_frames(path, exposures, count=3):
+    print("Total exposure time:\n\t", np.sum(exposures)*count, "seconds")
+    print("Estimated service time:\n\t", 0.1*len(exposures)*count, "seconds")
+
+    for exp in exposures:
+        full_path = path + "dark_frame_" + str(exp) + "_sec/"
+        capture_batch(full_path, [exp]*count, roi=None, pixel_format="Mono12", save_preview=False, plot=False)
+
+    with open(path + "exposures.json", "w") as f:
+        json.dump(exposures, f)
+
+if __name__ == "__main__":
+    exposures = [0.0001, 0.00025, 0.0005, 0.001, 0.0025, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 0.75,
+                 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 10]
+
+    # capture_dark_frames("D:/scanner_sim/dark_frames/", exposures, count=100)
+    # exit()
+
+    # path = "gamma/"
+    path = "hdr/"
+    # path = "spurious/"
+    # path = "dark/"
+
+    # target_exposures = np.logspace(-4, 1, 300)
+    # target_exposures = [0.001, 0.004, 0.01, 0.04, 0.1, 0.4, 1, 2, 4, 8, 10]
+    # target_exposures = [0.1, 0.3, 0.6, 1, 2, 3.5, 5, 6.5, 8, 10]
+    # target_exposures = [0.01, 0.1, 1, 10]
+    target_exposures = exposures
+
+    # roi = (300, 300, 1000, 3000)
+    roi = None
+
+    capture_batch(path, target_exposures, roi, pixel_format="Mono12", save_preview=True, plot=True)
+
+    plt.show()
     print('Done')

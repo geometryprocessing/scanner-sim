@@ -1,6 +1,7 @@
 import json
 import Imath
 import OpenEXR
+import imageio
 import scipy
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,14 +10,18 @@ import scipy.ndimage.morphology as morph
 from scipy.ndimage.filters import gaussian_filter
 
 
-def load_images(path):
+def load_images(path, numpify=True):
     with open(path + "exposures.json", "r") as f:
         exposures = json.load(f)
         print("Found", len(exposures), "images in", path)
 
-    images = [np.load(path + str(i) + ".npy") / (2 ** 12 - 1) for i in range(len(exposures))]
+    images = [np.load(path + str(i) + ".npy") for i in range(len(exposures))]
+    print("\tLoaded")
 
-    return np.array(exposures)[:, 1], np.array(images)
+    if numpify:
+        return np.array(exposures)[:, 1], np.array(images)
+    else:
+        return exposures, images
 
 
 def find_gamma(path, plot=False):
@@ -132,7 +137,117 @@ def save_openexr(file, image):
     exr.close()
 
 
+def explore_dark_frames(path):
+    exposures, images = load_images(path, numpify=False)
+
+    titles = []
+    for i, exp in enumerate(exposures):
+        r, c = np.nonzero(np.greater(images[i], 1.5))
+        r2, c2 = np.nonzero(np.greater(images[i], 8.5))
+        r3, c3 = np.nonzero(np.greater(images[i], 1024.5))
+        titles.append(str(exp[0]) + " sec with %d noisy pixels (%d > 8 and %d > 1024)" % (r.shape[0], r2.shape[0], r3.shape[0]))
+        print("\n", titles[-1], "\nr:", r3, "\nc:", c3)
+
+    for i, exp in enumerate(exposures):
+        plt.figure(str(exp[0]) + " sec", (16, 9))
+        plt.imshow(images[i], vmin=1, vmax=2**([2, 2, 3, 6][i]))
+        plt.title(titles[i])
+        plt.colorbar()
+        plt.get_current_fig_manager().window.state('zoomed')
+        plt.tight_layout()
+        plt.savefig(path + str(exp[0]) + " sec.png", dpi=150)
+
+    files = [path + str(exp[0]) + " sec.png" for exp in exposures]
+    imageio.mimsave(path + "dark_frame_noise.gif", [imageio.imread(f) for f in files], duration=1)
+
+    plt.figure("distributions", (16, 9))
+    for i, exp in enumerate(exposures):
+        plt.subplot(2, 2, i+1)
+        plt.hist(images[i].ravel(), bins=2**10, range=[-0.5, 2**12 - 0.5])
+        plt.ylim([0.1, 1e+7])
+        plt.title(titles[i])
+        plt.yscale("log")
+
+    plt.get_current_fig_manager().window.state('zoomed')
+    plt.tight_layout()
+    plt.savefig(path + "distributions.png", dpi=150, bbox_inches='tight')
+
+
+def average_dark_frame(path, save=False):
+    exposures, images = load_images(path, numpify=False)
+    img = np.average(np.array(images), axis=0)
+
+    if save:
+        name = "dark_frame_" + str(exposures[0][0]) + "_sec"
+        np.save(path + name, img.astype(np.float32))
+        save_openexr(path + name + ".exr", img)
+
+    return img
+
+def plot_dark_frame(img, exp, path=None, scale=12):
+    name = "dark_frame_" + str(exp) + "_sec"
+    title = str(exp) + " sec dark frame (average of 100)"
+
+    plt.figure(name, (16, 9))
+    plt.imshow(img, vmin=1, vmax=2**scale)
+    plt.title(title)
+    plt.colorbar()
+    plt.tight_layout()
+    if path:
+        plt.savefig(path + name + ".png", dpi=120)
+
+    plt.figure(name + "_distribution", (16, 9))
+    plt.hist(img.ravel(), bins=2**12, range=[-0.5, 2**12 - 0.5])
+    plt.title(title)
+    plt.xlim([-32, 2**12 + 32])
+    plt.ylim([0.1, 1e+7])
+    plt.yscale("log")
+    plt.tight_layout()
+    if path:
+        plt.savefig(path + name + "_distribution.png", dpi=300, bbox_inches='tight')
+
+
+def generate_dark_frames(dark_path):
+    with open(dark_path + "exposures.json", "r") as f:
+        exposures = json.load(f)
+        print("Found", len(exposures), "dark frames in", dark_path)
+
+    frames = []
+    distributions = []
+    for exp in exposures:
+        name = "dark_frame_" + str(exp) + "_sec"
+        print(name)
+
+        full_path = dark_path + name + "/"
+        frames.append(full_path + name + ".png")
+        distributions.append(full_path + name + "_distribution.png")
+
+        # img = average_dark_frame(full_path, save=True)
+        img = np.load(full_path + name + ".npy")
+
+        if exp < 0.9:
+            continue
+
+        s = 2
+        if exp > 0.9:
+            s = 3
+        if exp > 2.9:
+            s = 4
+        if exp > 5.9:
+            s = 5
+
+        plot_dark_frame(img, exp, path=full_path, scale=s)
+
+    imageio.mimsave(dark_path + "dark_frames.gif", [imageio.imread(f) for f in frames], duration=1)
+    imageio.mimsave(dark_path + "dark_frame_distributions.gif", [imageio.imread(d) for d in distributions], duration=1)
+
+
 if __name__ == "__main__":
+    # generate_dark_frames("D:/scanner_sim/dark_frames/")
+    #
+    # plt.show()
+    # exit()
+
     path = "hdr/"
 
     gamma = find_gamma("gamma/", plot=True)
@@ -149,5 +264,6 @@ if __name__ == "__main__":
     plt.figure('HDR', (12, 8))
     plt.imshow(hdr, vmax=np.max(hdr)/10.)
     plt.colorbar()
+    plt.tight_layout()
     plt.show()
     print("Done")
