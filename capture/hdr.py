@@ -9,6 +9,8 @@ from scipy import optimize
 import scipy.ndimage.morphology as morph
 from scipy.ndimage.filters import gaussian_filter
 
+eps = 1e-8
+default_gamma = 1.0078
 
 def load_images(path, numpify=True):
     with open(path + "exposures.json", "r") as f:
@@ -16,111 +18,12 @@ def load_images(path, numpify=True):
         print("Found", len(exposures), "images in", path)
 
     images = [np.load(path + str(i) + ".npy") for i in range(len(exposures))]
-    print("\tLoaded")
+    print("\tLoaded", [exp[0] for exp in exposures])
 
     if numpify:
         return np.array(exposures)[:, 1], np.array(images)
     else:
         return exposures, images
-
-
-def find_gamma(path, plot=False):
-    exposures, images = load_images(path)
-
-    gammas = []
-    for i in np.arange(images.shape[1]):
-        for j in np.arange(images.shape[2]):
-            x = np.log10(exposures)
-            y = np.log10(images[:, i, j])
-
-            idx = (y > np.log10(0.01)) & (y < np.log10(0.8))
-
-            fit_func = lambda p, x: p[0] + p[1] * x
-            err_func = lambda p, x, y: (y - fit_func(p, x))
-
-            p, _ = optimize.leastsq(err_func, [-1.0, 1.0], args=(x[idx], y[idx]))
-            gammas.append(p[1])
-
-    if plot:
-        plt.figure("Gamma")
-        plt.hist(gammas, bins=1000)
-        plt.title("Gamma = %f" % np.mean(gammas))
-
-    return np.mean(gammas)
-
-
-def correct_images(images, gamma=1.00792):
-    # gamma correction
-    images = np.power(images, 1 / gamma)
-
-    # broken pixel removal
-    h, w = 4852, 6464
-    broken_r, broken_c = 3123, 2862
-    if images.shape[1] == h and images.shape[2] == w:
-        images[:, broken_r, broken_c] = images[:, broken_r, broken_c + 1]
-
-    return images
-
-
-def compute_hdr(exposures, images, plot=False):
-    order = np.argsort(exposures)[::-1]
-
-    exp = exposures[order[0]]
-    res = np.copy(images[order[0], :, :])
-    thr0 = 0.85
-    thr = thr0
-
-    for i in range(exposures.shape[0] - 1):
-        # mask = res > thr
-        mask_g = gaussian_filter(res, 1) > thr
-
-        struct = scipy.ndimage.generate_binary_structure(2, 1)
-        mask_e = morph.binary_erosion(mask_g, struct, 1)
-        mask_dd = morph.binary_dilation(mask_e, struct, 2)
-
-        r, c = np.nonzero(mask_dd)
-        print("%d: replace %d" % (i, r.shape[0]))
-
-        if r.shape[0] == 0:
-            break
-
-        exp2 = exposures[order[i + 1]]
-        img2 = images[order[i + 1], :, :]
-
-        # exposures are known with sub us precision
-        ratio = exp / exp2
-
-        res[r, c] = img2[r, c] * ratio
-        thr = thr0 * ratio
-
-        if plot:
-            plt.figure(str(i), (14, 8))
-            plt.subplot2grid((1, 3), (0, 1), colspan=2)
-            masked = res.copy()
-            masked[r, c] = 0.5 * masked[r, c]
-            plt.imshow(masked)
-            plt.gca().set_title("%.6f seconds exposure (ratio %.6f)" % (exp2, ratio))
-            plt.colorbar()
-
-            r0, c0 = np.nonzero(~mask_dd)
-            ratios = res[r0, c0] / img2[r0, c0]
-            std, mean = np.std(ratios), np.mean(ratios)
-
-            y, bins = np.histogram(ratios, bins=1000, range=[ratio - 3 * std, ratio + 3 * std])
-            x = 0.5 * (bins[:-1] + bins[1:])
-
-            def gauss_function(x, a, mu, sigma):
-                return a * np.exp(-(x - mu) ** 2 / (2 * sigma ** 2))
-
-            p, _ = optimize.curve_fit(gauss_function, x, y, p0=[np.max(y), ratio, std])
-
-            plt.subplot2grid((1, 3), (0, 0))
-            plt.bar(x, y, width=x[1] - x[0])
-            plt.plot(x, gauss_function(x, *p), 'r')
-            plt.gca().set_title("%.6f -> %.6f" % (mean, p[1]))
-            plt.tight_layout()
-
-    return res
 
 
 def save_openexr(file, image):
@@ -222,7 +125,7 @@ def generate_dark_frames(dark_path):
         frames.append(full_path + name + ".png")
         distributions.append(full_path + name + "_distribution.png")
 
-        # img = average_dark_frame(full_path, save=True)
+        img = average_dark_frame(full_path, save=True)
         img = np.load(full_path + name + ".npy")
 
         if exp < 0.9:
@@ -242,6 +145,198 @@ def generate_dark_frames(dark_path):
     imageio.mimsave(dark_path + "dark_frame_distributions.gif", [imageio.imread(d) for d in distributions], duration=1)
 
 
+def load_dark_frames(path):
+    with open(path + "exposures.json", "r") as f:
+        exposures = json.load(f)
+        exposures = [exp[0] for exp in exposures]
+        print("Found", len(exposures), "dark frames in", path)
+
+    images = [np.load(path + "dark_frame_" + str(exp) + "_sec.npy") for exp in exposures]
+    print("\tLoaded", exposures)
+
+    return exposures, np.array(images)
+
+
+def apply_dark_frames(images, dark_frames, replace_hot=True, normalize=True, scale=12):
+    images = images - dark_frames + 1
+    i, r, c = np.nonzero(images < 1)
+    images[i, r, c] = 1
+    print("Subtracted dark frames")
+
+    if replace_hot:
+        i, r, c = np.nonzero(dark_frames > 2**(scale-2))
+        # Potential index out of bounds error but not with our dark frames)
+        images[i, r, c] = 0.25*(images[i, r, c+1] + images[i, r, c-1] + images[i, r+1, c] + images[i, r-1, c])
+        print("Replaced %d hot pixels in %d images" % (i.shape[0], images.shape[0]))
+
+    if normalize:
+        images = images / (2**scale-1)
+        print("Normalized")
+
+    return images
+
+
+def find_gamma(exposures, images, n_fits=1e+4, min_points=7, plot=False, plot_count=100):
+    imgs = images.reshape((images.shape[0], images.shape[1]*images.shape[2]))
+    order = np.round(np.random.rand(imgs.shape[1]//10) * (imgs.shape[1] - 1)).astype(np.int32)
+
+    gammas = []
+    n_fitted = 0
+    for i in order:
+        if n_fitted == n_fits:
+            break
+
+        x = np.log10(exposures)
+        y = np.log10(imgs[:, i])
+
+        idx = (y > np.log10(0.01)) & (y < np.log10(0.8))
+        k = np.nonzero(idx)[0].shape[0]
+
+        if k < min_points:
+            continue
+
+        fit_func = lambda p, x: p[0] + p[1] * x
+        err_func = lambda p, x, y: (y - fit_func(p, x))
+
+        p, _ = optimize.leastsq(err_func, [-1.0, 1.0], args=(x[idx], y[idx]))
+        gammas.append(p[1])
+        n_fitted += 1
+
+    if n_fitted != n_fits:
+        print("Could only fit %d response curves with min %d points out of %d requested" % (n_fitted, min_points, n_fits))
+
+    gammas = np.array(gammas)
+    g = np.mean(gammas[(0.9 < gammas) & (gammas < 1.1)])
+
+    if plot:
+        plt.figure("Gamma")
+        plt.hist(gammas, bins=1000)
+        plt.title("Gamma = %f" % g)
+
+        if plot_count > 0:
+            plt.figure("Response Curves")
+            for i in order[:plot_count]:
+                plt.plot(exposures, imgs[:, i], '.-')
+            plt.xscale("log")
+            plt.yscale("log")
+
+    return g
+
+
+def gamma_correct(images, gamma=default_gamma):
+    images = np.power(images, 1 / gamma)
+    print("Gamma corrected")
+    return images
+
+
+def compute_hdr_replace(exposures, images, plot=False):
+    order = np.argsort(exposures)[::-1]
+
+    exp = exposures[order[0]]
+    res = np.copy(images[order[0], :, :])
+    thr0 = 0.85
+    thr = thr0
+
+    for i in range(exposures.shape[0] - 1):
+        # mask = res > thr
+        mask_g = gaussian_filter(res, 1) > thr
+
+        struct = scipy.ndimage.generate_binary_structure(2, 1)
+        mask_e = morph.binary_erosion(mask_g, struct, 1)
+        mask_dd = morph.binary_dilation(mask_e, struct, 2)
+
+        r, c = np.nonzero(mask_dd)
+        print("%d: replace %d" % (i, r.shape[0]))
+
+        if r.shape[0] == 0:
+            break
+
+        exp2 = exposures[order[i + 1]]
+        img2 = images[order[i + 1], :, :]
+
+        # exposures are known with sub us precision
+        ratio = exp / exp2
+
+        res[r, c] = img2[r, c] * ratio
+        thr = thr0 * ratio
+
+        if plot:
+            plt.figure(str(i), (14, 8))
+            plt.subplot2grid((1, 3), (0, 1), colspan=2)
+            masked = res.copy()
+            masked[r, c] = 0.5 * masked[r, c]
+            plt.imshow(masked)
+            plt.gca().set_title("%.6f seconds exposure (ratio %.6f)" % (exp2, ratio))
+            plt.colorbar()
+
+            r0, c0 = np.nonzero(~mask_dd)
+            ratios = res[r0, c0] / img2[r0, c0]
+            ratios = ratios[(0.1*ratio < ratios) & (ratios < 10*ratio)]
+            print(ratios.shape)
+            std, mean = np.std(ratios), np.mean(ratios)
+            print(std, mean)
+
+            y, bins = np.histogram(ratios, bins=1000, range=[ratio - 3 * std, ratio + 3 * std])
+            x = 0.5 * (bins[:-1] + bins[1:])
+
+            def gauss_function(x, a, mu, sigma):
+                return a * np.exp(-(x - mu) ** 2 / (2 * sigma ** 2))
+
+            p, _ = optimize.curve_fit(gauss_function, x, y, p0=[np.max(y), ratio, std])
+
+            plt.subplot2grid((1, 3), (0, 0))
+            plt.bar(x, y, width=x[1] - x[0])
+            plt.plot(x, gauss_function(x, *p), 'r')
+            plt.gca().set_title("%.6f -> %.6f" % (mean, p[1]))
+            plt.tight_layout()
+
+    return res
+
+
+def compute_hdr_average(exposures, images, low=0.1, high=0.7, plot=False):
+    imgs = np.copy(images)
+    exps = np.zeros_like(images)
+    exps[:, :, :] = exposures[:, None, None]
+
+    for i in np.arange(imgs.shape[0]):
+        print("HDR:", i + 1, "of", imgs.shape[0])
+        r, c = np.nonzero(images[i, :, :] < low)
+        imgs[i, r, c] = 0
+        exps[i, r, c] = 0
+
+        r, c = np.nonzero(images[i, :, :] > high)
+        imgs[i, r, c] = 0
+        exps[i, r, c] = 0
+
+    im = np.argmax(exposures)
+    r, c = np.nonzero(images[im, :, :] < low + eps)
+    imgs[im, r, c] = images[im, r, c]
+    exps[im, r, c] = exposures[im]
+
+    im = np.argmin(exposures)
+    r, c = np.nonzero(images[im, :, :] > high - eps)
+    imgs[im, r, c] = images[im, r, c]
+    exps[im, r, c] = exposures[im]
+
+    tot_exps = np.sum(exps, axis=0)
+    if np.min(tot_exps) < eps:
+        raise ValueError("HDR: Some pixels have no data")
+
+    if plot:
+        counts = np.sum(np.greater(exps > eps, 0), axis=0)
+        m = np.max(counts)
+
+        plt.figure("Counts Image")
+        plt.imshow(counts)
+        plt.colorbar()
+        plt.tight_layout()
+
+        plt.figure("Counts Hist")
+        plt.hist(counts.ravel(), bins=m + 1, range=[-0.5, m + 0.5])
+
+    return np.sum(imgs, axis=0) / tot_exps
+
+
 if __name__ == "__main__":
     # generate_dark_frames("D:/scanner_sim/dark_frames/")
     #
@@ -249,14 +344,22 @@ if __name__ == "__main__":
     # exit()
 
     path = "hdr/"
-
-    gamma = find_gamma("gamma/", plot=True)
-    print("gamma =", gamma)
-
     exposures, images = load_images(path)
-    images = correct_images(images, gamma)
 
-    hdr = compute_hdr(exposures, images, plot=True)
+    dark_exposures, dark_frames = load_dark_frames("dark_frames/")
+    images = apply_dark_frames(images, dark_frames, replace_hot=True, normalize=True, scale=12)
+    # images = images / (2**12 - 1)
+
+    gamma = default_gamma
+    gamma = find_gamma(exposures, images, n_fits=1e+5, min_points=10, plot=True, plot_count=100)
+    print("gamma =", gamma)
+    images = gamma_correct(images, gamma)
+
+    # np.save(path + "corrected", images.astype(np.float32))
+    # images = np.load(path + "corrected.npy")
+
+    # hdr = compute_hdr_replace(exposures, images, plot=True)
+    hdr = compute_hdr_average(exposures, images, plot=True)
 
     np.save(path + "hdr", hdr.astype(np.float32))
     save_openexr(path + "hdr.exr", hdr)
