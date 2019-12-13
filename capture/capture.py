@@ -1,4 +1,7 @@
 import os
+import queue
+import threading
+from concurrent import futures
 import time
 import json
 import ctypes
@@ -95,7 +98,7 @@ class Camera:
             self.handle = None
         system.destroy_device()
         self.device = None
-        print("\nDestroyed devices at %.3f sec" % self.now())
+        print("Destroyed devices at %.3f sec" % self.now())
 
     # roi = (Width, Height, OffsetX, OffsetY)
     def init(self, roi=None, pixel_format="Mono12"):
@@ -138,7 +141,7 @@ class Camera:
             self.device.nodemap['AcquisitionFrameRate'].value = self.device.nodemap['AcquisitionFrameRate'].max
 
             self.device.start_stream()
-            print("\nStarted stream in %.3f sec" % self.now())
+            print("\nStarted stream in %.3f sec\n" % self.now())
             return self
         else:
             raise RuntimeError("No open device!")
@@ -150,7 +153,7 @@ class Camera:
             self.stopped_at = self.now()
 
     # non-blocking, exposure in seconds
-    def start_frame(self, exposure):
+    def start_frame(self, exposure, silent=False):
         self.got_buffer = False
         self.img = None
 
@@ -162,7 +165,8 @@ class Camera:
             # ~ a few ms delay if you disabled AcquisitionFrameRate right after trigger (~ 1/FrameRate otherwise!)
             while not nm['TriggerArmed'].value:
                 time.sleep(0.001)
-            print("\nTrigger armed at %.3f sec" % self.now())
+            if not silent:
+                print("\nTrigger armed at %.3f sec" % self.now())
             self.armed_at.append(self.now())
 
             # bug with ExposureTime limit (1/FrameRate even if AcquisitionFrameRate is disabled)
@@ -178,7 +182,8 @@ class Camera:
             # trigger exposure
             nm['TriggerSoftware'].execute()
             # ~ 40-50 ms delay since armed
-            print("Triggered at %.3f sec (%.3f ms exposure @ %.3f fps)" % (self.now(), 0.001 * real_exp, real_fps))
+            if not silent:
+                print("Triggered at %.3f sec (%.3f ms exposure @ %.3f fps)" % (self.now(), 0.001 * real_exp, real_fps))
             self.triggered_at.append(self.now())
 
             # bug with TriggerArmed (delay of ~1/FrameRate if don't disable)
@@ -196,8 +201,8 @@ class Camera:
         return self.img
 
     # blocking, exposure in seconds
-    def capture_ldr(self, exposure, recapture_incomplete=True):
-        real_exp = self.start_frame(exposure)
+    def capture_ldr(self, exposure, recapture_incomplete=True, silent=False):
+        real_exp = self.start_frame(exposure, silent)
 
         while self.img is None:
             while not self.got_buffer:
@@ -206,7 +211,7 @@ class Camera:
                 break
             if self.img is None:
                 print(Yellow + "Image is missing data! Recapturing..." + Reset)
-                self.start_frame(exposure)
+                self.start_frame(exposure, silent)
 
         return real_exp, self.img
 
@@ -214,7 +219,7 @@ class Camera:
         if len(self.received_at) == 0:
             return
 
-        plt.figure("Acquisition Timeline")
+        plt.figure("Acquisition Timeline", (16, 8))
         plt.title("Acquisition Timeline")
 
         plt.plot(self.armed_at, [0] * len(self.armed_at), '.r', label="Trigger Armed")
@@ -227,14 +232,16 @@ class Camera:
         x_max = max(self.stopped_at, self.received_at[-1] + 0.1)
 
         if processing_intervals:
-            for i, inverval in enumerate(processing_intervals):
-                plt.plot(inverval, [-0.1, -0.1], '.-k', label="Processing" if i == 0 else None)
-            x_max = max(x_max, max([interval[1] + 0.1 for interval in processing_intervals]))
+            for i, pi in enumerate(processing_intervals):
+                plt.plot(pi[:2], -0.1 * np.ones(2) * (pi[2] + 2), '.-' + ('m' if pi[2] == -1 else "k"),
+                         label="Processing" if i == 0 else ("Adding" if i == len(processing_intervals) - 1 else None))
+            x_max = max(x_max, max([pi[1] + 0.1 for pi in processing_intervals]))
 
         plt.xlim([0, x_max])
-        plt.ylim([-1, 1])
+        plt.ylim([-1, 0.4])
         plt.xlabel("Time, sec")
         plt.legend()
+        plt.tight_layout()
 
 
 def capture_batch(path, exposures, roi=None, pixel_format="Mono12", save_preview=True, plot=True):
@@ -295,6 +302,9 @@ def capture_hdr(exposures, low=0.1, high=0.7, camera=None, dark_path=None, gamma
             if not os.path.exists(dark_path + name):
                 raise EnvironmentError("Dark frame %s not found in %s" % (name, dark_path))
 
+    if len(exposures) < 2:
+        raise ValueError("At least two different exposures are required to capture HDR")
+
     camera_was_none = camera is None
 
     if camera is None:
@@ -303,94 +313,114 @@ def capture_hdr(exposures, low=0.1, high=0.7, camera=None, dark_path=None, gamma
         camera.init(None, "Mono12")
     else:
         if camera.pixel_format != "Mono12":
-            raise AttributeError("Support HDR in 12 bit mode only")
-
-    if len(exposures) == 2:
-        raise ValueError("Need at least two different exposures to capture HDR")
+            raise AttributeError("HDR supported in 12 bit mode only")
 
     target_exposures = sorted(exposures)
-    next_real_exp = 0
-    next_image = None
     processing_intervals = []
 
     print("\nCapturing HDR with %d exposures:" % len(exposures), target_exposures)
     print("Total exposure time:\n\t", np.sum(exposures), "seconds")
-    print("Estimated service time:\n\t", 0.1*len(exposures), "seconds")
+    print("Estimated service time:\n\t", round(0.2*len(exposures), ndigits=3), "seconds")
+
+    size = (camera.roi[1], camera.roi[0])
+    total_light = np.zeros(size, dtype=np.float)
+    total_exp = np.zeros(size, dtype=np.float)
+    counts = np.zeros(size, dtype=np.int)
+
+    executor = futures.ThreadPoolExecutor(max_workers=8)
+    image_queue = queue.Queue()
+
+    def parallel_processing(i, real_exp, ldr, verbose=False):
+        t0 = camera.now()
+        image = ldr.astype(np.float32)
+
+        if dark_path:
+            name = "dark_frame_" + str(target_exposures[i]) + "_sec.exr"
+            dark_frame = load_openexr(dark_path + name)
+            image -= dark_frame
+            r, c = np.nonzero(image < 0)
+            image[r, c] = 0
+            if verbose:
+                print("Subtracted", name)
+
+            r, c = np.nonzero(dark_frame > 2 ** 10)
+            # Potential index out of bounds error but not with our dark frames)
+            image[r, c] = 0.25 * (image[r, c + 1] + image[r, c - 1] + image[r + 1, c] + image[r - 1, c])
+            if verbose:
+                print("Replaced %d hot pixel(s) in frame %d" % (r.shape[0], i))
+
+        image /= 2 ** 12 - 3
+        if verbose:
+            print("Normalized frame", i)
+
+        if gamma:
+            image = np.power(image, 1 / gamma)
+            if verbose:
+                print("Gamma corrected frame", i)
+
+        processing_intervals.append((t0, camera.now(), int(threading.current_thread().name[-1])))
+        print("%sProcessed frame %d%s in %.3f sec" % (Magenta, i, Reset, camera.now() - t0))
+        image_queue.put((i, real_exp, image))
+
+    def parallel_capture(camera, exposures):
+        for i, exp in enumerate(exposures):
+            print("Capturing frame %d with %s%s sec%s exposure" % (i, Blue, str(exp), Reset))
+            real_exp, ldr = camera.capture_ldr(exp, silent=True)
+            executor.submit(lambda p: parallel_processing(*p), [i, real_exp, ldr])
+        print(Cyan + "\nDone capturing\n" + Reset)
 
     with camera as cam:
-        for i, exp in enumerate(target_exposures):
-            if i == 0:
-                print("\nCapturing frame 0 with", str(exp), "sec exposure:")
-                next_real_exp, next_image = cam.capture_ldr(exp)
+        capture_thread = threading.Thread(target=parallel_capture, daemon=True,
+                                          args=(cam, target_exposures))
+        capture_thread.start()
 
-                total_light = np.zeros_like(next_image, dtype=np.float)
-                total_exp = np.zeros_like(next_image, dtype=np.float)
-                counts = np.zeros_like(next_image, dtype=np.int)
+        n = 0
+        while n < len(target_exposures):
+            while not image_queue.empty():
+                i, real_exp, image = image_queue.get()
 
-            real_exp, image = next_real_exp, next_image.astype(np.float)
+                t0 = cam.now()
+                if i == 0:
+                    r, c = np.nonzero(image > low - eps)
+                    total_light[r, c] = image[r, c]
+                    total_exp[r, c] = real_exp
+                    counts[r, c] = 1
+                elif i == len(exposures) - 1:
+                    r, c = np.nonzero(image < high + eps)
+                    total_light[r, c] += image[r, c]
+                    total_exp[r, c] += real_exp
+                    counts[r, c] += 1
+                else:
+                    r, c = np.nonzero((low < image) & (image < high))
+                    total_light[r, c] += image[r, c]
+                    total_exp[r, c] += real_exp
+                    counts[r, c] += 1
 
-            if i < len(exposures) - 1:
-                print("\nStarting frame", i+1, "with", str(target_exposures[i+1]), "sec exposure:")
-                next_real_exp = cam.start_frame(target_exposures[i+1])
+                processing_intervals.append((t0, cam.now(), -1))
+                print("%sAdded frame %d%s in %.3f sec" % (Magenta, i, Reset, cam.now() - t0))
+                n += 1
 
-            t0 = cam.now()
-            if dark_path:
-                name = "dark_frame_" + str(exp) + "_sec.exr"
-                dark_frame = load_openexr(dark_path + name)
-                image -= dark_frame
-                r, c = np.nonzero(image < 0)
-                image[r, c] = 0
-                print("\nSubtracted", name)
-
-                r, c = np.nonzero(dark_frame > 2 ** 10)
-                # Potential index out of bounds error but not with our dark frames)
-                image[r, c] = 0.25 * (image[r, c + 1] + image[r, c - 1] + image[r + 1, c] + image[r - 1, c])
-                print("Replaced %d hot pixel(s)" % r.shape[0])
-
-            image /= 2**12 - 3
-            print("Normalized")
-
-            if gamma:
-                image = np.power(image, 1 / gamma)
-                print("Gamma corrected")
-
-            if i == 0:
-                r, c = np.nonzero(image > low - eps)
-                total_light[r, c] = image[r, c]
-                total_exp[r, c] = real_exp
-                counts[r, c] = 1
-            elif i == len(exposures) - 1:
-                r, c = np.nonzero(image < high + eps)
-                total_light[r, c] += image[r, c]
-                total_exp[r, c] += real_exp
-                counts[r, c] += 1
-            else:
-                r, c = np.nonzero((low < image) & (image < high))
-                total_light[r, c] += image[r, c]
-                total_exp[r, c] += real_exp
-                counts[r, c] += 1
-
-            processing_intervals.append((t0, cam.now()))
-            print("Added frame %d in %.3f sec" % (i, cam.now() - t0))
-
-            if i < len(exposures) - 1:
-                while cam.retrieve_frame() is None:
-                    while not cam.frame_ready():
-                        time.sleep(0.001)
-                    if cam.retrieve_frame() is None:
-                        print(Yellow + "Frame %d is missing data! Recapturing..." % (i+1) + Reset)
-                        cam.start_frame(target_exposures[i+1])
-                next_image = cam.retrieve_frame()
+            time.sleep(0.001)
 
     if camera_was_none:
         camera.close()
 
     hdr = total_light / total_exp
-    print("Divided")
+    print(Cyan + "\nComputed HDR\n" + Reset)
 
     if plot:
         print("Plotting")
-        camera.plot_timeline(processing_intervals)
+
+        plt.figure("Histograms", (12, 6))
+        plt.subplot(1, 2, 1)
+        m = np.max(counts)
+        plt.hist(counts.ravel(), bins=m, range=[0.5, m + 0.5])
+        plt.title("Counts")
+        plt.subplot(1, 2, 2)
+        plt.hist(np.log10(hdr.ravel()), bins=500)
+        plt.title("Dynamic Range")
+        plt.yscale("log")
+        plt.tight_layout()
 
         plt.figure("Counts", (16, 9))
         plt.imshow(counts)
@@ -405,16 +435,7 @@ def capture_hdr(exposures, low=0.1, high=0.7, camera=None, dark_path=None, gamma
         if save_preview:
             plt.savefig("hdr.png", dpi=120, bbox_inches='tight')
 
-        plt.figure("Histograms", (12, 6))
-        plt.subplot(1, 2, 1)
-        m = np.max(counts)
-        plt.hist(counts.ravel(), bins=m+1, range=[-0.5, m + 0.5])
-        plt.title("Counts")
-        plt.subplot(1, 2, 2)
-        plt.hist(hdr.ravel(), bins=500)
-        plt.title("Dynamic Range")
-        plt.yscale("log")
-        plt.tight_layout()
+        camera.plot_timeline(processing_intervals)
 
     return hdr
 
@@ -426,8 +447,8 @@ if __name__ == "__main__":
     # capture_dark_frames("D:/scanner_sim/dark_frames/", exposures, count=100)
     # exit()
 
-    # hdr = capture_hdr(exposures, dark_path="dark_frames/", gamma=default_gamma, plot=True, save_preview=True)
-    hdr = capture_hdr([0.1, 0.5, 2], dark_path="dark_frames/", gamma=default_gamma, plot=True, save_preview=True)
+    hdr = capture_hdr(exposures, dark_path="dark_frames/", gamma=default_gamma, plot=True, save_preview=True)
+    # hdr = capture_hdr([0.1, 0.5, 1.5], dark_path="dark_frames/", gamma=default_gamma, plot=True, save_preview=True)
     print("Ready")
 
     # np.save("hdr", hdr.astype(np.float32))
@@ -437,7 +458,6 @@ if __name__ == "__main__":
     plt.show()
     print('Done')
     exit()
-
 
     # path = "gamma/"
     # path = "hdr/"
