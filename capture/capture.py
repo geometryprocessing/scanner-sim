@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from arena_api.system import system
 from arena_api.callback import callback, callback_function
 # from arena_api.buffer import BufferFactory
+from hdr import *
 
 Black = '\u001b[30m'
 Red = '\u001b[31m'
@@ -97,7 +98,7 @@ class Camera:
         print("\nDestroyed devices at %.3f sec" % self.now())
 
     # roi = (Width, Height, OffsetX, OffsetY)
-    def init(self, roi=None, pixel_format="Mono8"):
+    def init(self, roi=None, pixel_format="Mono12"):
         if self.device:
             nm = self.device.nodemap
 
@@ -195,7 +196,7 @@ class Camera:
         return self.img
 
     # blocking, exposure in seconds
-    def capture_frame(self, exposure, recapture_incomplete=True):
+    def capture_ldr(self, exposure, recapture_incomplete=True):
         real_exp = self.start_frame(exposure)
 
         while self.img is None:
@@ -209,21 +210,29 @@ class Camera:
 
         return real_exp, self.img
 
-    def plot_timeline(self):
+    def plot_timeline(self, processing_intervals=None):
         if len(self.received_at) == 0:
             return
 
-        plt.figure("Camera Timeline")
-        plt.title("Camera Timeline")
+        plt.figure("Acquisition Timeline")
+        plt.title("Acquisition Timeline")
 
         plt.plot(self.armed_at, [0] * len(self.armed_at), '.r', label="Trigger Armed")
 
         for i, (trig, exp, inc) in enumerate(zip(self.triggered_at, self.exposures, self.was_incomplete)):
-            plt.plot([trig, trig + exp], [0, 0], '--b' if inc else '-b', label="Exposure" if i == 0 else "")
+            plt.plot([trig, trig + exp], [0, 0], '--b' if inc else '-b',
+                     label="Exposure" if i == len(self.exposures) - 1 else None)
 
         plt.plot(self.received_at, [0] * len(self.received_at), '.g', label="Buffer Received")
+        x_max = max(self.stopped_at, self.received_at[-1] + 0.1)
 
-        plt.xlim([0, max(self.stopped_at, self.received_at[-1] + 0.1)])
+        if processing_intervals:
+            for i, inverval in enumerate(processing_intervals):
+                plt.plot(inverval, [-0.1, -0.1], '.-k', label="Processing" if i == 0 else None)
+            x_max = max(x_max, max([interval[1] + 0.1 for interval in processing_intervals]))
+
+        plt.xlim([0, x_max])
+        plt.ylim([-1, 1])
         plt.xlabel("Time, sec")
         plt.legend()
 
@@ -242,7 +251,7 @@ def capture_batch(path, exposures, roi=None, pixel_format="Mono12", save_preview
     print("\nTotal exposure time:\n\t", np.sum(target_exposures), "seconds")
     with camera as cam:
         for i, exp in enumerate(target_exposures):
-            real_exp, img = cam.capture_frame(exp, recapture_incomplete=True)
+            real_exp, img = cam.capture_ldr(exp)
             actual_exposures.append(real_exp)
 
             if img is not None:
@@ -278,6 +287,138 @@ def capture_dark_frames(path, exposures, count=3):
     with open(path + "exposures.json", "w") as f:
         json.dump(exposures, f)
 
+
+def capture_hdr(exposures, low=0.1, high=0.7, camera=None, dark_path=None, gamma=None, plot=False, save_preview=False):
+    if dark_path:
+        for exp in exposures:
+            name = "dark_frame_" + str(exp) + "_sec.exr"
+            if not os.path.exists(dark_path + name):
+                raise EnvironmentError("Dark frame %s not found in %s" % (name, dark_path))
+
+    camera_was_none = camera is None
+
+    if camera is None:
+        camera = Camera()
+        camera.open()
+        camera.init(None, "Mono12")
+    else:
+        if camera.pixel_format != "Mono12":
+            raise AttributeError("Support HDR in 12 bit mode only")
+
+    if len(exposures) == 2:
+        raise ValueError("Need at least two different exposures to capture HDR")
+
+    target_exposures = sorted(exposures)
+    next_real_exp = 0
+    next_image = None
+    processing_intervals = []
+
+    print("\nCapturing HDR with %d exposures:" % len(exposures), target_exposures)
+    print("Total exposure time:\n\t", np.sum(exposures), "seconds")
+    print("Estimated service time:\n\t", 0.1*len(exposures), "seconds")
+
+    with camera as cam:
+        for i, exp in enumerate(target_exposures):
+            if i == 0:
+                print("\nCapturing frame 0 with", str(exp), "sec exposure:")
+                next_real_exp, next_image = cam.capture_ldr(exp)
+
+                total_light = np.zeros_like(next_image, dtype=np.float)
+                total_exp = np.zeros_like(next_image, dtype=np.float)
+                counts = np.zeros_like(next_image, dtype=np.int)
+
+            real_exp, image = next_real_exp, next_image.astype(np.float)
+
+            if i < len(exposures) - 1:
+                print("\nStarting frame", i+1, "with", str(target_exposures[i+1]), "sec exposure:")
+                next_real_exp = cam.start_frame(target_exposures[i+1])
+
+            t0 = cam.now()
+            if dark_path:
+                name = "dark_frame_" + str(exp) + "_sec.exr"
+                dark_frame = load_openexr(dark_path + name)
+                image -= dark_frame
+                r, c = np.nonzero(image < 0)
+                image[r, c] = 0
+                print("\nSubtracted", name)
+
+                r, c = np.nonzero(dark_frame > 2 ** 10)
+                # Potential index out of bounds error but not with our dark frames)
+                image[r, c] = 0.25 * (image[r, c + 1] + image[r, c - 1] + image[r + 1, c] + image[r - 1, c])
+                print("Replaced %d hot pixel(s)" % r.shape[0])
+
+            image /= 2**12 - 3
+            print("Normalized")
+
+            if gamma:
+                image = np.power(image, 1 / gamma)
+                print("Gamma corrected")
+
+            if i == 0:
+                r, c = np.nonzero(image > low - eps)
+                total_light[r, c] = image[r, c]
+                total_exp[r, c] = real_exp
+                counts[r, c] = 1
+            elif i == len(exposures) - 1:
+                r, c = np.nonzero(image < high + eps)
+                total_light[r, c] += image[r, c]
+                total_exp[r, c] += real_exp
+                counts[r, c] += 1
+            else:
+                r, c = np.nonzero((low < image) & (image < high))
+                total_light[r, c] += image[r, c]
+                total_exp[r, c] += real_exp
+                counts[r, c] += 1
+
+            processing_intervals.append((t0, cam.now()))
+            print("Added frame %d in %.3f sec" % (i, cam.now() - t0))
+
+            if i < len(exposures) - 1:
+                while cam.retrieve_frame() is None:
+                    while not cam.frame_ready():
+                        time.sleep(0.001)
+                    if cam.retrieve_frame() is None:
+                        print(Yellow + "Frame %d is missing data! Recapturing..." % (i+1) + Reset)
+                        cam.start_frame(target_exposures[i+1])
+                next_image = cam.retrieve_frame()
+
+    if camera_was_none:
+        camera.close()
+
+    hdr = total_light / total_exp
+    print("Divided")
+
+    if plot:
+        print("Plotting")
+        camera.plot_timeline(processing_intervals)
+
+        plt.figure("Counts", (16, 9))
+        plt.imshow(counts)
+        plt.colorbar()
+        plt.tight_layout()
+
+        plt.figure("HDR", (16, 9))
+        plt.imshow(hdr)
+        plt.colorbar()
+        plt.tight_layout()
+
+        if save_preview:
+            plt.savefig("hdr.png", dpi=120, bbox_inches='tight')
+
+        plt.figure("Histograms", (12, 6))
+        plt.subplot(1, 2, 1)
+        m = np.max(counts)
+        plt.hist(counts.ravel(), bins=m+1, range=[-0.5, m + 0.5])
+        plt.title("Counts")
+        plt.subplot(1, 2, 2)
+        plt.hist(hdr.ravel(), bins=500)
+        plt.title("Dynamic Range")
+        plt.yscale("log")
+        plt.tight_layout()
+
+    return hdr
+
+
 if __name__ == "__main__":
     exposures = [0.0001, 0.00025, 0.0005, 0.001, 0.0025, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 0.75,
                  1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 10]
@@ -285,10 +426,24 @@ if __name__ == "__main__":
     # capture_dark_frames("D:/scanner_sim/dark_frames/", exposures, count=100)
     # exit()
 
+    # hdr = capture_hdr(exposures, dark_path="dark_frames/", gamma=default_gamma, plot=True, save_preview=True)
+    hdr = capture_hdr([0.1, 0.5, 2], dark_path="dark_frames/", gamma=default_gamma, plot=True, save_preview=True)
+    print("Ready")
+
+    # np.save("hdr", hdr.astype(np.float32))
+    save_openexr("hdr.exr", hdr)
+    print("Saved")
+
+    plt.show()
+    print('Done')
+    exit()
+
+
     # path = "gamma/"
-    path = "hdr/"
+    # path = "hdr/"
     # path = "spurious/"
     # path = "dark/"
+    path = "calib/"
 
     # target_exposures = np.logspace(-4, 1, 300)
     # target_exposures = [0.001, 0.004, 0.01, 0.04, 0.1, 0.4, 1, 2, 4, 8, 10]

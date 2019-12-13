@@ -40,6 +40,21 @@ def save_openexr(file, image):
     exr.close()
 
 
+def load_openexr(filename):
+    with open(filename, "rb") as f:
+        # f.seek(0)
+        in_file = OpenEXR.InputFile(f)
+        try:
+            header = in_file.header()
+            dw = header['dataWindow']
+
+            (r, g, b) = in_file.channels("RGB", pixel_type=Imath.PixelType(Imath.PixelType.FLOAT))
+
+            return np.reshape(np.frombuffer(g, dtype=np.float32), (dw.max.y - dw.min.y + 1, dw.max.x - dw.min.x + 1))
+        finally:
+            in_file.close()
+
+
 def explore_dark_frames(path):
     exposures, images = load_images(path, numpify=False)
 
@@ -125,7 +140,7 @@ def generate_dark_frames(dark_path):
         frames.append(full_path + name + ".png")
         distributions.append(full_path + name + "_distribution.png")
 
-        img = average_dark_frame(full_path, save=True)
+        # img = average_dark_frame(full_path, save=True)
         img = np.load(full_path + name + ".npy")
 
         if exp < 0.9:
@@ -337,13 +352,36 @@ def compute_hdr_average(exposures, images, low=0.1, high=0.7, plot=False):
     return np.sum(imgs, axis=0) / tot_exps
 
 
+def compare(img1, img2, plot=False):
+    err = np.abs(img2 - img1)
+
+    if plot:
+        plt.figure("Absolute Error Map")
+        plt.imshow(err)
+        plt.colorbar()
+        plt.tight_layout()
+
+        plt.figure("Relative Error Map")
+        plt.imshow(err / img1)
+        plt.colorbar()
+        plt.tight_layout()
+
+        plt.figure("Absolute Error Hist")
+        plt.hist(err.ravel(), bins=1000)
+
+        plt.figure("Relative Error Hist")
+        plt.hist(err.ravel() / img1.ravel(), bins=1000)
+
+    return np.sum(err), np.sum(err / img1)
+
+
 if __name__ == "__main__":
     # generate_dark_frames("D:/scanner_sim/dark_frames/")
     #
     # plt.show()
     # exit()
 
-    path = "hdr/"
+    path = "calib/"
     exposures, images = load_images(path)
 
     dark_exposures, dark_frames = load_dark_frames("dark_frames/")
@@ -355,14 +393,21 @@ if __name__ == "__main__":
     print("gamma =", gamma)
     images = gamma_correct(images, gamma)
 
-    # np.save(path + "corrected", images.astype(np.float32))
-    # images = np.load(path + "corrected.npy")
+    np.save(path + "corrected", images.astype(np.float32))
+    images = np.load(path + "corrected.npy")
 
     # hdr = compute_hdr_replace(exposures, images, plot=True)
     hdr = compute_hdr_average(exposures, images, plot=True)
 
     np.save(path + "hdr", hdr.astype(np.float32))
+    hdr = np.load(path + "hdr.npy")
+
     save_openexr(path + "hdr.exr", hdr)
+    exr = load_openexr(path + "hdr.exr")
+
+    abs_err, rel_err = compare(hdr, exr, plot=True)
+    n = hdr.shape[0] * hdr.shape[1]
+    print("abs", abs_err / n, "rel", rel_err / n)
 
     plt.figure('HDR', (12, 8))
     plt.imshow(hdr, vmax=np.max(hdr)/10.)
