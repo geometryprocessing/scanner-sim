@@ -7,6 +7,8 @@ from mpl_toolkits.mplot3d import proj3d
 import cv2
 from cv2 import aruco
 from hdr import *
+from camera import *
+from display import *
 
 
 # n - horizontal, m - vertical. Detect in down-sampled image and then refine in original
@@ -173,6 +175,14 @@ def board(ax, T, R, *args, label="", **kwargs):
     basis(ax, T, R, length=10)
 
 
+def projector(ax, pos, rvec, mtx, p):
+    T, R = pos.ravel(), cv2.Rodrigues(rvec)
+    p = p.reshape((-1, 3))
+
+    basis(ax, T, R)
+    scatter(ax, p, c="m")
+
+
 def axis_equal_3d(ax):
     extents = np.array([getattr(ax, 'get_{}lim'.format(dim))() for dim in 'xyz'])
     sz = extents[:,1] - extents[:,0]
@@ -244,79 +254,110 @@ def load_planes(filename):
     return planes, np.array(new_mtx)
 
 
-def find_origin(planes, new_mtx, plot=True, savefigs=True):
-    points = np.zeros((len(planes), 8, 17, 3))
+def calibrate_projector(planes, cam_new_mtx, plot=True, savefigs=True):
+    charuco, chess = [], []
+    chess_objs, chess_prjs = [], []
+    chess_full = np.zeros((len(planes), 8, 17, 3))
     lines = np.zeros((2, 8, 17, 3))
-    charuco = []
+
+    chess_board = np.stack(np.meshgrid(np.arange(8), np.arange(17), indexing="ij"), axis=2) * 100
+    chess_board[:, :, 0] += 190
+    chess_board[:, :, 1] += 160
+    chess_board = chess_board[:, :, ::-1]
 
     if plot:
         plt.figure("Projector Calibration", (12, 12))
         ax = plt.subplot(111, projection='3d', proj_type='ortho')
         ax.set_title("Projector Calibration")
 
-    reproj_errors = []
+    cam_reproj_errors = []
     for i, p in enumerate(planes):
-        ret, rvec, tvec = cv2.solvePnP(p["objCharuco"], p["ImgCharuco"], new_mtx, None)
+        ret, rvec, tvec = cv2.solvePnP(p["objCharuco"], p["ImgCharuco"], cam_new_mtx, None)
         T, (R, _) = tvec.ravel(), cv2.Rodrigues(rvec)
 
-        reproj, _ = cv2.projectPoints(p["objCharuco"], rvec, tvec, new_mtx, None)
-        reproj_errors.extend(np.linalg.norm(p["ImgCharuco"] - reproj.reshape(-1, 2), axis=1).tolist())
+        reproj, _ = cv2.projectPoints(p["objCharuco"], rvec, tvec, cam_new_mtx, None)
+        cam_reproj_errors.extend(np.linalg.norm(p["ImgCharuco"] - reproj.reshape(-1, 2), axis=1).tolist())
 
         charuco_3d = np.matmul(R, p["objCharuco"].T) + tvec
         charuco.append(charuco_3d.T)
 
-        p_3d = lift_to_3d(p["ImgChess"], new_mtx, T, R, offset=5.25)
+        offset = 5.25
+        chess_3d = lift_to_3d(p["ImgChess"], cam_new_mtx, T, R, offset=offset)
+        chess.append(chess_3d)
+
+        chess_obj = np.ones((chess_3d.shape[0], 3))
+        chess_obj[:, 0] = np.dot(chess_3d - T, R[:, 0])
+        chess_obj[:, 1] = np.dot(chess_3d - T, R[:, 1])
+        chess_obj[:, 2] = 0
+        chess_objs.append(chess_obj.astype(np.float32))
 
         if p["folder"] == "right":
-            points[i, :, 8:, :] = p_3d.reshape((8, 9, 3))
+            chess_full[i, :, 8:, :] = chess_3d.reshape((8, 9, 3))
+            chess_prj = chess_board[:, 8:, :]
         if p["folder"] == "left":
-            points[i, :, :9, :] = p_3d.reshape((8, 9, 3))
+            chess_full[i, :, :9, :] = chess_3d.reshape((8, 9, 3))
+            chess_prj = chess_board[:, :9, :]
         if p["folder"] == "full":
-            points[i, :, :, :] = p_3d.reshape((8, 17, 3))
+            chess_full[i, :, :, :] = chess_3d.reshape((8, 17, 3))
+            chess_prj = chess_board
+        chess_prjs.append(chess_prj.reshape(-1, 2).astype(np.float32))
 
         if plot:
             board(ax, T, R, label="Charuco Boards" if i == 0 else "")
 
-    fit_errors = []
+    print("Mean camera error:", np.average(cam_reproj_errors))
+
+    line_fit_errors = []
     for i in range(8):
         for j in range(17):
-            valid = points[points[:, i, j, 2] > 1, i, j, :].reshape(-1, 3)
+            valid = chess_full[chess_full[:, i, j, 2] > 1, i, j, :].reshape(-1, 3)
             c, dir = fit_line(valid)
-            err = np.array([point_line_dist(valid[k, :], c, c + dir) for k in range(valid.shape[0])])
-            # print(i, j, np.mean(err), np.max(err))
-
-            # valid = valid[err < 0.9, :]
-            # c, dir = fit_line(valid)
-            # err = np.array([point_line_dist(valid[k, :], c, c + dir) for k in range(valid.shape[0])])
-            # print(i, j, np.mean(err), np.max(err))
-
             lines[0, i, j, :] = c
             lines[1, i, j, :] = c + dir
-            fit_errors.extend(err)
+            proj_err = np.array([point_line_dist(valid[k, :], c, c + dir) for k in range(valid.shape[0])])
+            line_fit_errors.extend(proj_err)
+    print("Mean line fit error:", np.mean(line_fit_errors))
 
-    print("Mean fit error:", np.mean(fit_errors))
-
-    origin = intersect_lines(lines[0, ...].reshape(-1, 3), lines[1, ...].reshape(-1, 3))
+    lines_origin = intersect_lines(lines[0, ...].reshape(-1, 3), lines[1, ...].reshape(-1, 3))
+    print("Lines Origin:", lines_origin)
 
     origin_errors = []
     for i in range(8):
         for j in range(17):
-            origin_errors.append(point_line_dist(origin, lines[0, i, j, :], lines[1, i, j, :]))
-    print("Mean origin error:", np.mean(origin_errors))
+            origin_errors.append(point_line_dist(lines_origin, lines[0, i, j, :], lines[1, i, j, :]))
+    print("Mean lines origin error:", np.mean(origin_errors))
+
+    calibration_estimate = cv2.calibrateCamera(chess_objs, chess_prjs, (1920, 1080), None, None)
+    errors = reprojection_errors(chess_objs, chess_prjs, calibration_estimate)
+    ret, mtx_guess, dist, rvecs, tvecs = calibration_estimate
+    print("Reprojection errors:", errors, "\nMean error:", np.mean(errors))
+    print("Calibration matrix guess:\n", mtx_guess)
+
+    obj_all = np.vstack(chess).astype(np.float32)
+    prj_all = np.vstack(chess_prjs).astype(np.float32)
+    full_calibration = cv2.calibrateCamera([obj_all], [prj_all], (1920, 1080), mtx_guess, None, flags=cv2.CALIB_USE_INTRINSIC_GUESS)
+    error = reprojection_errors([obj_all], [prj_all], full_calibration)[0]
+    ret, mtx, dist, rvecs, tvecs = full_calibration
+    T, (R, _) = tvecs[0].ravel(), cv2.Rodrigues(rvecs[0])
+    origin = np.matmul(R.T, -T)
+    print("Calibration matrix:\n", mtx)
+    print("Mean projector error:", error)
+    print("Projector Origin:", origin)
+    print("Distance from lines origin:", np.linalg.norm(origin - lines_origin))
 
     if plot:
         scatter(ax, np.concatenate(charuco, axis=0).T, c="g", s=5, label="Charuco Corners")
-        scatter(ax, points[points[:, :, :, 2] > 1, :].reshape(-1, 3).T, c="b", s=8, label="Checker Corners")
-        # scatter(ax, np.array([0, 0, 0]), c="m", s=15, label="Camera Origin")
+        scatter(ax, np.concatenate(chess, axis=0).T, c="b", s=8, label="Checker Corners")
         scatter(ax, origin, c="k", s=15, label="Projector Origin")
+        basis(ax, origin, R.T, length=20)
 
         for i in range(8):
             for j in range(17):
                 if (i + j) % 2 != 0:
                     continue
-                d = lines[0, i, j, :] - origin
+                d = lines[0, i, j, :] - lines_origin
                 d /= np.linalg.norm(d)
-                line(ax, origin + 0*d, origin + 400*d, "r", label="Fitted Rays" if i == 0 and j == 0 else "")
+                line(ax, lines_origin + 0*d, lines_origin + 400*d, "r", label="Fitted Rays" if i == 0 and j == 0 else "")
 
         ax.set_xlabel("x, mm")
         ax.set_ylabel("z, mm")
@@ -331,16 +372,46 @@ def find_origin(planes, new_mtx, plot=True, savefigs=True):
             ax.view_init(elev=12, azim=26)
             plt.savefig("projector/calibration_view2.png", dpi=320)
 
-        plt.figure("Errors", (12, 6))
-        plt.subplot(1, 3, 1, title="Reprojection")
-        plt.hist(reproj_errors, bins=50)
+        plt.figure("Original Pattern", (12, 7))
+        pattern = gen_checker((1080, 1920), (90, 60), 100, (9, 18))
+        plt.imshow(pattern)
+        plt.plot(chess_board[:, :, 0], chess_board[:, :, 1], ".g")
+        plt.title("Original Pattern")
+
+        obj_all_proj, _ = cv2.projectPoints(obj_all, rvecs[0], tvecs[0], mtx, dist)
+        obj_all_proj = obj_all_proj.reshape((-1, 2))
+        proj_err = np.linalg.norm(prj_all - obj_all_proj, axis=1)
+        plt.plot(obj_all_proj[:, 0], obj_all_proj[:, 1], ".r")
+        plt.tight_layout()
+
+        plt.figure("Distorted Pattern", (12, 7))
+        new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (1920, 1080), 1, (1920, 1080))
+        pattern_dist = cv2.undistort(pattern, mtx, dist, None, new_mtx)
+        plt.imshow(pattern_dist)
+        plt.title("Distorted Pattern")
+
+        obj_all_proj2, _ = cv2.projectPoints(obj_all, rvecs[0], tvecs[0], new_mtx, None)
+        obj_all_proj2 = obj_all_proj2.reshape((-1, 2))
+        plt.plot(obj_all_proj2[:, 0], obj_all_proj2[:, 1], ".r")
+        plt.tight_layout()
+
+        if savefigs:
+            plt.savefig("projector/calibration_pattern.png", dpi=160)
+
+        plt.figure("Errors", (12, 7))
+        plt.subplot(2, 2, 1, title="Camera Reprojection")
+        plt.hist(cam_reproj_errors, bins=50)
         plt.xlabel("Error, pixels")
 
-        plt.subplot(1, 3, 2, title="Ray Fitting")
-        plt.hist(fit_errors, bins=50)
+        plt.subplot(2, 2, 2, title="Projector Reprojection")
+        plt.hist(proj_err, bins=50)
+        plt.xlabel("Error, pixels")
+
+        plt.subplot(2, 2, 3, title="Ray Fitting")
+        plt.hist(line_fit_errors, bins=50)
         plt.xlabel("Error, mm")
 
-        plt.subplot(1, 3, 3, title="Projector Origin")
+        plt.subplot(2, 2, 4, title="Projector Origin")
         plt.hist(origin_errors, bins=50)
         plt.xlabel("Error, mm")
         plt.tight_layout()
@@ -348,7 +419,7 @@ def find_origin(planes, new_mtx, plot=True, savefigs=True):
         if savefigs:
             plt.savefig("projector/calibration_errors.png", dpi=160)
 
-    return origin
+    return origin, R.T, mtx, dist
 
 
 if __name__ == "__main__":
@@ -364,10 +435,9 @@ if __name__ == "__main__":
     # with open(path + "planes.json", "w") as f:
     #     json.dump({"planes": planes, "new_mtx": new_mtx.tolist()}, f, indent=4)
 
-    planes, new_mtx = load_planes(path + "planes.json")
+    planes, cam_new_mtx = load_planes(path + "planes.json")
 
-    origin = find_origin(planes, new_mtx, plot=True)
-    print("Projector Origin:", origin)
+    origin, R, mtx, dist = calibrate_projector(planes, cam_new_mtx, plot=True, savefigs=True)
 
     plt.show()
     exit()

@@ -33,6 +33,7 @@ def detect_single_chessboard(filename, resize=False, n=N, m=M, plot=True):
         print(filename, img.shape, "Failed")
         return None
 
+
 def detect_all_chessboards(filenames, **kwargs):
     jobs = [joblib.delayed(detect_single_chessboard, check_pickle=False)(name, plot=False, **kwargs) for name in filenames]
 
@@ -41,16 +42,19 @@ def detect_all_chessboards(filenames, **kwargs):
 
     return results
 
+
 def reprojection_errors(objpoints, imgpoints, calibration):
     ret, mtx, dist, rvecs, tvecs = calibration
 
     errors = []
     for i, (objpt, imgpt) in enumerate(zip(objpoints, imgpoints)):
         imgpoints2, _ = cv2.projectPoints(objpt, rvecs[i], tvecs[i], mtx, dist)
-        imgpoints2 = imgpoints2.reshape((N * M, 2))
-        errors.append(cv2.norm(imgpt, imgpoints2, cv2.NORM_L2) / len(imgpoints2))
+        imgpoints2 = imgpoints2.reshape((objpt.shape[0], 2))
+        # errors.append(cv2.norm(imgpt, imgpoints2, cv2.NORM_L2) / len(imgpoints2))
+        errors.append(np.average(np.linalg.norm(imgpt - imgpoints2, axis=1)))
 
     return np.array(errors)
+
 
 if __name__ == "__main__":
     # Uncomment this section to detect chessboards and corners. Cached results are used otherwise
@@ -62,10 +66,10 @@ if __name__ == "__main__":
     #
     # corners = detect_all_chessboards(filenames, resize=False)
     #
-    # with open("corners.json", "w") as f:
+    # with open("camera/corners.json", "w") as f:
     #     json.dump({n: c.tolist() for n, c in corners.items()}, f, indent=4)
 
-    with open("corners.json", "r") as f:
+    with open("camera/corners.json", "r") as f:
         corners = json.load(f)
 
     print("\n%d detected" % len(corners))
@@ -82,26 +86,26 @@ if __name__ == "__main__":
         imgpoints.append(np.array(results).reshape((N*M, 2)).astype(np.float32))
         names.append(name)
 
-    img = cv2.imread("original.png")
+    img = cv2.imread("camera/original.png")
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Uncomment this section to compute full calibration. Cached results are used otherwise
     #
     # full_calibration = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
-    # with open("full_calibration.pkl", "wb") as f:
+    # with open("camera/full_calibration.pkl", "wb") as f:
     #     pickle.dump(full_calibration, f)
 
-    with open("full_calibration.pkl", "rb") as f:
+    with open("camera/full_calibration.pkl", "rb") as f:
         full_calibration = pickle.load(f)
 
     errors = reprojection_errors(objpoints, imgpoints, full_calibration)
     print(errors, "\nmean error:", np.mean(errors))
 
-    plt.figure("Calibration")
+    plt.figure("Calibration", (12, 9))
     plt.plot(np.arange(errors.shape[0]), errors, ".r", label="All")
 
     # thr = np.mean(errors)
-    thr = 0.1
+    thr = 0.8
 
     idx = np.nonzero(np.array(errors) < thr)[0]
     print("\n%d selected" % idx.shape[0])
@@ -112,10 +116,10 @@ if __name__ == "__main__":
     # Uncomment this section to compute refined calibration. Cached results are used otherwise
     #
     # refined_calibration = cv2.calibrateCamera(objpoints2, imgpoints2, gray.shape[::-1], None, None)
-    # with open("refined_calibration.pkl", "wb") as f:
+    # with open("camera/refined_calibration.pkl", "wb") as f:
     #     pickle.dump(refined_calibration, f)
 
-    with open("refined_calibration.pkl", "rb") as f:
+    with open("camera/refined_calibration.pkl", "rb") as f:
         refined_calibration = pickle.load(f)
 
     errors2 = reprojection_errors(objpoints2, imgpoints2, refined_calibration)
@@ -132,12 +136,13 @@ if __name__ == "__main__":
     plt.ylabel("Error, pixels")
     plt.ylim([0, 1.1*np.max(errors)])
     plt.legend()
+    plt.savefig("camera/reprojection_errors.png", dpi=160)
 
     h, w = img.shape[:2]
     new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
     print("\nnew_mtx", new_mtx)
 
-    # dst = cv2.undistort(img, mtx, dist, None, new_mtx)
+    dst = cv2.undistort(img, mtx, dist, None, new_mtx)
     mapx, mapy = cv2.initUndistortRectifyMap(mtx, dist, None, new_mtx, (w, h), 5)
     dst = cv2.remap(img, mapx, mapy, cv2.INTER_LINEAR)
 
@@ -147,7 +152,7 @@ if __name__ == "__main__":
 
     # cv2.imwrite('undistorted.png', dst)
 
-    plt.figure("Image")
+    plt.figure("Image", (12, 9))
     plt.imshow(dst)
     plt.plot(mtx[0,2], mtx[1,2], ".r")
     plt.plot(new_mtx[0,2], new_mtx[1,2], ".b")
