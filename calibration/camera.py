@@ -136,6 +136,7 @@ if __name__ == "__main__":
     plt.ylabel("Error, pixels")
     plt.ylim([0, 1.1*np.max(errors)])
     plt.legend()
+    plt.tight_layout()
     plt.savefig("camera/reprojection_errors.png", dpi=160)
 
     h, w = img.shape[:2]

@@ -437,7 +437,10 @@ if __name__ == "__main__":
 
     planes, cam_new_mtx = load_planes(path + "planes.json")
 
-    origin, R, mtx, dist = calibrate_projector(planes, cam_new_mtx, plot=True, savefigs=True)
+    projector_calibration = calibrate_projector(planes, cam_new_mtx, plot=True, savefigs=True)
+
+    with open("projector/calibration.pkl", "wb") as f:
+        pickle.dump(projector_calibration, f)
 
     plt.show()
     exit()
