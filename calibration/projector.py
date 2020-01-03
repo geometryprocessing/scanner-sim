@@ -9,6 +9,7 @@ from cv2 import aruco
 from hdr import *
 from camera import *
 from display import *
+from reconstruct import *
 
 
 # n - horizontal, m - vertical. Detect in down-sampled image and then refine in original
@@ -422,25 +423,91 @@ def calibrate_projector(planes, cam_new_mtx, plot=True, savefigs=True):
     return origin, R.T, mtx, dist
 
 
+def projector_vignetting(path, camera_calibration, projector_calibration, plot=True):
+    dark, white, checker = [load_openexr(path + str(i) + ".exr") for i in range(3)]
+    white = white - dark
+    white = gaussian_filter(white, sigma=10)
+
+    camera_vignetting = np.load("camera/camera_vignetting.npy")
+    white /= camera_vignetting
+
+    ret, cam_mtx, cam_dist, rvecs, tvecs = camera_calibration
+    origin, R, proj_mtx, proj_dist = projector_calibration
+
+    proj, corners = detect_chessboard((255 * checker / np.max(checker)).astype(np.uint8), plot=False)
+    proj *= 100
+    proj[:, 0] += 160
+    proj[:, 1] += 190
+
+    p = triangulate(corners, proj[:, :2], camera_calibration, projector_calibration)
+
+    c = np.mean(p, axis=0)
+    uu, dd, vv = np.linalg.svd(p - c)
+    n = vv[2]
+
+    ri, ci = np.indices((1080, 1920), dtype=np.float32)
+    p2 = np.stack([ci, ri], axis=2).reshape(-1, 2)
+    u = cv2.undistortPoints(p2, proj_mtx, proj_dist).reshape((-1, 2))
+    u = np.concatenate([u, np.ones((u.shape[0], 1))], axis=1)
+    u = np.matmul(R, u.T).T
+
+    t = ((origin-c) @ n) / (u @ n)
+    p3 = origin - u * t[:, None]
+
+    R, T = cv2.Rodrigues(np.eye(3, dtype=np.float32))[0], np.zeros((3), dtype=np.float32)
+    cr, _ = cv2.projectPoints(p3.astype(np.float32), R, T, cam_mtx, cam_dist)
+    cr = cr.reshape((-1, 2)).astype(np.int)
+    img = white[cr[:, 1], cr[:, 0]].reshape((1080, 1920))
+    np.save("projector/projector_vignetting", img.astype(np.float32))
+
+    if plot:
+        plt.figure("Vignetting Plane", (12, 12))
+        ax = plt.subplot(111, projection='3d', proj_type='ortho')
+        scatter(ax, p.T, "r")
+        line(ax, c, c+100*n, "r")
+        scatter(ax, p3[::3000, :].T, c="b")
+        scatter(ax, origin[:, None] + 150*u[::5000, :].T, c="g", label="u")
+        scatter(ax, origin, c="k")
+        plt.legend()
+        axis_equal_3d(ax)
+
+        plt.figure("Camera View", (12, 7))
+        plt.imshow(white)
+        plt.colorbar()
+        plt.tight_layout()
+
+        plt.figure("Projector Vignetting", (12, 6))
+        plt.imshow(img / np.max(img), vmin=0.5)
+        plt.colorbar()
+        plt.title("Projector Vignetting")
+        plt.tight_layout()
+        plt.savefig("projector/projector_vignetting.png", dpi=160)
+
+
 if __name__ == "__main__":
     # chessboard_vs_charuco("camera/original.png", plot=True)
     path = "projector/"
 
     with open("camera/refined_calibration.pkl", "rb") as f:
-        calibration = pickle.load(f)
+        camera_calibration = pickle.load(f)
 
     # planes, new_mtx = detect(path, folders=["right", "left", "full"], counts=[8, 3, 4],
-    #                          calibration=calibration, plot=False, save=True, crop=True)
+    #                          calibration=camera_calibration, plot=False, save=True, crop=True)
     #
     # with open(path + "planes.json", "w") as f:
     #     json.dump({"planes": planes, "new_mtx": new_mtx.tolist()}, f, indent=4)
 
-    planes, cam_new_mtx = load_planes(path + "planes.json")
+    # planes, cam_new_mtx = load_planes(path + "planes.json")
+    #
+    # projector_calibration = calibrate_projector(planes, cam_new_mtx, plot=True, savefigs=True)
+    #
+    # with open("projector/calibration.pkl", "wb") as f:
+    #     pickle.dump(projector_calibration, f)
 
-    projector_calibration = calibrate_projector(planes, cam_new_mtx, plot=True, savefigs=True)
+    with open("projector/calibration.pkl", "rb") as f:
+        projector_calibration = pickle.load(f)
 
-    with open("projector/calibration.pkl", "wb") as f:
-        pickle.dump(projector_calibration, f)
+    projector_vignetting("../capture/norm/", camera_calibration, projector_calibration, plot=True)
 
     plt.show()
     exit()

@@ -5,6 +5,8 @@ import joblib
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import imageio
+from scipy.ndimage.filters import gaussian_filter
 
 N, M = 11, 8
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -56,7 +58,54 @@ def reprojection_errors(objpoints, imgpoints, calibration):
     return np.array(errors)
 
 
+def combine(imgs, roi):
+    img = np.copy(imgs[0])
+
+    for i in range(len(imgs)-1):
+        r = np.average(imgs[i+1][:, roi[0]:roi[1]] / imgs[i][:, roi[0]:roi[1]])
+        print(i, r)
+        img += imgs[i+1] / r
+
+    return img / (len(imgs) * 255.)
+
+
+def camera_vignetting(path):
+    left = [np.average(imageio.imread(path + "brightness/" + name), axis=2) for name in ["left.png", "left2.png"]]
+    right = [np.average(imageio.imread(path + "brightness/" + name), axis=2) for name in ["right.png"]]  # "right2.png" has dark br corner
+    center = [np.average(imageio.imread(path + "brightness/" + name), axis=2) for name in ["center.png", "center2.png", "center3.png"]]
+
+    left = combine(left, [0, 4500])
+    right = combine(right, [2000, 6500])
+    center = combine(center, [1000, 5500])
+
+    l = np.average(left[:, 1000:1300] / center[:, 1000:1300])
+    r = np.average(right[:, 5200:5500] / center[:, 5200:5500])
+    print(l, r)
+    left /= l
+    right /= r
+
+    full = np.copy(center)
+    full[:, :1000] = left[:, :1000]
+    full[:, 5500:] = right[:, 5500:]
+    print(full.shape)
+    full = gaussian_filter(full, sigma=10)
+    full /= np.average(full[2300:2500, 3100:3300])
+    np.save(path + "camera_vignetting", full.astype(np.float32))
+
+    plt.figure("full", (12, 7))
+    plt.imshow(full)
+    plt.colorbar()
+    plt.title("Camera Vignetting")
+    plt.tight_layout()
+    plt.savefig(path + "camera_vignetting.png", dpi=160)
+
+
 if __name__ == "__main__":
+    # camera_vignetting("camera/")
+    # plt.show()
+    # print("Done")
+    # exit()
+
     # Uncomment this section to detect chessboards and corners. Cached results are used otherwise
     #
     # filenames = glob.glob('D:/calibration/regular/*.png')
