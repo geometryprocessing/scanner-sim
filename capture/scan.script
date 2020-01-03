@@ -1,0 +1,93 @@
+prefix shapes/
+color 0
+hdr 0
+color 255
+hdr 1
+gray 0
+hdr 100
+gray 0 i
+hdr 200
+gray 1
+hdr 101
+gray 1 i
+hdr 201
+gray 2
+hdr 102
+gray 2 i
+hdr 202
+gray 3
+hdr 103
+gray 3 i
+hdr 203
+gray 4
+hdr 104
+gray 4 i
+hdr 204
+gray 5
+hdr 105
+gray 5 i
+hdr 205
+gray 6
+hdr 106
+gray 6 i
+hdr 206
+gray 7
+hdr 107
+gray 7 i
+hdr 207
+gray 8
+hdr 108
+gray 8 i
+hdr 208
+gray 9
+hdr 109
+gray 9 i
+hdr 209
+gray 10
+hdr 110
+gray 10 i
+hdr 210
+gray 0 v
+hdr 300
+gray 0 v i
+hdr 400
+gray 1 v
+hdr 301
+gray 1 v i
+hdr 401
+gray 2 v
+hdr 302
+gray 2 v i
+hdr 402
+gray 3 v
+hdr 303
+gray 3 v i
+hdr 403
+gray 4 v
+hdr 304
+gray 4 v i
+hdr 404
+gray 5 v
+hdr 305
+gray 5 v i
+hdr 405
+gray 6 v
+hdr 306
+gray 6 v i
+hdr 406
+gray 7 v
+hdr 307
+gray 7 v i
+hdr 407
+gray 8 v
+hdr 308
+gray 8 v i
+hdr 408
+gray 9 v
+hdr 309
+gray 9 v i
+hdr 409
+gray 10 v
+hdr 310
+gray 10 v i
+hdr 410
