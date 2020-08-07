@@ -14,6 +14,8 @@ from sklearn.decomposition import PCA
 
 from hdr import *
 from projector import *
+from scan import *
+from display import *
 
 
 def gray_to_bin(num):
@@ -149,17 +151,123 @@ def triangulate(p_cam, p_proj, cam_calib, proj_calib):
     return cam_3d * L[:, None]
 
 
+def undistort_cached(path, hdrs, cam_calib, proj_calib, plot=True):
+    ret, cam_mtx, cam_dist, rvecs, tvecs = cam_calib
+    origin, R, proj_mtx, proj_dist = proj_calib
+
+    if hdrs is not None:
+        dark, white, hor, hor_i, ver, ver_i = hdrs
+
+        white -= dark
+        hor -= dark
+        hor_i -= dark
+        ver -= dark
+        ver_i -= dark
+    else:
+        white = load_openexr(path + "../checker.exr")
+
+    h, w = white.shape[:2]
+    new_cam_mtx, cam_roi = cv2.getOptimalNewCameraMatrix(cam_mtx, cam_dist, (w, h), 1, (w, h))
+    print("\nnew_cam_mtx", new_cam_mtx)
+
+    calib = {"definitions" : "https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html"}
+    calib["new_cam_mtx"] = new_cam_mtx.tolist()
+
+    H, W = (1080, 1920)
+    new_proj_mtx, proj_roi = cv2.getOptimalNewCameraMatrix(proj_mtx, proj_dist, (W, H), 1, (W, H))
+    print("\nnew_proj_mtx", new_proj_mtx)
+
+    calib["new_proj_mtx"] = new_proj_mtx.tolist()
+
+    n = 4
+    def scale_n(img):
+        return np.repeat(np.repeat(img, n, axis=0), n, axis=1)
+
+    proj_mtx_n = proj_mtx * n
+    proj_mtx_n[2, 2] = 1
+    new_proj_mtx_n = new_proj_mtx * n
+    new_proj_mtx_n[2, 2] = 1
+
+    calib["new_proj_mtx_x%d" % n] = new_proj_mtx_n.tolist()
+    calib["proj_origin"] = origin.tolist()
+    calib["proj_origin_hint"] = "Units are millimeters (in camera's frame of reference)"
+    calib["proj_basis"] = R.T.tolist()
+    calib["proj_basis_hint"] = "[ex, ey, ez] in camera's frame of reference (same as origin)"
+
+    with open(path + "calibration.json", "w") as f:
+        json.dump(calib, f, indent=4)
+
+    R, C = gen_gray((H, W), color=[255, 255, 255], invert=False)
+    R_i, C_i = gen_gray((H, W), color=[255, 255, 255], invert=True)
+
+    for i in range(11):
+        break
+        print(i)
+        save_openexr(path + "horizontal_%d.exr" % i, cv2.undistort(hor[i, :], cam_mtx, cam_dist, None, new_cam_mtx))
+        save_openexr(path + "horizontal_%d_inv.exr" % i, cv2.undistort(hor_i[i, :], cam_mtx, cam_dist, None, new_cam_mtx))
+
+        imageio.imwrite(path + "horizontal_%d.png" % i, cv2.undistort(R[i, :], proj_mtx, proj_dist, None, new_proj_mtx))
+        imageio.imwrite(path + "horizontal_%d_inv.png" % i, cv2.undistort(R_i[i, :], proj_mtx, proj_dist, None, new_proj_mtx))
+
+        imageio.imwrite(path + "horizontal_%d_x%d.png" % (i, n), cv2.undistort(scale_n(R[i, :]), proj_mtx_n, proj_dist, None, new_proj_mtx_n))
+        imageio.imwrite(path + "horizontal_%d_inv_x%d.png" % (i, n), cv2.undistort(scale_n(R_i[i, :]), proj_mtx_n, proj_dist, None, new_proj_mtx_n))
+
+        save_openexr(path + "vertical_%d.exr" % i, cv2.undistort(ver[i, :], cam_mtx, cam_dist, None, new_cam_mtx))
+        save_openexr(path + "vertical_%d_inv.exr" % i, cv2.undistort(ver_i[i, :], cam_mtx, cam_dist, None, new_cam_mtx))
+
+        imageio.imwrite(path + "vertical_%d.png" % i, cv2.undistort(C[i, :], proj_mtx, proj_dist, None, new_proj_mtx))
+        imageio.imwrite(path + "vertical_%d_inv.png" % i, cv2.undistort(C_i[i, :], proj_mtx, proj_dist, None, new_proj_mtx))
+
+        imageio.imwrite(path + "vertical_%d_x%d.png" % (i, n), cv2.undistort(scale_n(C[i, :]), proj_mtx_n, proj_dist, None, new_proj_mtx_n))
+        imageio.imwrite(path + "vertical_%d_inv_x%d.png" % (i, n), cv2.undistort(scale_n(C_i[i, :]), proj_mtx_n, proj_dist, None, new_proj_mtx_n))
+
+    white2 = cv2.undistort(white, cam_mtx, cam_dist, None, new_cam_mtx)
+    save_openexr(path + "white.exr", white2)
+
+    checker = gen_checker((H, W), (90, 60), 100, (9, 18))
+    checker2 = cv2.undistort(checker, proj_mtx, proj_dist, None, new_proj_mtx)
+    imageio.imwrite(path + "checker.png", checker2)
+
+    checker_n2 = cv2.undistort(scale_n(checker), proj_mtx_n, proj_dist, None, new_proj_mtx_n)
+    imageio.imwrite(path + "checker_x%d.png" % n, checker_n2)
+
+    if plot:
+        plt.figure("White")
+        plt.imshow(white2/np.max(white2), vmax=0.001)
+        plt.colorbar()
+        plt.tight_layout()
+
+        plt.figure("Checker")
+        plt.imshow(scale_n(checker2))
+        plt.xlim([6000, 8000])
+        plt.ylim([3000, 4000])
+        plt.colorbar()
+        plt.tight_layout()
+
+        plt.figure("Checker_n")
+        plt.imshow(checker_n2)
+        plt.xlim([6000, 8000])
+        plt.ylim([3000, 4000])
+        plt.colorbar()
+        plt.tight_layout()
+
+
 if __name__ == "__main__":
     path = "shapes/"
-
-    hdrs = load_cached(path)
-    cam, proj = decode_cached(path, hdrs=hdrs, plot=True)
 
     with open("../calibration/camera/refined_calibration.pkl", "rb") as f:
         cam_calib = pickle.load(f)
 
     with open("../calibration/projector/calibration.pkl", "rb") as f:
         proj_calib = pickle.load(f)
+
+    hdrs = load_cached(path)
+    # hdrs = None
+    # undistort_cached(path + "undistorted/", hdrs=hdrs, cam_calib=cam_calib, proj_calib=proj_calib, plot=True)
+    # plt.show()
+    # exit(0)
+
+    cam, proj = decode_cached(path, hdrs=hdrs, plot=True)
 
     p = triangulate(cam, proj, cam_calib, proj_calib)
 
