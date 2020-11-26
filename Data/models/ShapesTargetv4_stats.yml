@@ -1,0 +1,798 @@
+'#edges': 325
+'#faces': 48416
+'#norms': 28301
+'#parts': 1
+'#points': 196
+'#sharp': 248
+'#surfs': 139
+'#verts': 24200
+bbox:
+- '-0.00'
+- '-0.00'
+- '-0.00'
+- '150.00'
+- '150.00'
+- '36.00'
+- '150.01'
+- '150.01'
+- '36.01'
+curves:
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: BSpline
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: BSpline
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Line
+diag: 215.17903816882736
+gaus_curv: -1.358512772148184e-30
+mean_curv: -16.20198065442457
+model: sim/ShapesTargetv4.step
+surfs:
+- Cone
+- Cylinder
+- Plane
+- Cone
+- Plane
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cone
+- Plane
+- Cone
+- Cone
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Cylinder
+- Plane
+- Cylinder
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Plane
+- Cylinder
+- Cone
+- Cone
+- Cone
+- Cone
+- Cylinder
+- Cylinder
+- Plane
+- Cone
+- Cone
+- Cone
+- Cone
+- Cylinder
+- Cylinder
+- Plane
+- Cone
+- Cone
+- Cone
+- Cone
+- Cylinder
+- Cylinder
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Plane
+- Cylinder
+- Plane
+- Cylinder
+- Plane
+- Cylinder
+- Plane
+- Cone
+- Plane
+- Cylinder
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Cone
+- Plane
+- Plane
+- Cylinder
+- Plane
+- Cylinder
+- Cone
+- Cylinder
+- Plane
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Plane
+- Cylinder
+- Plane
+- Cylinder
+- Plane
+- Cylinder
+- Cylinder
+- Cylinder
+- Cylinder
+- Plane
+- Cylinder
+- Plane
+- Plane
+- Plane
+- Cylinder
+- Plane
+tolerance: 2.1517903816882736e-05

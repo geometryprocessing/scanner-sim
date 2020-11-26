@@ -1,0 +1,299 @@
+'#edges': 124
+'#faces': 27758
+'#norms': 16609
+'#parts': 1
+'#points': 81
+'#sharp': 32
+'#surfs': 46
+'#verts': 13881
+bbox:
+- '-45.72'
+- '-45.72'
+- '-0.00'
+- '45.72'
+- '45.72'
+- '152.40'
+- '91.45'
+- '91.45'
+- '152.41'
+curves:
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Line
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 1
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+- orientation: 0
+  type: Circle
+diag: 199.88022257772957
+gaus_curv: -531.4718067968245
+mean_curv: -117.87204797011559
+model: sim/PawnTargetv6.step
+surfs:
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Cone
+- Cylinder
+- Plane
+- Torus
+- Cone
+- Torus
+- Sphere
+- Torus
+- Plane
+- Torus
+- Plane
+- Cylinder
+- Torus
+- Cylinder
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+- Torus
+tolerance: 1.9988022257772955e-05
