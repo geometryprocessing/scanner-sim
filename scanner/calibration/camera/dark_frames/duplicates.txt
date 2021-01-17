@@ -1,0 +1,2 @@
+Dark frame exposures 0.0167_sec and 0.0333_sec are both copied form 0.025_sec.
+Reason: can only use exposures that are multiples of 1/60 Hz (period of the projector refresh rate)
