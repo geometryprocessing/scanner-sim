@@ -20,11 +20,12 @@ def detect_checker(gray, n=11, m=8, size=20, pre_scale=1, draw_on=None, draw_sca
     if pre_scale > 1.5:
         gray2 = cv2.resize(gray, (gray.shape[1] // pre_scale, gray.shape[0] // pre_scale))
         ret, corners2 = cv2.findChessboardCorners(gray2, (n, m), flags=flags)
-        corners = corners2 * pre_scale
+        if ret:
+            corners = corners2 * pre_scale
     else:
         ret, corners = cv2.findChessboardCorners(gray, (n, m), flags=flags)
 
-    if ret == True:
+    if ret:
         criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS, 30, 0.001)
         corners = cv2.cornerSubPix(gray, corners, (n, m), (-1, -1), criteria)
     else:
@@ -69,7 +70,7 @@ def detect_charuco(gray, n=25, m=18, size=15, pre_scale=1, draw_on=None, draw_sc
 
     if count:
         img_points, obj_points = np.array(c_pos).reshape((-1, 2)), board.chessboardCorners[c_ids].reshape((-1, 3))
-        ids  = c_ids
+        ids = c_ids.ravel()
     else:
         img_points, obj_points, ids = None, None, None
 
@@ -87,7 +88,7 @@ def detect_charuco(gray, n=25, m=18, size=15, pre_scale=1, draw_on=None, draw_sc
 
 
 # Load image from file and detect calibration board using detect_func. Save or plot an overlay image if need be
-def detect_single(filename, detect_func, resize=1, draw=False, save=False, plot=False, return_image=True, **kw):
+def detect_single(filename, detect_func, resize=1, out_dir="detected", draw=False, save=False, plot=False, return_image=True, **kw):
     assert(type(filename) is str)
 
     img = cv2.imread(filename)
@@ -98,17 +99,16 @@ def detect_single(filename, detect_func, resize=1, draw=False, save=False, plot=
     points, img = detect_func(gray, draw_on=img if draw else None, **kw)
 
     success = points[2] is not None
-    print(filename, "Success" if success else "Failed")
+    print(filename, " - Success" if success else " - Failed")
 
     new_filename = None
     if save:
         if draw:
-            path, name = os.path.dirname(filename), os.path.basename(filename)
-            new_filename = path + "/detected/" + name[:-4] + "_detected.png"
+            path = os.path.dirname(filename) + "/" + out_dir + "/"
+            if not os.path.exists(path):
+                os.makedirs(path, exist_ok=True)
 
-            if not os.path.exists(path + "/detected"):
-                os.makedirs(path + "/detected", exist_ok=True)
-
+            new_filename = path + os.path.basename(filename)[:-4] + ".png"
             cv2.imwrite(new_filename, img)
         else:
             print("Nothing new to save because draw=False")
@@ -123,11 +123,11 @@ def detect_single(filename, detect_func, resize=1, draw=False, save=False, plot=
 
 
 # Process all images that match a filename_template. Save valid results as json file if need be
-def detect_all(filename_template, detect_func, save_json=True, **kw):
+def detect_all(filename_template, detect_func, out_dir="detected", save_json=True, **kw):
     filenames = glob.glob(filename_template)
 
     jobs = [joblib.delayed(detect_single, check_pickle=False)
-            (name, detect_func, return_image=False, **kw) for name in filenames]
+            (name, detect_func, return_image=False, out_dir=out_dir, **kw) for name in filenames]
 
     results = joblib.Parallel(verbose=15, n_jobs=-1, batch_size=1, pre_dispatch="all")(jobs)
 
@@ -141,11 +141,26 @@ def detect_all(filename_template, detect_func, save_json=True, **kw):
             ret[name] = {"img_points": points[0], "obj_points": points[1], "ids": points[2]}
 
     if save_json:
-        path = os.path.dirname(filename_template)
+        path = os.path.dirname(filename_template) + "/" + out_dir
+        if not os.path.exists(path):
+            os.makedirs(path, exist_ok=True)
+
         with open(path + "/corners.json", "w") as f:
             json.dump(ret, f, indent=4)
 
     return ret
+
+
+def load_corners(filename):
+    corners = {}
+
+    for name, points in json.load(open(filename, "r")).items():
+        img_points = np.array(points["img_points"]).reshape(-1, 2).astype(np.float32)
+        obj_points = np.array(points["obj_points"]).reshape(-1, 3).astype(np.float32)
+        ids = np.array(points["ids"]).ravel().astype(np.int32)
+        corners[name] = {"img": img_points, "obj": obj_points, "idx": ids}
+
+    return corners
 
 
 def test(data_path):

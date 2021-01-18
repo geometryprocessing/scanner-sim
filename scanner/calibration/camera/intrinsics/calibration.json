@@ -45,5 +45,13 @@
         18,
         6435,
         4815
-    ]
+    ],
+    "mean_reprojection_error, pixels": 0.6177863478660583,
+    "sensor": "Sony IMX342",
+    "image_width, pixels": 6464,
+    "image_height, pixels": 4852,
+    "pixel size, us": 3.45,
+    "focal_length, mm": 51,
+    "focus_distance, cm": 80,
+    "aperture, mm": "4 (~f/13)"
 }
