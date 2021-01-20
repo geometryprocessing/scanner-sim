@@ -1,10 +1,11 @@
 import json
 import cv2
 import numpy as np
-from camera import *
+from camera import load_camera_calibration
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 from scipy.optimize import least_squares
+from utils import *
 from calibrate import *
 
 
@@ -34,14 +35,6 @@ def board(ax, T, R, *args, label="", **kwargs):
     basis(ax, T, R, length=10)
 
 
-# def projector(ax, pos, rvec, mtx, p):
-#     T, R = pos.ravel(), cv2.Rodrigues(rvec)
-#     p = p.reshape((-1, 3))
-#
-#     basis(ax, T, R)
-#     scatter(ax, p, c="m")
-
-
 def axis_equal_3d(ax):
     extents = np.array([getattr(ax, 'get_{}lim'.format(dim))() for dim in 'xyz'])
     sz = extents[:,1] - extents[:,0]
@@ -52,192 +45,81 @@ def axis_equal_3d(ax):
         getattr(ax, 'set_{}lim'.format(dim))(ctr - r, ctr + r)
 
 
-def calibrate_geometry(data_path, camera_calib, center=False, plot=False, save_figures=True, **kw):
-    full, half = [[160, 190]] * 65, [[800 + 160, 190]] * 35
-    half.extend([[160, 190]] * 30)
-    if center:
-        half = [400 + 160, 190] * 23
-
-    charuco, checker, cam_errors = reconstruct_planes(data_path, camera_calib, full_offsets=full, half_offsets=half)
-    charuco_3d, charuco_id, charuco_frame = charuco
+def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, no_tangent=False, save=False, plot=False, save_figures=True, **kw):
+    charuco, checker, plane_errors = reconstruct_planes(data_path, camera_calib, **kw)
     checker_3d, checker_2d, checker_local = checker
-
-    mtx_guess = np.array([[3000, 0, 1000], [0, 3000, 1000], [0, 0, 1]]).astype(np.float32)
-    initial_calib, initial_errors = calibrate(checker_local[::2], checker_2d[::2], (1080, 1920), mtx_guess=mtx_guess,
-                                         out_dir=data_path, plot=plot, save_figures=save_figures, **kw)
-    mtx, dist, new_mtx, roi = initial_calib
-
-    flags = cv2.CALIB_FIX_TANGENT_DIST | cv2.CALIB_USE_INTRINSIC_GUESS
-
-    all_obj, all_img = np.vstack(checker_3d).astype(np.float32), np.vstack(checker_2d).astype(np.float32)
-    full_calib = cv2.calibrateCamera([all_obj], [all_img], (1920, 1080), mtx_guess, None, flags=flags)
-    ret, mtx, dist, rvecs, tvecs = full_calib
-
-    full_error = projection_errors([all_obj], [all_img], full_calib)[0]
-    T, (R, _) = tvecs[0].ravel(), cv2.Rodrigues(rvecs[0])
-    origin = np.matmul(R.T, -T)
-
+    avg_plane_errors, all_plane_errors = plane_errors
     w, h = 1920, 1080
-    new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
-    print("Calibration matrix:\n", mtx)
-    print("Distortions:\n", dist)
-    print("Optimal calibration matrix:\n", new_mtx)
-    print("Region of interest:\n", roi)
-    print("Mean projector error:", full_error)
-    print("Projector Origin:", origin)
-    print("Projector Basis:", R)
+    print("\nReconstructed:", len(checker_3d))
+    print("Mean plane error", np.mean(avg_plane_errors))
+
+    stride = len(checker_3d) // max_planes + 1
+    checker_3d, checker_2d, checker_local = checker_3d[::stride], checker_2d[::stride], checker_local[::stride]
+
+    initial_calib, initial_errors = calibrate(checker_local, checker_2d, (h, w), no_tangent=no_tangent,
+                                              out_dir=data_path, plot=plot, save_figures=save_figures, **kw)
+    mtx_guess, dist_guess, _, _ = initial_calib
+    selected = initial_errors[2]
+
+    all_obj = np.vstack([checker_3d[i] for i in selected]).astype(np.float32)
+    all_img = np.vstack([checker_2d[i] for i in selected]).astype(np.float32)
+
+    if intrinsic is None:
+        flags = (cv2.CALIB_FIX_TANGENT_DIST if no_tangent else 0) | cv2.CALIB_USE_INTRINSIC_GUESS
+        # flags |= cv2.CALIB_FIX_K3
+        # flags |= cv2.CALIB_FIX_K2
+        # flags |= cv2.CALIB_FIX_K1
+
+        # mtx_guess[1, 2] = min(h - 1, mtx_guess[1, 2])  # initial guess of center point cannot be outside of the image
+        mtx_guess = np.array([[3000, 0, 1000], [0, 3000, 1000], [0, 0, 1]]).astype(np.float32)
+
+        full_calib = cv2.calibrateCamera([all_obj], [all_img], (w, h), mtx_guess, None, flags=flags)
+        # full_errors = projection_errors([all_obj], [all_img], full_calib)
+        # full_errors = full_errors[0][0], full_errors[1][0]
+
+        ret, mtx, dist, rvecs, tvecs = full_calib
+        print("\nCalibration matrix:\n", mtx)
+        print("\nDistortions:", dist)
+        # print("\nMean full error:", full_errors[0])
+
+        new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
+        print("\nOptimal calibration matrix:\n", new_mtx)
+        print("\nRegion of interest:", roi)
+
+        intrinsic = mtx, dist.ravel(), new_mtx, np.array(roi)
+        # T, (R, _) = tvecs[0].ravel(), cv2.Rodrigues(rvecs[0])
+        # origin = np.matmul(R.T, -T)
+        # print("\nProjector Origin:", origin)
+        # print("\nProjector Basis [ex, ey, ez]:\n", R)
+    else:
+        mtx, dist, new_mtx, roi = intrinsic
+
+    ret, rvec, tvec = cv2.solvePnP(all_obj, all_img, mtx, dist)
+    full_errors = projection_errors([all_obj], [all_img], (ret, mtx, dist, [rvec], [tvec]))
+    full_errors = full_errors[0][0], full_errors[1][0]
+    print("\nMean full error:", full_errors[0])
+
+    T, (R, _) = tvec.ravel(), cv2.Rodrigues(rvec)
+    origin = np.matmul(R.T, -T)
+    print("\nProjector Origin:", origin)
+    print("\nProjector Basis [ex, ey, ez]:\n", R)
+    extrinsic = origin, R
 
     if plot:
         plt.figure("Projector Calibration", (12, 12))
         plt.clf()
         ax = plt.subplot(111, projection='3d', proj_type='ortho')
         ax.set_title("Projector Calibration")
-        skip = 5
+        skip = 3
 
-        for i in range(len(charuco[0])):
+        charuco_3d, charuco_id, charuco_frame = charuco
+        to_plot = charuco_frame[::stride]
+        for i in range(len(to_plot)):
             if i % skip == 0:
-                Ti, Ri = charuco_frame[i]
+                Ti, Ri = to_plot[i]
                 board(ax, Ti, Ri, label="Charuco Boards" if i == 0 else "")
 
-        # scatter(ax, np.concatenate(charuco_3d, axis=0)[::skip, :], c="g", s=5, label="Charuco Corners")
-        scatter(ax, np.concatenate(checker_3d, axis=0)[::skip, :], c="b", s=8, label="Checker Corners")
-        scatter(ax, origin, c="k", s=15, label="Projector Origin")
-        basis(ax, origin, R.T, length=20)
-
-        ax.set_xlabel("x, mm")
-        ax.set_ylabel("z, mm")
-        ax.set_zlabel("-y, mm")
-        plt.legend()
-        plt.tight_layout()
-        axis_equal_3d(ax)
-
-        if save_figures:
-            ax.view_init(elev=10, azim=-20)
-            plt.savefig(data_path + "/calibration_view1.png", dpi=320)
-            ax.view_init(elev=12, azim=26)
-            plt.savefig(data_path + "/calibration_view2.png", dpi=320)
-
-        plt.figure("Errors", (12, 7))
-        # plt.clf()
-        plt.subplot(2, 2, 1, title="Camera projection")
-        plt.hist(cam_errors, bins=50)
-        plt.xlabel("Error, pixels")
-        plt.tight_layout()
-
-        if save_figures:
-            plt.savefig(data_path + "/calibration_errors.png", dpi=160)
-
-
-def old_load_corners(filename):
-    corners = json.load(open(filename, "r"))
-
-    names = [name for name, points in corners.items()]
-    img_points = [np.array(points["img_points"]).reshape(-1, 2).astype(np.float32) for name, points in corners.items()]
-    obj_points = [np.array(points["obj_points"]).reshape(-1, 3).astype(np.float32) for name, points in corners.items()]
-    ids = [np.array(points["ids"]).ravel().astype(np.int) for name, points in corners.items()]
-
-    return names, img_points, obj_points, ids
-
-
-def calibrate_intrinsic(data_path, camera_calib, no_tangent=True, plot=False, save_figures=True, **kw):
-    cam_mtx, cam_dist, cam_new_mtx = camera_calib["mtx"], camera_calib["dist"], camera_calib["new_mtx"]
-
-    c_names, c_img_points, c_obj_points, c_ids = old_load_corners(data_path + "/charuco/corners.json")
-    f_names, f_img_points, f_obj_points, f_ids = old_load_corners(data_path + "/checker/detected_full/corners.json")
-    h_names, h_img_points, h_obj_points, h_ids = old_load_corners(data_path + "/checker/detected_half/corners.json")
-
-    c_dict = dict(zip(c_names, zip(c_img_points, c_obj_points, c_ids)))
-    f_dict = dict(zip(f_names, zip(f_img_points, f_obj_points, f_ids)))
-    h_dict = dict(zip(h_names, zip(h_img_points, h_obj_points, h_ids)))
-
-    checker_board = np.stack(np.meshgrid(np.arange(8), np.arange(17), indexing="ij"), axis=2) * 100
-    checker_board[:, :, 0] += 190
-    checker_board[:, :, 1] += 160
-    checker_board = checker_board[:, :, ::-1]
-
-    charuco_3d, checker_3d = [], []
-    objs, prjs = [], []
-
-    if plot:
-        plt.figure("Projector Calibration", (12, 12))
-        ax = plt.subplot(111, projection='3d', proj_type='ortho')
-        ax.set_title("Projector Calibration")
-
-    c_proj_errors, skip = [], 5
-
-    for i, name in enumerate(c_names):
-        id = int(name[name.rfind("_") + 1:-4])
-        pair = "checker_%d.png" % id
-
-        if not pair in f_names:  # and not pair in h_names:
-            continue
-        else:
-            print("Including", pair)
-
-        c_img = cv2.undistortPoints(c_img_points[i], cam_mtx, cam_dist, None, cam_new_mtx).reshape(-1, 2)
-        c_obj = c_obj_points[i]
-
-        p_img = cv2.undistortPoints(f_dict[pair][0], cam_mtx, cam_dist, None, cam_new_mtx).reshape(-1, 2)
-        p_obj = f_dict[pair][1]
-        p_obj = p_obj.reshape(-1, 3)[:, :2]
-        p_obj += [160, 190]
-
-        ret, rvec, tvec = cv2.solvePnP(c_obj, c_img, cam_new_mtx, None)
-        T, (R, _) = tvec.ravel(), cv2.Rodrigues(rvec)
-
-        c_proj, _ = cv2.projectPoints(c_obj, rvec, tvec, cam_new_mtx, None)
-        c_proj_errors.extend(np.linalg.norm(c_img - c_proj.reshape(-1, 2), axis=1).tolist())
-
-        c_3d = np.matmul(R, c_obj.T) + tvec
-        charuco_3d.append(c_3d.T)
-
-        p_3d = lift_to_3d(p_img, cam_new_mtx, T, R, offset=0)
-        checker_3d.append(p_3d)
-
-        obj = np.zeros((p_3d.shape[0], 3))
-        obj[:, 0] = np.dot(p_3d - T, R[:, 0])
-        obj[:, 1] = np.dot(p_3d - T, R[:, 1])
-        obj[:, 2] = 0
-        objs.append(obj.astype(np.float32))
-        prjs.append(p_obj.astype(np.float32))
-
-        if plot and i % skip == 0:
-            board(ax, T, R, label="Charuco Boards" if i == 0 else "")
-
-    print("Mean charuco re-projection error:", np.average(c_proj_errors))
-
-    # flags = cv2.CALIB_FIX_K1 | cv2.CALIB_FIX_K2 | cv2.CALIB_FIX_K3 | cv2.CALIB_FIX_TANGENT_DIST
-    flags = cv2.CALIB_FIX_TANGENT_DIST if no_tangent else 0
-
-    w, h = 1920, 1080
-    calibration_estimate = cv2.calibrateCamera(objs, prjs, (w, h), None, None, flags=flags)
-    errors = projection_errors(objs, prjs, calibration_estimate)
-    ret, mtx_guess, dist, rvecs, tvecs = calibration_estimate
-    print("Reprojection errors:", errors, "\nMean error:", np.mean(errors))
-    print("Calibration matrix guess:\n", mtx_guess)
-
-    mtx_guess = np.array([[3000, 0, 1000], [0, 3000, 1000], [0, 0, 1]]).astype(np.float32)
-
-    checker_all = np.vstack(checker_3d).astype(np.float32)
-    prj_all = np.vstack(prjs).astype(np.float32)
-    full_calibration = cv2.calibrateCamera([checker_all], [prj_all], (1920, 1080), mtx_guess, None, flags=(flags | cv2.CALIB_USE_INTRINSIC_GUESS))
-    error = projection_errors([checker_all], [prj_all], full_calibration)[0]
-    ret, mtx, dist, rvecs, tvecs = full_calibration
-    T, (R, _) = tvecs[0].ravel(), cv2.Rodrigues(rvecs[0])
-    origin = np.matmul(R.T, -T)
-
-    new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
-    print("Calibration matrix:\n", mtx)
-    print("Distortions:\n", dist)
-    print("Optimal calibration matrix:\n", new_mtx)
-    print("Region of interest:\n", roi)
-    print("Mean projector error:", error)
-    print("Projector Origin:", origin)
-    print("Projector Basis:", R)
-    # print("Distance from lines origin:", np.linalg.norm(origin - lines_origin))
-
-    if plot:
-        scatter(ax, np.concatenate(charuco_3d[::skip], axis=0), c="g", s=5, label="Charuco Corners")
+        scatter(ax, np.concatenate(charuco_3d[::stride][::skip], axis=0), c="g", s=5, label="Charuco Corners")
         scatter(ax, np.concatenate(checker_3d[::skip], axis=0), c="b", s=8, label="Checker Corners")
         scatter(ax, origin, c="k", s=15, label="Projector Origin")
         basis(ax, origin, R.T, length=20)
@@ -255,22 +137,82 @@ def calibrate_intrinsic(data_path, camera_calib, no_tangent=True, plot=False, sa
             ax.view_init(elev=12, azim=26)
             plt.savefig(data_path + "/calibration_view2.png", dpi=320)
 
+        plt.figure("Distortions", (16, 9))
+        plt.clf()
+        points = np.mgrid[0:17, 0:8].T.reshape(-1, 2) * 100 + np.array([160, 190])
+        u_points = cv2.undistortPoints(points.astype(np.float32), mtx, dist, None, new_mtx).reshape(-1, 2)
+        plt.plot(points[:, 0], points[:, 1], ".r")
+        plt.plot(u_points[:, 0], u_points[:, 1], ".b")
+        plt.gca().invert_yaxis()
+        plt.tight_layout()
+
+        if save_figures:
+            plt.savefig(data_path + "/distortions.png", dpi=160)
+
+
         plt.figure("Errors", (12, 7))
-        plt.subplot(2, 2, 1, title="Charuco re-projection")
-        plt.hist(c_proj_errors, bins=50)
+        plt.clf()
+        plt.subplot(2, 1, 1, title="Camera projection")
+        plt.hist(np.concatenate(all_plane_errors), bins=50)
         plt.xlabel("Error, pixels")
+        plt.tight_layout()
+
+        plt.subplot(2, 1, 2, title="Projector projection")
+        plt.hist(full_errors[1], bins=50)
+        plt.xlabel("Error, pixels")
+        plt.tight_layout()
 
         if save_figures:
             plt.savefig(data_path + "/calibration_errors.png", dpi=160)
 
+    if save:
+        save_projector_calibration(intrinsic, extrinsic, data_path + "/calibration.json", mean_error=full_errors[0])
+
+    return intrinsic, extrinsic, full_errors
+
+
+def save_projector_calibration(intrinsic, extrinsic, filename, mean_error=0.0):
+    with open(filename, "w") as f:
+        json.dump({"mtx": intrinsic[0],
+                   "dist": intrinsic[1],
+                   "new_mtx": intrinsic[2],
+                   "roi": intrinsic[3],
+                   "origin": extrinsic[0],
+                   "basis": extrinsic[1],
+                   "mean_projection_error, pixels": mean_error,
+                   "projector": "Texas Instrument DPL4710LC",
+                   "image_width, pixels": 1920,
+                   "image_height, pixels": 1080,
+                   "focus_distance, cm": 50,
+                   "aperture, mm": 7.5}, f, indent=4, cls=NumpyEncoder)
+
+
+def load_projector_calibration(filename):
+    with open(filename, "r") as f:
+        calib = numpinize(json.load(f))
+
+    intrinsic = calib["mtx"], calib["dist"], calib["new_mtx"], calib["roi"]
+    extrinsic = calib["origin"], calib["basis"]
+
+    return intrinsic, extrinsic, calib
+
 
 if __name__ == "__main__":
-    data_path = "D:/Scanner/Calibration/projector_intrinsics/data/charuco_checker_5mm/"
-    # data_path = "D:/Scanner/Calibration/projector_extrinsic/data/charuco_checker_5mm/"
-    # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/"
-
     camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
-    calibrate_geometry(data_path, camera_calib, error_thr=1.0, no_tangent=True, plot=True, save_figures=True)
-    # calibrate_intrinsic(data_path, camera_calib, no_tangent=True, plot=True, save_figures=True)
+
+    data_path = "D:/Scanner/Calibration/projector_intrinsics/data/charuco_checker_5mm/"
+    intrinsic, _, _ = calibrate_geometry(data_path, camera_calib, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
+
+    data_path = "D:/Scanner/Calibration/projector_extrinsic/data/charuco_checker_5mm/"
+    _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
+
+    save_projector_calibration(intrinsic, extrinsic, "projector/calibration.json", mean_error=errors[0])
+    intrinsic, extrinsic, all = load_projector_calibration("projector/calibration.json")
+
+    data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/merged/"
+    # calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, center=True, no_tangent=True, save=True, plot=True, save_figures=True)
+
+    data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/merged/"
+    # calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=50, center=True, no_tangent=True, save=True, plot=True, save_figures=True)
 
     plt.show()

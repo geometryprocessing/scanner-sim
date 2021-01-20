@@ -254,18 +254,24 @@ if __name__ == "__main__":
     data_path = "D:/Scanner/Calibration/projector_extrinsic/data/charuco_checker_5mm/"
 
     # test_stage(data_path, id=33, n=17, m=8)
-    process_stage(data_path)
+    # process_stage(data_path)
 
     data_path = "D:/Scanner/Calibration/projector_intrinsics/data/charuco_checker_5mm/"
     # rename_group(data_path)
 
     # test_stage(data_path, id=33, n=17, m=8)
-    process_stage(data_path)
+    # process_stage(data_path)
 
     data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/"
     # merge_positions(data_path)
 
     # test_stage(data_path + "/merged/", id=70, n=9, m=8)
-    process_stage(data_path + "/merged/")
+    # process_stage(data_path + "/merged/")
+
+    data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/"
+    # merge_positions(data_path)
+
+    # test_stage(data_path + "/merged/", id=70, n=9, m=8)
+    # process_stage(data_path + "/merged/")
 
     plt.show()

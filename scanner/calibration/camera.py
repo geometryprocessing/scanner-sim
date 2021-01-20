@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 from scipy.optimize import least_squares
 from detect import load_corners
+from utils import *
 from calibrate import *
 
 
@@ -76,19 +77,19 @@ def calibrate_intrinsic(data_path, max_images=70, min_points=80, save=False, plo
         undistorted = cv2.circle(undistorted, tuple(new_mtx[:2, 2].astype(np.int)), 5, (255, 0, 0), thickness=10)
 
     if save:
-        save_camera_calibration(calibration, data_path + "calibration.json", mean_error=float(np.mean(errors[1])))
+        save_camera_calibration(calibration, data_path + "calibration.json", mean_error=np.mean(errors[1][0]))
         cv2.imwrite(data_path + name[:-4] + '_original.png', img)
         cv2.imwrite(data_path + name[:-4] + '_undistorted.png', undistorted)
 
-    return calibration, errors
+    return calibration, errors[1]
 
 
 def save_camera_calibration(calibration, filename, mean_error=0.0):
     with open(filename, "w") as f:
-        json.dump({"mtx": calibration[0].tolist(),
-                   "dist": calibration[1].tolist(),
-                   "new_mtx": calibration[2].tolist(),
-                   "roi": calibration[3].tolist(),
+        json.dump({"mtx": calibration[0],
+                   "dist": calibration[1],
+                   "new_mtx": calibration[2],
+                   "roi": calibration[3],
                    "mean_projection_error, pixels": mean_error,
                    "sensor": "Sony IMX342",
                    "image_width, pixels": 6464,
@@ -97,14 +98,12 @@ def save_camera_calibration(calibration, filename, mean_error=0.0):
                    "focal_length, mm": 51,
                    "focus_distance, cm": 80,
                    "f-number": "f/12.75",
-                   "aperture, mm": 4}, f, indent=4)
+                   "aperture, mm": 4}, f, indent=4, cls=NumpyEncoder)
 
 
 def load_camera_calibration(filename):
     with open(filename, "r") as f:
-        calib = json.load(f)
-
-    return {k: np.array(v) for k, v in calib.items() if k in ["mtx", "dist", "new_mtx", "roi"]}
+        return numpinize(json.load(f))
 
 
 def replace_hot_pixels(img, dark, thr=32):
@@ -236,8 +235,9 @@ def calibrate_vignetting(data_path, light_on_filename, light_off_filename, dark_
 if __name__ == "__main__":
     data_path = "D:/Scanner/Calibration/camera_intrinsics/data/"
 
-    calibrate_intrinsic(data_path + "charuco/", error_thr=0.9, save=True, plot=True)
-    # calibrate_intrinsic(data_path + "checker/", error_thr=0.8, save=True, plot=True)
+    calibration, errors = calibrate_intrinsic(data_path + "charuco/", error_thr=0.9, save=True, plot=True)
+    # calibration, errors = calibrate_intrinsic(data_path + "checker/", error_thr=0.8, save=True, plot=True)
+    save_camera_calibration(calibration, "camera/calibration.json", mean_error=errors[0])
 
     calib = load_camera_calibration(data_path + "charuco/calibration.json")
     center = calib["mtx"][:2, 2]
