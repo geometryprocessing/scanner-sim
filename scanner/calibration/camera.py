@@ -106,50 +106,18 @@ def load_camera_calibration(filename):
         return numpinize(json.load(f))
 
 
-def replace_hot_pixels(img, dark, thr=32):
-    h, w = img.shape[:2]
-    rr, cc = np.nonzero(dark > thr)
-
-    for r, c in zip(rr, cc):
-        v, n = 0, 0
-        if c > 0:
-            v += img[r, c - 1]
-            n += 1
-        if c < w - 1:
-            v += img[r, c + 1]
-            n += 1
-        if r > 0:
-            v += img[r - 1, c]
-            n += 1
-        if r < h - 1:
-            v += img[r + 1, c]
-            n += 1
-        img[r, c] = v / n
-
-    print("Replaced %d hot/stuck pixels with average value of their neighbours" % rr.shape[0])
-
-    return img
-
-
 def calibrate_vignetting(data_path, light_on_filename, light_off_filename, dark_frame_filename, center, plot=False):
     on = cv2.imread(data_path + light_on_filename)[..., 0]
     off = cv2.imread(data_path + light_off_filename)[..., 0]
     dark = cv2.imread(data_path + dark_frame_filename)[..., 0]
     path_prefix = data_path + "/processed/" + light_on_filename[:-4] + "_"
 
-    def stats(img, low=16, high=250):
-        vmin, vmax = np.min(img), np.max(img)
-        print("\tMin - Max range:", [vmin, vmax])
-        print("\tDark (<%d) / Saturated (>%d): %d / %d" % (low, high, np.nonzero(img < low)[0].shape[0],
-                                                                      np.nonzero(img > high)[0].shape[0]))
-        return vmin, vmax
-
     clean = np.maximum(0, on - off)
     print("Original")
-    vmin, vmax = stats(clean)
+    vmin, vmax = img_stats(clean)
 
     clean = replace_hot_pixels(clean, dark)
-    vmin, vmax = stats(clean)
+    vmin, vmax = img_stats(clean)
 
     if plot:
         plt.close("all")
@@ -163,7 +131,7 @@ def calibrate_vignetting(data_path, light_on_filename, light_off_filename, dark_
     sigma = 5
     clean = gaussian_filter(clean, sigma=sigma)
     print("Applied Gaussian filter with sigma =", sigma)
-    vmin, vmax = stats(clean)
+    vmin, vmax = img_stats(clean)
 
     # Compute geometric correction
     h, w = clean.shape[:2]
@@ -175,7 +143,7 @@ def calibrate_vignetting(data_path, light_on_filename, light_off_filename, dark_
 
     clean = clean * correction
     print("Applied Correction")
-    vmin, vmax = stats(clean)
+    vmin, vmax = img_stats(clean)
 
     r, c = np.meshgrid(np.arange(h), np.arange(w), indexing="ij")
     R = np.linalg.norm(np.stack([r - center[1], c - center[0]], axis=2), axis=2)
