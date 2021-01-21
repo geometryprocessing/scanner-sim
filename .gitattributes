@@ -1,2 +1,4 @@
 Data/calibration/camera_vignetting.npy filter=lfs diff=lfs merge=lfs -text
 Data/calibration/projector_vignetting.npy filter=lfs diff=lfs merge=lfs -text
+data/calibration/projector_vignetting.npy filter=lfs diff=lfs merge=lfs -text
+data/calibration/camera_vignetting.npy filter=lfs diff=lfs merge=lfs -text
