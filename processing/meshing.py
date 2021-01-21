@@ -7,6 +7,7 @@ from tqdm.auto import tqdm
 import numpy as np
 import sys, getopt
 import argparse
+import random
 
 
 
@@ -114,7 +115,7 @@ def save_mesh(output_pathname, body, rescale=True, filter_level=0, precision=[0.
         else:
             igl.write_triangle_mesh(output_pathname, verts, tris)
     
-def process(data_path="./data/conv/", output_path="./results_fixed", sort=False, filter_level=0, rescale=True, subfolders=False, precision=[0.95, 0.05]):
+def process(data_path="./data/conv/", output_path="./results_fixed", sort=False, filter_level=0, rescale=True, subfolders=False, precision=[0.95, 0.05], rang=[0, 10000], rand=-1):
     
     #print(data_path, output_path, sort, filter_level, rescale, subfolders, precision)
     data_dir = Path(data_path)
@@ -133,9 +134,12 @@ def process(data_path="./data/conv/", output_path="./results_fixed", sort=False,
             step_files.extend(sorted(files))
         else:
             step_files.extend(files)
+            if random != -1:
+                random.shuffle(step_files)
         
-    #step_files = step_files[rang[0]:rang[1]]
-    print(step_files)
+        
+    step_files = step_files[rang[0]:rang[1]]
+    #print(step_files)
     
     # Process step files
     pbar = tqdm(range(len(step_files)))
@@ -169,7 +173,12 @@ if __name__ == "__main__":
     parser.add_argument('-l', '--lin_prec', dest='lin_precision', type=float, default=0.95, help='Linear precision of meshing.')
     parser.add_argument('-a', '--ang_prec', dest='ang_precision', type=float, default=0.04, help='Angular precision of meshing.')
     parser.add_argument('-u', '--subfolders', dest='subfolders', type=str2bool, default=False, help='Look for step files in subfolders.')
+    parser.add_argument('-b', '--range_min', dest='r_min', type=int, default=0, help='Index of first step file to process.')
+    parser.add_argument('-e', '--range_max', dest='r_max', type=int, default=10000, help='Index of last step file to process.')
+    parser.add_argument('-rs', '--random_seed', dest='r_seed', type=int, default=-1, help='Random seed for randomized meshing.')
     a = parser.parse_args()
     
+    random.seed(a.r_seed)
+    
     process(data_path=a.data_path, output_path=a.output_path, sort=a.sort, rescale=a.rescale, 
-            filter_level=a.filter, precision=[a.lin_precision, a.ang_precision], subfolders=a.subfolders)
+            filter_level=a.filter, precision=[a.lin_precision, a.ang_precision], subfolders=a.subfolders, rang=[a.r_min, a.r_max], rand=a.r_seed)

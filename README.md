@@ -23,3 +23,17 @@ structure:
   - (AI) denoising
   - (AI) hole_filling
   - (Future) shape/material optimization (regular gradient descent or with differentiable renderer if too many parameters)
+  
+  
+  
+steps:
+- meshing: python3 processing/meshing.py -d data/models/abc_00 -o data/objects/abc_filter1 -s True -r True -f 1 -a 0.04 -u True -b 0 -e 2000
+- rendering: 
+
+
+
+TODO:
+1. Batchrender folder: one job per object
+1.1 Render object, multiple rotations per object, one pattern
+2. Cleanup scenes <include filename="nested-scene.xml"/>
+3. Cleanup config
