@@ -4,3 +4,6 @@ data/calibration/projector_vignetting.npy filter=lfs diff=lfs merge=lfs -text
 data/calibration/camera_vignetting.npy filter=lfs diff=lfs merge=lfs -text
 data/calibrations/camera_vignetting.npy filter=lfs diff=lfs merge=lfs -text
 data/calibrations/projector_vignetting.npy filter=lfs diff=lfs merge=lfs -text
+data/objects filter=lfs diff=lfs merge=lfs -text
+data/datasets filter=lfs diff=lfs merge=lfs -text
+data/results filter=lfs diff=lfs merge=lfs -text
