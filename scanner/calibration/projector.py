@@ -1,50 +1,16 @@
 import json
 import cv2
+import scipy
 import numpy as np
 from camera import load_camera_calibration
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
+import scipy.ndimage.morphology as morph
 from scipy.optimize import least_squares
 from scipy.optimize import curve_fit
 from utils import *
 from calibrate import *
 from detect import *
-
-
-def scatter(ax, p, *args, **kwargs):
-    if len(p.shape) > 1:
-        ax.scatter(p[:, 0], p[:, 2], -p[:, 1], *args, **kwargs)
-    else:
-        ax.scatter(p[0], p[2], -p[1], **kwargs)
-
-
-def line(ax, p1, p2, *args, **kwargs):
-    ax.plot([p1[0], p2[0]], [p1[2], p2[2]], [-p1[1], -p2[1]], *args, **kwargs)
-
-
-def basis(ax, T, R, *args, length=1, **kwargs):
-    line(ax, T, T + length * R[:, 0], "r")
-    line(ax, T, T + length * R[:, 1], "g")
-    line(ax, T, T + length * R[:, 2], "b")
-
-
-def board(ax, T, R, *args, label="", **kwargs):
-    line(ax, T, T + 375 * R[:, 0], "orange", linestyle="--", label=label)
-    line(ax, T, T + 270 * R[:, 1], "orange", linestyle="--")
-    line(ax, T + 375 * R[:, 0], T + 375 * R[:, 0] + 270 * R[:, 1], "orange", linestyle="--")
-    line(ax, T + 270 * R[:, 1], T + 375 * R[:, 0] + 270 * R[:, 1], "orange", linestyle="--")
-
-    basis(ax, T, R, length=10)
-
-
-def axis_equal_3d(ax):
-    extents = np.array([getattr(ax, 'get_{}lim'.format(dim))() for dim in 'xyz'])
-    sz = extents[:,1] - extents[:,0]
-    centers = np.mean(extents, axis=1)
-    maxsize = max(abs(sz))
-    r = maxsize/2
-    for ctr, dim in zip(centers, 'xyz'):
-        getattr(ax, 'set_{}lim'.format(dim))(ctr - r, ctr + r)
 
 
 def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, no_tangent=False, save=False, plot=False, save_figures=True, **kw):
@@ -257,12 +223,12 @@ def calibrate_vignetting(data_path, camera_vignetting, light_on_filename, light_
 
     if plot:
         plt.close("all")
-        # plt.figure("Original Vignetting", (16, 9))
-        # plt.imshow(clean, vmin=vmin, vmax=vmax)
-        # plt.title("Original Vignetting")
-        # plt.colorbar()
-        # plt.tight_layout()
-        # plt.savefig(path_prefix + "original.png", dpi=160)
+        plt.figure("Original Vignetting", (16, 9))
+        plt.imshow(clean, vmin=vmin, vmax=vmax)
+        plt.title("Original Vignetting")
+        plt.colorbar()
+        plt.tight_layout()
+        plt.savefig(path_prefix + "original.png", dpi=160)
 
         plt.figure("Corrected Vignetting", (16, 9))
         plt.imshow(corrected, vmin=vmin, vmax=vmax)
@@ -298,91 +264,64 @@ def calibrate_vignetting(data_path, camera_vignetting, light_on_filename, light_
         plt.tight_layout()
         plt.savefig(path_prefix + "smooth.png", dpi=160)
 
-        # plt.figure("Checker", (16, 9))
-        # plt.imshow(detected)
-        # points = points.reshape((-1, 2))
-        # plt.plot(points[:, 0], points[:, 1], ".r")
-        # plt.plot(tl[0], tl[1], ".g")
-        # plt.plot(tr[0], tr[1], ".g")
-        # plt.plot(bl[0], bl[1], ".g")
-        # plt.plot(br[0], br[1], ".g")
-        # plt.title("Checker")
-        # plt.colorbar()
-        # plt.tight_layout()
-        # plt.savefig(path_prefix + "detected.png", dpi=160)
 
-    return
+def calibrate_white_balance(data_path, R_filename, G_filename, B_filename, exposures=None, plot=False):
+    rgb = [None, None, None]
+    for i, (name, exp) in enumerate(zip([R_filename, G_filename, B_filename], exposures)):
+        img = cv2.imread(data_path + name)[..., 0]
+        black = cv2.imread(data_path + "Black" + name[1:])[..., 0]
+        dark = cv2.imread(data_path + "Dark" + name[1:])[..., 0]
 
-    sigma = 5
-    clean = gaussian_filter(clean, sigma=sigma)
-    print("Applied Gaussian filter with sigma =", sigma)
-    vmin, vmax = img_stats(clean)
+        clean = np.maximum(0, img - black)
+        clean = replace_hot_pixels(clean, dark)
+        rgb[i] = clean / exp
 
-    # Compute geometric correction
-    h, w = clean.shape[:2]
-    x, y = np.meshgrid(np.arange(w), np.arange(h))
-    scale, light_origin = 11.5/6464, np.array([14.5*12, 0, 14.5*12])  # inch/pixel, inch
-    x, y, z = (x - w/2)*scale, (h/2 - y)*scale, np.zeros_like(x)
-    r = np.linalg.norm(np.stack([x, y, z], axis=2) - light_origin[None, None, :], axis=2)
-    correction = np.power(r/np.average(r), 2)
+    [img_stats(rgb[i], low=16/exposures[i], high=250/exposures[i]) for i in range(3)]
 
-    clean = clean * correction
-    print("Applied Correction")
-    vmin, vmax = img_stats(clean)
+    print("\nApplying gauss filter")
+    rgb = [gaussian_filter(rgb[i], sigma=5) for i in range(3)]
 
-    r, c = np.meshgrid(np.arange(h), np.arange(w), indexing="ij")
-    R = np.linalg.norm(np.stack([r - center[1], c - center[0]], axis=2), axis=2)
-    R = np.nan_to_num(R, nan=0.0, posinf=0.0, neginf=0.0)  # center pixel might result in NaN after linalg.norm
+    [img_stats(rgb[i], low=16/exposures[i], high=250/exposures[i]) for i in range(3)]
 
-    def profile_func(p, r):
-        return p[0] + np.power(r, 2) * p[1] + np.power(r, 3) * p[2] + np.power(r, 4) * p[3]
+    mask = rgb[1] > 0.5 * np.max(rgb[1])
+    struct = scipy.ndimage.generate_binary_structure(2, 2)
+    mask = morph.binary_erosion(mask, struct, 5)
+    idx = np.nonzero(mask.ravel())[0]
 
-    errfunc = lambda p, r, y: profile_func(p, r) - y
+    print("\nApplying mask")
+    rgb = [rgb[i].ravel()[idx] for i in range(3)]
 
-    idx = np.random.randint(w * h, size=100000)
-    p0, r, y = [vmax, 0, 0, 0], R.ravel()[idx], clean.ravel()[idx]
-    p = least_squares(errfunc, p0, bounds=([0, -1, -1, -1], [255, 1, 1, 1]), args=(r, y))['x']
-    print("Fitted parameters:\n\t", p)
+    [img_stats(rgb[i], low=16/exposures[i], high=250/exposures[i]) for i in range(3)]
 
-    with open(path_prefix + "profile.json", "w") as f:
-        json.dump({"function": "intensity = p[0] + p[1]*r^2 + p[2]*r^3 + p[3]*r^4" +
-                               ", where r is distance fron the center in pixels",
-                   "center": center.tolist(),
-                   "p": (p / p[0]).tolist()}, f, indent=4)
+    save_path = data_path + "/processed/"
+    ensure_exists(save_path)
 
-    smooth = profile_func(255 * p / p[0], R)
-    cv2.imwrite(path_prefix + "smooth.png", np.repeat(smooth[:, :, None], 3, axis=2))
+    r, g, b = rgb
 
     if plot:
-        plt.figure("Geometric Correction", (16, 9))
-        plt.imshow(correction)
-        plt.title("Geometric Correction")
+        plt.figure("Balance Mask", (16, 9))
+        plt.imshow(mask)
+        plt.title("White Balance Mask")
         plt.colorbar()
         plt.tight_layout()
-        plt.savefig(path_prefix + "correction.png", dpi=160)
+        plt.savefig(save_path + "balance_mask.png", dpi=160)
 
-        plt.figure("Corrected Vignetting", (16, 9))
-        plt.imshow(clean, vmin=vmin, vmax=vmax)
-        plt.plot(center[0], center[1], ".r")
-        plt.title("Corrected Vignetting")
-        plt.colorbar()
+        plt.figure("White Balance", (12, 7))
+        plt.clf()
+        plt.subplot(1, 2, 1, title="R")
+        plt.hist(g / r, bins=200)
+        plt.xlabel("Ratio")
         plt.tight_layout()
-        plt.savefig(path_prefix + "corrected.png", dpi=160)
 
-        plt.figure("Radial Profile", (16, 9))
-        idx = np.random.randint(0, w*h, size=3000)
-        x = R.ravel()[idx]
-        plt.plot(x, (clean/correction).ravel()[idx], ".r", markersize=4, label="No Correction")
-        plt.plot(x, clean.ravel()[idx], ".b", markersize=4, label="With Correction")
-        x = np.sort(x)
-        plt.plot(x, profile_func(p, x), "-g", linewidth=2.5, label="Fitted")
-        plt.xlim([0, np.max(R)])
-        plt.xlabel("Radial distance, pixels")
-        plt.ylabel("Intensity")
-        plt.legend()
-        plt.title("Radial Profile")
+        plt.subplot(1, 2, 2, title="B")
+        plt.hist(g / b, bins=200)
+        plt.xlabel("Ratio")
         plt.tight_layout()
-        plt.savefig(path_prefix + "profile.png", dpi=160)
+        plt.savefig(save_path + "white_balance.png", dpi=160)
+
+    with open("white_balance.json", "w") as f:
+        json.dump({"g/r": np.mean(g / r),
+                   "g/b": np.mean(g / b)}, f, indent=4)
 
 
 if __name__ == "__main__":
@@ -400,7 +339,9 @@ if __name__ == "__main__":
 
     data_path = "D:/Scanner/Calibration/projector_vignetting/data/"
     camera_vignetting = load_ldr("camera/vignetting/inverted_softbox_smooth.png", make_gray=True)
-    calibrate_vignetting(data_path, camera_vignetting, "White_200ms.png", "Room_200ms.png", "Dark_200ms.png", "White_Checker_200ms.png", plot=True)
+    calibrate_vignetting(data_path, camera_vignetting, "White_200ms.png", "Black_200ms.png", "Dark_200ms.png", "White_Checker_200ms.png", plot=True)
+
+    calibrate_white_balance(data_path, "R_800ms.png", "G_400ms.png", "B_800ms.png", exposures=[0.8, 0.4, 0.8], plot=True)
 
     data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/merged/"
     # calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, center=True, no_tangent=True, save=True, plot=True, save_figures=True)

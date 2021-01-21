@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
-from scipy.optimize import least_squares
 from detect import load_corners
 from utils import *
 from calibrate import *

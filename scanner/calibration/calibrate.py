@@ -7,6 +7,16 @@ import matplotlib.pyplot as plt
 from detect import load_corners
 
 
+def fit_line(points):
+    center = np.mean(points, axis=0)
+    uu, dd, vv = np.linalg.svd(points - center)
+    return center, vv[0]
+
+
+def point_line_dist(p, l0, l1):
+    return np.linalg.norm(np.cross(l1 - l0, p - l0)) / np.linalg.norm(l1 - l0)
+
+
 def projection_errors(obj_points, img_points, calibration):
     ret, mtx, dist, rvecs, tvecs = calibration
 
@@ -86,18 +96,19 @@ def lift_to_3d(p_img, mtx, T, R, offset=0.0):
     return p_world
 
 
-def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=False, **kw):
+def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=False, charuco_only=False, **kw):
     cam_mtx, cam_dist, cam_new_mtx = camera_calib["mtx"], camera_calib["dist"], camera_calib["new_mtx"]
-
     charuco = load_corners(data_path + "/charuco/corners.json")
-    full = load_corners(data_path + "/checker/detected_full/corners.json")
-    half = load_corners(data_path + "/checker/detected_half/corners.json")
 
-    n = len(charuco.keys())
-    full_offsets, half_offsets = [[160, 190]] * n, [[800 + 160, 190]] * thr
-    half_offsets.extend([[160, 190]] * (n - thr))
-    if center:
-        half_offsets = [[400 + 160, 190]] * n
+    if not charuco_only:
+        full = load_corners(data_path + "/checker/detected_full/corners.json")
+        half = load_corners(data_path + "/checker/detected_half/corners.json")
+
+        n = len(charuco.keys())
+        full_offsets, half_offsets = [[160, 190]] * n, [[800 + 160, 190]] * thr
+        half_offsets.extend([[160, 190]] * (n - thr))
+        if center:
+            half_offsets = [[400 + 160, 190]] * n
 
     charuco_template, checker_template = "blank_%d.png", "checker_%d.png"
     charuco_3d, charuco_id, charuco_frame = [], [], []
@@ -107,8 +118,9 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
     for i, id in enumerate(sorted([int(name[name.rfind("_") + 1:-4]) for name in charuco.keys()])):
         name, pair = charuco_template % id, checker_template % id
 
-        if pair not in full and pair not in half:
-            continue
+        if not charuco_only:
+            if pair not in full and pair not in half:
+                continue
 
         c_img = cv2.undistortPoints(charuco[name]["img"], cam_mtx, cam_dist, None, cam_new_mtx).reshape(-1, 2)
         c_obj = charuco[name]["obj"]
@@ -116,10 +128,6 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
 
         if len(c_idx) < min_points:
             continue
-
-        src = full if pair in full else half
-        p_img = cv2.undistortPoints(src[pair]["img"], cam_mtx, cam_dist, None, cam_new_mtx).reshape(-1, 2)
-        p_prj = src[pair]["obj"][:, :2] + (full_offsets[i] if pair in full else half_offsets[i])
 
         ret, rvec, tvec = cv2.solvePnP(c_obj, c_img, cam_new_mtx, None)
         T, (R, _) = tvec.ravel(), cv2.Rodrigues(rvec)
@@ -133,13 +141,21 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
         charuco_id.append(c_idx)
         charuco_frame.append((T, R))
 
-        p_3d = lift_to_3d(p_img, cam_new_mtx, T, R, offset=0)
-        checker_3d.append(p_3d)
-        checker_2d.append(p_prj.astype(np.float32))
+        if not charuco_only:
+            src = full if pair in full else half
+            p_img = cv2.undistortPoints(src[pair]["img"], cam_mtx, cam_dist, None, cam_new_mtx).reshape(-1, 2)
+            p_prj = src[pair]["obj"][:, :2] + (full_offsets[i] if pair in full else half_offsets[i])
 
-        local = np.zeros((p_3d.shape[0], 3))
-        local[:, 0] = np.dot(p_3d - T, R[:, 0])
-        local[:, 1] = np.dot(p_3d - T, R[:, 1])
-        checker_local.append(local.astype(np.float32))
+            p_3d = lift_to_3d(p_img, cam_new_mtx, T, R, offset=0)
+            checker_3d.append(p_3d)
+            checker_2d.append(p_prj.astype(np.float32))
 
-    return (charuco_3d, charuco_id, charuco_frame), (checker_3d, checker_2d, checker_local), (avg_errors, all_errors)
+            local = np.zeros((p_3d.shape[0], 3))
+            local[:, 0] = np.dot(p_3d - T, R[:, 0])
+            local[:, 1] = np.dot(p_3d - T, R[:, 1])
+            checker_local.append(local.astype(np.float32))
+
+    if charuco_only:
+        return (charuco_3d, charuco_id, charuco_frame), (avg_errors, all_errors)
+    else:
+        return (charuco_3d, charuco_id, charuco_frame), (checker_3d, checker_2d, checker_local), (avg_errors, all_errors)
