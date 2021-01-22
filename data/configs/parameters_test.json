@@ -45,7 +45,7 @@
   "obj_x": 0.0,
   "obj_y": 0.0,
   "obj_z": 0.0,
-  "object_path": "objects/st_4_40k_occ_c.ply",
+  "object_path": "objects/machined/st_4_40k_occ_c.ply",
   "pattern_calibrate": true,
   "pattern_colored": false,
   "pattern_height": 1080,
@@ -97,7 +97,7 @@
   "render_ambient": true,
   "result_overwrite": true,
   "result_path": "results/obj_test",
-  "root_path": "rendering",
+  "root_path": "data",
   "rot_range": [
     -90,
     100,

@@ -3,7 +3,6 @@ import numpy as np
 import os
 import multiprocessing
 import json
-import yaml
 import glob
 from PIL import Image
 from mitsuba.core import * 
