@@ -1,3 +1,4 @@
 .idea
 old_scanner
 __pycache__
+.ipynb_checkpoints

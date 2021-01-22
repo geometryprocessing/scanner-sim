@@ -1,0 +1,190 @@
+<scene version='0.6.0'>
+
+<!--    <integrator type='path'>
+        <integer name="maxDepth" value="128"/>
+    </integrator>
+-->
+
+<integrator type="multichannel">
+    <integrator type="path">
+        <integer name="maxDepth" value="128"/>
+        <boolean name="hideEmitters" value="true"/>
+    </integrator>
+    <integrator type="field">
+        <string name="field" value="distance"/>
+    </integrator>
+</integrator>
+
+
+    <sensor type="thinlens">
+        <float name="nearClip" value="0.001"/>
+        <float name="farClip" value="100000"/>
+        <float name="apertureRadius" value="$cam_aperture"/>
+        <float name="focusDistance" value="$cam_focus"/>
+        <!--<string name="focalLength" value="$focal_length"/>-->
+        <float name="fov" value="$cam_fovy"/>
+        <string name="fovAxis" value="y"/>
+
+        <transform name="toWorld">
+            <lookat target="$cam_tx, $cam_ty, $cam_tz"
+                    origin="$cam_x, $cam_y, $cam_z"
+                    up    ="$cam_ux, $cam_uy, $cam_uz"/>
+        </transform>
+
+<!--        <film type="mfilm">-->
+<!--            <string name="fileFormat" value="numpy"/>-->
+<!--            <boolean name="banner" value="false"/>-->
+<!--            <rfilter type="box"/>-->
+<!--            <integer name="width" value='$width'/>-->
+<!--            <integer name="height" value='$height'/>-->
+<!--        </film>-->
+
+		<film type="hdrfilm">
+            <string name="pixelFormat" value="rgb,luminance"/>
+            <string name="fileFormat" value="openexr"/>
+            <string name="channelNames" value="color, distance"/>
+            <string name="componentFormat" value="float32"/>
+			<boolean name="banner" value="false"/>
+            <integer name="width" value='$cam_width'/>
+            <integer name="height" value='$cam_height'/>
+			<rfilter type="box"/>
+		</film>
+
+
+<!--		<film type="hdrfilm">
+            <string name="pixelFormat" value="rgb"/>
+            <string name="fileFormat" value="openexr"/>
+            <string name="channelNames" value="color"/>
+            <string name="componentFormat" value="float32"/>
+			<boolean name="banner" value="false"/>
+            <integer name="width" value='$width'/>
+            <integer name="height" value='$height'/>
+			<rfilter type="box"/>
+		</film>
+-->
+
+        <sampler type="halton">
+            <integer name="sampleCount" value="$samples"/>
+        </sampler>
+    </sensor>
+
+    <shape type="ply">
+        <string name="filename" value='$object_name'/>
+        <float name="maxSmoothAngle" value="30.0"/>
+
+<!--        <bsdf type="diffuse">-->
+<!--            <spectrum name="reflectance" value="0.0 1.0 1.0"/>-->
+<!--            <texture type='vertexcolors' name="reflectance"/>-->
+<!--        </bsdf>-->
+
+        <bsdf type="roughplastic">
+            <string name="distribution" value="beckmann"/>
+            <float name="intIOR" value="1.1"/>
+            <spectrum name="diffuseReflectance" value="0.6"/>
+        </bsdf>
+
+
+<!--        <bsdf type="plastic">
+            <float name="intIOR" value="1.49"/>
+            <spectrum name="diffuseReflectance" value="0.5"/>
+        </bsdf>-->
+        
+       <!-- <bsdf type="mixturebsdf">
+            <string name="weights" value="0.5, 0.5"/>
+            
+            <bsdf type="roughconductor">
+                <string name="material" value="Al"/>
+                <string name="distribution" value="beckmann"/>
+                <float name="alpha" value="0.8"/>
+            </bsdf>
+            <bsdf type="roughplastic">
+                <string name="distribution" value="beckmann"/>
+                <float name="intIOR" value="1.5"/>
+                <spectrum name="diffuseReflectance" value="1.6"/>
+            </bsdf>
+        </bsdf>
+-->
+
+  <!--      <subsurface type="dipole">
+            <string name="material" value="skin2"/>
+            <integer name="irrSamples" value="64"/>
+        </subsurface>-->
+<!--        <subsurface type="dipole">
+        <string name="intIOR" value="water"/>
+        <string name="extIOR" value="air"/>
+        <rgb name="sigmaS" value="87.2, 127.2, 143.2"/>
+        <rgb name="sigmaA" value="1.04, 5.6, 11.6"/>
+        <integer name="irrSamples" value="64"/>
+        <float name="scale" value="1"/>
+        </subsurface>
+        <bsdf type="plastic">
+        <string name="intIOR" value="water"/>
+        <string name="extIOR" value="air"/>
+        <spectrum name="diffuseReflectance" value="0"/>
+        </bsdf>
+
+        
+        <bsdf type="roughdielectric">
+        <string name="distribution" value="ggx"/>
+        <float name="alpha" value="0.304"/>
+        <float name="intIOR" value="2.5"/>
+        <string name="extIOR" value="air"/>
+        </bsdf>
+-->
+
+        <transform name="toWorld">
+            <translate x="$obj_ttx" y="$obj_tty" z="$obj_ttz"/>
+            <rotate x="1.0" y="0.0" z="0.0" angle="$rot_x"/>
+            <rotate x="0.0" y="1.0" z="0.0" angle="$rot_y"/>
+            <rotate x="0.0" y="0.0" z="1.0" angle="$rot_z"/>
+            <scale x="0.1" y="0.1" z="0.1"/>
+            <rotate x="1.0" y="0.0" z="0.0" angle="180"/><!--180-->
+<!--            <translate x="$obj_x" y="$obj_y" z="$obj_z"/>-->
+<!--            <rotate x="1.0" y="1.0" z="1.0" angle="45"/>-->
+<!--            <rotate x="1.0" y="0.0" z="0.0" angle="45"/>-->
+<!--            <rotate x="1.0" y="0.0" z="0.0" angle="45"/>-->
+
+<!--            <matrix value="$obj_transform"/>-->
+<!--            <rotate x="1.0" y="0.0" z="0.0" angle="$obj_rx"/>-->
+<!--            <rotate x="0.0" y="1.0" z="0.0" angle="$obj_ry"/>-->
+<!--            <rotate x="0.0" y="0.0" z="1.0" angle="$obj_rz"/>-->
+        </transform>
+    </shape>
+
+    <texture type="bitmap" id="projector">
+        <string name="filename" value="$pattern_name"/>
+        <string name="wrapMode" value="black"/>
+    </texture>
+
+    <emitter type="spot">
+        <transform name="toWorld">
+            <lookat target="$pro_tx, $pro_ty, $pro_tz"
+                    origin="$pro_x, $pro_y, $pro_z"
+                    up    ="$pro_ux, $pro_uy, $pro_uz"/>
+        </transform>
+        <spectrum name="intensity" value="$pro_intensity"/>
+        <float name="offX" value="$pro_offset_x"/>
+        <float name="offY" value="$pro_offset_y"/>
+        <float name="scaleX" value="$pro_scale_x"/>
+        <float name="scaleY" value="$pro_scale_y"/>
+        <float name="cutoffAngle" value="$pro_cutoff"/>
+        <float name="beamWidth" value="$pro_beamwidth"/>
+        <float name="samplingWeight" value="5.0"/>
+        <ref name="texture" id="projector"/>
+        <float name="apertureRadius" value="$pro_aperture"/>
+        <float name="focusDistance" value="$pro_focus"/>
+    </emitter>
+
+<!--    <emitter type="directional">
+        <vector name="direction" x="-1.0" y="0.0" z="1.0"/>
+        <spectrum name="irradiance" value="0.05"/>
+        <float name="samplingWeight" value="5.0"/>
+    </emitter> -->
+    
+    <emitter type="constant">
+        <spectrum name="radiance" value="$const_radiance"/>
+        <float name="samplingWeight" value="1.0"/>
+    </emitter>
+
+
+</scene>
