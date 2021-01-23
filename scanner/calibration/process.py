@@ -108,12 +108,6 @@ def process_single(image_filename, blank_filename, texture_filename, auto_map=No
     if plot:
         name = new_filename or image_filename
 
-        def plot_image(img, title, **kw):
-            plt.figure(title, (12, 9))
-            plt.imshow(img, **kw)
-            plt.colorbar()
-            plt.tight_layout()
-
         plot_image(processed, name + " - Processed HDR", vmin=0, vmax=1)
         plot_image(linear_map(processed)[0], name + " - Processed LDR")
         if texture_filename is not None:

@@ -6,6 +6,7 @@ import Imath
 import OpenEXR
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from sklearn.decomposition import PCA
 from scipy.optimize import least_squares
 
@@ -38,6 +39,25 @@ def img_stats(img, low=16, high=250):
     print("\tDark (<%d) / Saturated (>%d): %d / %d" % (low, high, np.nonzero(img < low)[0].shape[0],
                                                                   np.nonzero(img > high)[0].shape[0]))
     return vmin, vmax
+
+
+def plot_image(img, title, save_as=None, **kw):
+    plt.figure(title, (12, 9))
+    plt.imshow(img, **kw)
+    plt.colorbar()
+    plt.title(title)
+    plt.tight_layout()
+    if save_as is not None:
+        plt.savefig(save_as + ".png", dpi=160)
+
+
+def plot_hist(data, title, save_as=None, **kw):
+    plt.figure(title, (12, 9))
+    plt.hist(data, **kw)
+    plt.title(title)
+    plt.tight_layout()
+    if save_as is not None:
+        plt.savefig(save_as + ".png", dpi=160)
 
 
 def replace_hot_pixels(img, dark, thr=32):
