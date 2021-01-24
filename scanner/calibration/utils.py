@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.decomposition import PCA
 from scipy.optimize import least_squares
+import meshio
+import open3d as o3d
 
 
 class NumpyEncoder(json.JSONEncoder):
@@ -41,23 +43,49 @@ def img_stats(img, low=16, high=250):
     return vmin, vmax
 
 
-def plot_image(img, title, save_as=None, **kw):
-    plt.figure(title, (12, 9))
+def plot_image(img, figure_name, title=None, size=(16, 9), save_as=None, **kw):
+    plt.figure(figure_name, size)
+    plt.clf()
     plt.imshow(img, **kw)
     plt.colorbar()
-    plt.title(title)
+    if title:
+        plt.title(title)
     plt.tight_layout()
+
     if save_as is not None:
         plt.savefig(save_as + ".png", dpi=160)
 
 
-def plot_hist(data, title, save_as=None, **kw):
-    plt.figure(title, (12, 9))
+def plot_hist(data, figure_name, title=None, size=(12, 12), save_as=None, **kw):
+    plt.figure(figure_name, size)
+    plt.clf()
     plt.hist(data, **kw)
-    plt.title(title)
+    if title:
+        plt.title(title)
     plt.tight_layout()
+
     if save_as is not None:
         plt.savefig(save_as + ".png", dpi=160)
+
+
+def plot_3d(points, figure_name, title=None, size=(12, 9), save_as=None, **kw):
+    plt.figure(figure_name, size)
+    plt.clf()
+    ax = plt.subplot(111, projection='3d', proj_type='ortho')
+    ax.set_title(title if title else figure_name)
+
+    scatter(ax, points, s=5, **kw)
+
+    ax.set_xlabel("x, mm")
+    ax.set_ylabel("z, mm")
+    ax.set_zlabel("-y, mm")
+    plt.tight_layout()
+    # axis_equal_3d(ax)
+
+    if save_as is not None:
+        plt.savefig(save_as + ".png", dpi=160)
+
+    return ax
 
 
 def replace_hot_pixels(img, dark, thr=32):
@@ -153,6 +181,16 @@ def load_ldr(filename, make_gray=False):
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
     return img
+
+
+def save_ply(filename, points):
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(points.astype(np.float32))
+    o3d.io.write_point_cloud(filename, pcd, compressed=False, print_progress=True)
+
+
+def load_ply(filename):
+    return np.asarray(o3d.io.read_point_cloud(filename, print_progress=True).points)
 
 
 def scatter(ax, p, *args, **kwargs):
