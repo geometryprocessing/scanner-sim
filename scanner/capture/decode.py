@@ -36,8 +36,8 @@ def get_single_bit_mask(filename, inverted_filename, undistort=None, plot=False,
     print("Loaded", filename)
 
     if undistort is not None:
-        image = cv2.undistort(image, undistort["mtx"], undistort["dist"], None, undistort["new_mtx"])
-        inverted = cv2.undistort(inverted, undistort["mtx"], undistort["dist"], None, undistort["new_mtx"])
+        image = cv2.undistort(image, undistort["mtx"], undistort["dist"], newCameraMatrix=undistort["new_mtx"])
+        inverted = cv2.undistort(inverted, undistort["mtx"], undistort["dist"], newCameraMatrix=undistort["new_mtx"])
 
     bit_mask = image > inverted
 
@@ -61,8 +61,8 @@ def get_all_bit_masks(template, inverted_template, ids=None, undistort=None, **k
     return np.array(joblib.Parallel(verbose=15, n_jobs=-1, batch_size=1, pre_dispatch="all")(jobs))
 
 
-def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, max_group=40, undistort=None, group=False,
-                  save=True, plot=False, save_figures=True, verbose=False, **kw):
+def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, mask_iter=6, crop=None, offset=-150,
+                  undistort=None, group=False, save=True, plot=False, save_figures=True, verbose=False, **kw):
 
     if symmetric:
         all_names = ["img_%02d.exr" % i for i in range(46)]
@@ -87,12 +87,16 @@ def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, ma
         blank = load_openexr(data_path + "/blank.exr", make_gray=True)
         white = load_openexr(data_path + "/white.exr", make_gray=True)
 
-    ldr, thr_ldr = linear_map(gaussian_filter(white - blank, sigma=mask_sigma))
+    clean = white - blank
+    if crop:
+        clean[:, :crop] = 0  # crop to the left of the rotating stage
+        clean[:, clean.shape[1] - crop + 2*offset:] = 0  # and to the right
+    ldr, thr_ldr = linear_map(gaussian_filter(clean, sigma=mask_sigma))
     thr_otsu, mask = cv2.threshold(ldr, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     print("Thresholds:", thr_ldr, thr_otsu)
 
     struct = scipy.ndimage.generate_binary_structure(2, 1)
-    mask = morph.binary_erosion(mask, struct, 5)
+    mask = morph.binary_erosion(mask, struct, mask_iter)
 
     # Old: filters away parts of the image where projected pattern got blurred too much
     # diff = np.abs(hor[0, ...] - hor_i[0, ...])
@@ -140,14 +144,7 @@ def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, ma
             #     break
 
             if region.label > 0:
-                n = region.coords.shape[0]
-
-                if n > max_group:
-                    if verbose:
-                        print("Skipped large group:", region.label, n)
-                    continue
-
-                group_counts.append(n)
+                group_counts.append(region.coords.shape[0])
                 group_rcs.append(region.coords)
                 group_cam_xy.append(region.centroid[::-1])
                 r0, c0 = region.coords[0, :]
@@ -195,7 +192,7 @@ def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, ma
             lut, idx = np.random.randint(m, size=(m,)), np.nonzero(labels > 0)
             labels[idx] = lut[labels[idx] - 1] + 1
             plot_image(labels, "Groups", data_path + " - Groups", save_as=save_path + "groups" if save_path else None)
-            plot_hist(group_counts, "Counts", data_path + " - Group Counts", bins=max_group, save_as=save_path + "group_counts" if save_path else None)
+            plot_hist(group_counts, "Counts", data_path + " - Group Counts", bins=np.max(group_counts), save_as=save_path + "group_counts" if save_path else None)
 
     return (cam_xy, proj_xy, mask), (group_cam_xy, group_proj_xy, group_counts, group_rcs) if group else None
 
@@ -225,26 +222,32 @@ def decode_many(path_template, suffix="gray/", **kw):
 
 
 if __name__ == "__main__":
-    data_path = "D:/scanner_sim/captures/plane/gray/"
+    camera_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
+
+    # Debug / Development
     # data_path = "D:/scanner_sim/captures/plane/default_scan/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/position_330/default_scan/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/position_330/default_scan/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_330/default_scan/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/default_scan/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/"
-
-    camera_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
-
     # get_single_bit_mask(data_path + "horizontal_0.exr", data_path + "horizontal_0_inv.exr", undistort=camera_calib, plot=True)
 
-    all, groups = decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
+    # all, groups = decode_single(data_path, undistort=camera_calib, symmetric=False, group=True, plot=True, verbose=True)
 
     # all, groups = load_decoded(data_path + "decoded")
     # print(all[0].shape, groups[0].shape if groups is not None else "")
 
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/"
-    # decode_many(data_path + "position_*", undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=False)
+    # Planes
+    # data_path = "D:/scanner_sim/captures/plane/gray/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/"
+    # decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
+
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_2/no_ambient/%s_30_deg/position_*"
+    # for object in ["pawn", "rook", "shapes"]:
+    #     decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
+    #
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
+    # for object in ["dodo", "avocado", "house", "chair", "vase", "bird", "radio"]:
+    #     decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1600, group=True, plot=True, verbose=True)
 
     plt.show()

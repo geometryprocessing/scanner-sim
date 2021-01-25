@@ -68,7 +68,7 @@ def plot_hist(data, figure_name, title=None, size=(12, 12), save_as=None, **kw):
         plt.savefig(save_as + ".png", dpi=160)
 
 
-def plot_3d(points, figure_name, title=None, size=(12, 9), save_as=None, **kw):
+def plot_3d(points, figure_name, title=None, size=(12, 9), axis_equal=True, save_as=None, **kw):
     plt.figure(figure_name, size)
     plt.clf()
     ax = plt.subplot(111, projection='3d', proj_type='ortho')
@@ -80,7 +80,8 @@ def plot_3d(points, figure_name, title=None, size=(12, 9), save_as=None, **kw):
     ax.set_ylabel("z, mm")
     ax.set_zlabel("-y, mm")
     plt.tight_layout()
-    # axis_equal_3d(ax)
+    if axis_equal:
+        axis_equal_3d(ax)
 
     if save_as is not None:
         plt.savefig(save_as + ".png", dpi=160)

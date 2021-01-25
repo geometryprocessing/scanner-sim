@@ -39,13 +39,20 @@ def triangulate(cam_rays, proj_xy, proj_calib):
     return cam_rays * L[:, None]
 
 
-def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed", gen_depth_map=True,
+def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed", max_group=25, gen_depth_map=True,
                        save=True, plot=False, save_figures=True, verbose=False, **kw):
+    if save:
+        save_path = data_path + out_dir + "/"
+        ensure_exists(save_path)
+        data_path += "decoded/"
+    else:
+        save_path = None
+
     all, groups = load_decoded(data_path)
     cam_xy, proj_xy, mask = all
     if groups:
         group_cam_xy, group_proj_xy, group_counts, group_rcs = groups
-    undistorted = bool(open(data_path + "/undistorted.txt", "r").read())
+    undistorted = bool(open(data_path + "undistorted.txt", "r").read())
     print("Loaded:", data_path)
 
     if undistorted:
@@ -66,6 +73,9 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
     all_points = triangulate(cam_rays, proj_xy, proj_calib)
     if groups:
         group_points = triangulate(group_cam_rays, group_proj_xy, proj_calib)
+        idx = np.nonzero(group_counts < max_group)[0]
+        print("%d groups larger than %d excluded" % (group_counts.shape[0] - idx.shape[0], max_group))
+        group_points = group_points[idx, :]
 
     if gen_depth_map:
         print("Generating depth map(s)")
@@ -74,25 +84,23 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
 
         if groups:
             group_depth_map = np.zeros_like(mask, dtype=np.float32)
-            for i, rcs in enumerate(group_rcs):
+            for i, id in enumerate(idx):
+                rcs = group_rcs[id]
                 if i % 100000 == 0 and verbose:
                     print("Group", i)
                 group_depth_map[rcs[:, 0], rcs[:, 1]] = np.linalg.norm(group_points[i, :])
 
     if save:
-        save_path = data_path + "/" + out_dir + "/"
-        ensure_exists(save_path)
-
         save_ply(save_path + "all_points.ply", all_points)
         if groups:
             save_ply(save_path + "group_points.ply", group_points)
+            with open(save_path + "max_group_size.txt", "w") as f:
+                f.write(str(max_group))
 
         if gen_depth_map:
             np.save(save_path + "full_depth_map.npy", full_depth_map.astype(np.float32))
             if groups:
                 np.save(save_path + "group_depth_map.npy", group_depth_map.astype(np.float32))
-    else:
-        save_path = None
 
     if plot:
         if not save_figures:
@@ -100,7 +108,7 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
 
         plot_3d(all_points[::1000, :], "All Points", save_as=save_path + "all_points" if save_path else None)
         if groups:
-            plot_3d(group_points[::1000, :], "Group Points", save_as=save_path + "group_points" if save_path else None)
+            plot_3d(group_points[::100, :], "Group Points", save_as=save_path + "group_points" if save_path else None)
 
         if gen_depth_map:
             vmin = np.min(full_depth_map[full_depth_map > 1])
@@ -112,34 +120,43 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
     return all_points, group_points if groups else None
 
 
-def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/decoded/", **kw):
+def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/", **kw):
     paths = glob.glob(path_template)
     print("Found %d directories:" % len(paths), paths)
 
-    for i, path in enumerate(paths):
-        print("Reconstructing %d:" % i, path + "/" + suffix)
-        plt.close("all")
-        reconstruct_single(path + "/" + suffix, cam_calib, proj_calib, **kw)
+    jobs = [joblib.delayed(reconstruct_single, check_pickle=False)
+            (path + "/" + suffix, cam_calib, proj_calib, **kw) for path in paths]
+
+    results = joblib.Parallel(verbose=15, n_jobs=8, batch_size=1, pre_dispatch="all")(jobs)
+
+    return {path: result for path, result in zip(paths, results)}
 
 
 if __name__ == "__main__":
-    data_path = "D:/scanner_sim/captures/plane/gray/decoded/"
-    # data_path = "D:/scanner_sim/captures/plane/default_scan/decoded/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/position_330/default_scan/decoded/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/position_330/default_scan/decoded/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_330/default_scan/decoded/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/default_scan/decoded/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/decoded/"
-
     cam_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
     proj_calib = load_projector_calibration("../calibration/projector/projector_calibration.json")[2]
 
-    all, group = reconstruct_single(data_path, cam_calib, proj_calib, save=True, plot=True, verbose=True)
+    # Debug / Development
+    # data_path = "D:/scanner_sim/captures/plane/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/position_330/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/position_330/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_330/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/"
+
+    # all, group = reconstruct_single(data_path + "default_scan/", cam_calib, proj_calib, max_group=25, save=True, plot=True, verbose=True)
     # print(all.shape, group.shape if group is not None else "")
 
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/"
-    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/"
-    # reconstruct_many(data_path + "position_*", cam_calib, proj_calib, plot=True, verbose=True)
+    # Planes
+    # data_path = "D:/scanner_sim/captures/plane/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/"
+    # reconstruct_single(data_path + "gray/", cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_2/no_ambient/%s_30_deg/position_*"
+    # for object in ["pawn", "rook", "shapes"]:
+    #     reconstruct_many(data_path_template % object, cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
+    # for object in ["dodo", "avocado", "house", "chair", "vase", "bird", "radio"]:
+    #     reconstruct_many(data_path_template % object, cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
 
     plt.show()

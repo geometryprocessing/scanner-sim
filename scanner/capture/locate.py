@@ -39,7 +39,7 @@ def build_local(stage_calib):
     return R
 
 
-def compute_pca_variation(points, plot=True):
+def compute_pca_variation(points, plot=False):
     pca = PCA(n_components=3)
     p2 = pca.fit_transform(points)
     fit_plane(points)
@@ -60,7 +60,7 @@ def compute_pca_variation(points, plot=True):
             #     plt.savefig(path + "plane_reconstruction_errors.png", dpi=160)
 
 
-def fit_ring(points, stage_calib, plot=True):
+def fit_ring(points, stage_calib, title="Ring", plot=False):
     p0, dir = stage_calib["p"], stage_calib["dir"]
 
     R = build_local(stage_calib)
@@ -82,17 +82,17 @@ def fit_ring(points, stage_calib, plot=True):
     # c = p0 + np.matmul(R.T, c)
 
     if plot:
-        ax = plot_3d(points[::10000, :], "Ring")
+        ax = plot_3d(points[::100, :], title, axis_equal=False)
         line(ax, p0 - 10 * dir, p0 + 100 * dir, "-r")
         basis(ax, p0, R.T, length=20)
         # basis(ax, c, R.T, length=20)
         axis_equal_3d(ax)
 
         # ax = plot_3d(local[::10000, :], "Local")
-    return c
+    return c, ax
 
 
-def fit_sphere(points, stage_calib, plot=True):
+def fit_sphere(points, stage_calib, plot=False):
     p0, dir = stage_calib["p"], stage_calib["dir"]
 
     R = build_local(stage_calib)
@@ -111,38 +111,24 @@ def fit_sphere(points, stage_calib, plot=True):
     # print(c)
 
     if plot:
-        ax = plot_3d(points[::100, :], "Sphere")
+        ax = plot_3d(points[::100, :], "Sphere", axis_equal=False)
         line(ax, p0 - 10 * dir, p0 + 100 * dir, "-r")
         basis(ax, p0, R.T, length=20)
         basis(ax, p0 + np.matmul(R.T, c), R.T, length=20)
         axis_equal_3d(ax)
 
-    return c
+    return c, ax
 
 
-if __name__ == "__main__":
-    data_path = "D:/scanner_sim/captures/plane/gray/decoded/reconstructed/"
-    # data_path = "D:/scanner_sim/captures/plane/default_scan/decoded/reconstructed/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/decoded"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/decoded/reconstructed/"
+def locate_pawn(data_path, stage_calib, plot=False):
+    print("\n\tLocating Pawn\n")
 
-    stage_calib = numpinize(json.load(open("../calibration/stage/stage_calibration.json", "r")))
+    ring = load_ply(data_path + "reconstructed/pawn_ring.ply")
+    c_ring, _ = fit_ring(ring, stage_calib, title="Pawn Ring", plot=plot)
 
-    # all, groups = load_decoded(data_path)
-    p = load_points(data_path + "/group_points.ply")
-    # print(p.shape, cam.shape)
-    compute_pca_variation(p, plot=True)
-    plt.show()
-    exit()
-
-    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
-
-    ring = load_ply(data_path + "pawn_ring.ply")
-    c_ring = fit_ring(ring, stage_calib, plot=True)
-
-    sphere = load_ply(data_path + "pawn_sphere.ply")
+    sphere = load_ply(data_path + "reconstructed/pawn_sphere.ply")
     sphere = sphere[::100, :]
-    c_sphere = fit_sphere(sphere, stage_calib, plot=True)
+    c_sphere, _ = fit_sphere(sphere, stage_calib, plot=plot)
 
     R = build_local(stage_calib)
 
@@ -156,15 +142,130 @@ if __name__ == "__main__":
     c[:2] = (c_ring[:2] + c_sphere[:2]) / 2
     c[2] = c_sphere[2]
     print(c)
+    c_loc = c
     c = p0 + np.matmul(R.T, c)
     print("Ball origin:", c)
     c -= dir * 5 * 25.4
     print("Pawn origin:", c)
 
-    ax = plot_3d(ring[::1000, :], "Global")
-    line(ax, p0 - 10 * dir, p0 + 100 * dir, "-r")
-    scatter(ax, sphere[::100, :])
-    basis(ax, c, R.T, length=20)
-    axis_equal_3d(ax)
+    if plot:
+        ax = plot_3d(ring[::100, :], "Global", axis_equal=False)
+        line(ax, p0 - 10 * dir, p0 + 100 * dir, "-r")
+        scatter(ax, sphere[::10, :], s=5)
+        basis(ax, c, R.T, length=20)
+        axis_equal_3d(ax)
+
+    c_loc[:2] = 0
+    stage_base = p0 + np.matmul(R.T, c_loc) - dir * 5 * 25.4
+    print("Stage Base:", stage_base)
+
+    return (c, R), stage_base
+
+
+def locate_rook(data_path, stage_calib, stage_base, plot=False):
+    print("\n\tLocating Rook\n")
+
+    ring = load_ply(data_path + "reconstructed/rook_ring.ply")
+    c_ring, ax = fit_ring(ring, stage_calib, title="Rook Ring", plot=plot)
+
+    p0, dir = stage_calib["p"], stage_calib["dir"]
+    R = build_local(stage_calib)
+
+    c = stage_base + np.matmul(R.T, c_ring)
+    print("Rook origin:\n", c)
+    print("Rook basis:", R)
+
+    if plot:
+        basis(ax, c, R.T, length=20)
+
+    return c, R
+
+
+def locate_shapes(data_path, plot=False):
+    print("\n\tLocating Shapes\n")
+
+    def fit(filename, ax=None, **kwargs):
+        p = np.asarray(o3d.io.read_point_cloud(filename).points)
+        print("\n" + filename, p.shape)
+
+        pca = PCA(n_components=3)
+        p2 = pca.fit_transform(p)
+        print(pca.mean_, pca.singular_values_, "\n", pca.components_)
+
+        if ax:
+            scatter(ax, p[::100, :], s=5, label="p", **kwargs)
+            basis(ax, pca.mean_, pca.components_.T, length=20, **kwargs)
+
+        return p, p2, pca.mean_, pca.singular_values_, pca.components_
+
+    if plot:
+        plt.figure("Shapes Target Origin", (12, 12))
+        ax = plt.subplot(111, projection='3d', proj_type='ortho')
+    else:
+        ax = None
+
+    base = fit(data_path + "/reconstructed/shapes_base.ply", ax)
+    hexagon = fit(data_path + "/reconstructed/shapes_hexagon.ply", ax)
+    cylinder = fit(data_path + "/reconstructed/shapes_cylinder.ply", ax)
+
+    ez = base[4][2, :]
+    hexagon_c = hexagon[2]
+    cylinder_c = cylinder[2]
+    ey = cylinder_c - hexagon_c
+    ey /= np.linalg.norm(ey)
+    ex = np.cross(ey, ez)
+    R = np.stack([ex, ey, ez], axis=0)
+    T = hexagon_c - 82*ex - 24.2*ey - 36*ez
+
+    print("Shapes location:")
+    print(T, "\n", R)
+
+    if plot:
+        basis(ax, T, R.T, length=50)
+
+        ax.set_title("Shapes Target Origin")
+        ax.set_xlabel("x, mm")
+        ax.set_ylabel("z, mm")
+        ax.set_zlabel("-y, mm")
+        plt.tight_layout()
+        axis_equal_3d(ax)
+
+    return T, R
+
+
+if __name__ == "__main__":
+    # data_path = "D:/scanner_sim/captures/plane/gray/decoded/reconstructed/"
+    # data_path = "D:/scanner_sim/captures/plane/default_scan/decoded/reconstructed/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/decoded"
+    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/decoded/reconstructed/"
+
+    stage_calib = numpinize(json.load(open("../calibration/stage/stage_calibration.json", "r")))
+
+    # # all, groups = load_decoded(data_path)
+    # p = load_points(data_path + "/group_points.ply")
+    # c = np.average(p, axis=0)
+    # dist = np.linalg.norm(p - c, axis=1)
+    # idx = np.nonzero(dist < 40)[0]
+    # _, _, T0, _, R0 = fit_plane(p)
+    #
+    # p = p[idx, :]
+    # _, _, T, _, R = fit_plane(p)
+    # ax = plot_3d(p[::100, :], "Plane Fit")
+    # basis(ax, T, R.T, length=20)
+    #
+    #
+    # # print(p.shape, cam.shape)
+    # compute_pca_variation(p, plot=True)
+    # plt.show()
+    # exit()
+
+    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
+    _, stage_base = locate_pawn(data_path, stage_calib, plot=True)
+
+    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/"
+    locate_rook(data_path, stage_calib, stage_base, plot=True)
+
+    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_0/gray/"
+    locate_shapes(data_path, plot=True)
 
     plt.show()

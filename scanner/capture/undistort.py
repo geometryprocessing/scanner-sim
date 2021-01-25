@@ -37,24 +37,27 @@ if __name__ == "__main__":
     # patterns = glob.glob(patterns_path + "*.png")
     # print("Found %d patterns:" % len(patterns), patterns)
     # ensure_exists(patterns_path + "predistorted/")
-    #
+
     # for pattern in patterns:
     #     original = load_ldr(pattern)
-    #     undistorted = cv2.undistort(original, proj_calib["mtx"], proj_calib["dist"], proj_calib["new_mtx"], None)
+    #     undistorted = cv2.undistort(original, proj_calib["mtx"], proj_calib["dist"], newCameraMatrix=proj_calib["new_mtx"])
     #     new_filename = patterns_path + "predistorted/" + os.path.basename(pattern)
     #     print(new_filename)
     #     save_ldr(new_filename, undistorted)
 
     # images_path = "D:/scanner_sim/captures/plane/gray/"
+    # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/position_0/color/"
+    images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/"
     # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/position_0/gray/"
-    images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_0/gray/"
+    # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/position_0/gray/"
+    # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_0/gray/"
     images = glob.glob(images_path + "*.exr")
     print("Found %d images:" % len(images), images)
     ensure_exists(images_path + "undistorted/")
 
     for image in images:
         original = load_openexr(image)
-        undistorted = cv2.undistort(original, cam_calib["mtx"], cam_calib["dist"], cam_calib["new_mtx"], None)
+        undistorted = cv2.undistort(original, cam_calib["mtx"], cam_calib["dist"], newCameraMatrix=cam_calib["new_mtx"])
         new_filename = images_path + "undistorted/" + os.path.basename(image)
         print(new_filename)
         save_openexr(new_filename, undistorted)
