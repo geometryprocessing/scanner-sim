@@ -9,6 +9,9 @@
         <integer name="maxDepth" value="128"/>
         <boolean name="hideEmitters" value="true"/>
     </integrator>
+<!--     <integrator type="bdpt">
+        <integer name="maxDepth" value="128"/>
+    </integrator> -->
     <integrator type="field">
         <string name="field" value="distance"/>
     </integrator>
@@ -45,6 +48,10 @@
 			<boolean name="banner" value="false"/>
             <integer name="width" value='$cam_width'/>
             <integer name="height" value='$cam_height'/>
+<!--             <integer name="cropOffsetX" value="$cam_crop_offset_x"/>
+            <integer name="cropOffsetY" value="$cam_crop_offset_y"/>
+            <integer name="cropWidth" value="$cam_crop_width"/>
+            <integer name="cropHeight" value="$cam_crop_height"/> -->
 			<rfilter type="box"/>
 		</film>
 
@@ -53,7 +60,7 @@
         </sampler>
     </sensor>
 
-    <shape type="ply">
+    <shape type="$shape_type">
         <string name="filename" value='$object_name'/>
         <float name="maxSmoothAngle" value="30.0"/>
 
@@ -71,7 +78,7 @@
         </bsdf>
 
         <transform name="toWorld">
-            <scale x="0.001" y="0.001" z="0.001"/>
+            <scale x="$scale" y="$scale" z="$scale"/>
             <rotate x="1.0" y="0.0" z="0.0" angle="$rot_x"/>
             <rotate x="0.0" y="1.0" z="0.0" angle="$rot_y"/>
             <rotate x="0.0" y="0.0" z="1.0" angle="$rot_z"/>

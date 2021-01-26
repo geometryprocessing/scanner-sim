@@ -7,7 +7,7 @@ import os
 
 # Fast gray decoding
 def decode_images_gray(path, prefix="img", suffix=".png", dec_name="decoded.xml", min_name="min_max.xml", min_direct_light=5, black_light_ratio=0.5, pro=[1920, 1080]):
-    cmd = "./decode '%s/%s_*%s' %0.1f %i '%s/%s' '%s/%s' %i %i"%(path, prefix, suffix,  black_light_ratio, min_direct_light, path, dec_name, path, min_name, pro[0], pro[1])
+    cmd = "./decoding/decode '%s/%s*%s' %0.1f %i '%s/%s' '%s/%s' %i %i"%(path, prefix, suffix,  black_light_ratio, min_direct_light, path, dec_name, path, min_name, pro[0], pro[1])
     #print(cmd)
     os.system(cmd)
     

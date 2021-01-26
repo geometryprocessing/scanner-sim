@@ -15,7 +15,7 @@ def reconstruct_object(path, calibration, threshold=127, max_depth=100.0, pro=[1
     elif map_type == "DEPTH":
         m_type = 1
     
-    cmd = "./reconstruct '%s/%s' '%s/%s' '%s' %s '%s/%s' '%s/%s' %i %0.1f %i %i %i 1"%(path, dec_name, path, min_name, c_image, calibration, path, dm_name, path, pc_name, threshold, max_depth, pro[0], pro[1], m_type)
+    cmd = "./reconstruction/reconstruct '%s/%s' '%s/%s' '%s' %s '%s/%s' '%s/%s' %i %0.1f %i %i %i 1"%(path, dec_name, path, min_name, c_image, calibration, path, dm_name, path, pc_name, threshold, max_depth, pro[0], pro[1], m_type)
     os.system(cmd)
     
     
