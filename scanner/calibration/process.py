@@ -3,7 +3,7 @@ from shutil import copyfile
 import matplotlib.pyplot as plt
 
 
-def linear_map(img, thr=None, mask=None):
+def linear_map(img, thr=None, mask=None, gamma=1.0):
     if thr is None:
         pixels = img[mask].ravel() if mask is not None else img.ravel()
 
@@ -12,7 +12,15 @@ def linear_map(img, thr=None, mask=None):
 
         thr = 1.1 * np.sort(pixels)[int(0.99*pixels.shape[0])]  # threshold at 99th percentile
 
-    return np.minimum(255 * img / thr, 255).astype(np.uint8), thr
+    img = img / thr
+    if abs(gamma - 1.0) > 1e-6:
+        img = np.power(img, 1/gamma)
+
+    return np.minimum(255 * img, 255).astype(np.uint8), thr
+
+
+def gamma_map(img, thr=None, mask=None, gamma=2.2):
+    return linear_map(img, thr=thr, mask=mask, gamma=gamma)
 
 
 def tone_map(img, thr=None, mask=None):
@@ -67,21 +75,24 @@ def map_all(filename_template, method, return_images=True, **kw):
 def process_single(image_filename, blank_filename, texture_filename, auto_map=None, out_dir="processed", return_image=True, are_gray=True, save=False, plot=False):
     image = load_openexr(image_filename, make_gray=are_gray)
     blank = load_openexr(blank_filename, make_gray=are_gray)
-    texture = load_openexr(texture_filename, make_gray=are_gray)
+    clean = np.maximum(0, image - blank)
+
     print("Loaded", image_filename)
 
-    texture = np.maximum(0, texture - blank)
-    texture_ldr, texture_thr = linear_map(texture)
-    mask = texture > texture_thr * 0.002
+    if texture_filename is not None:
+        texture = load_openexr(texture_filename, make_gray=are_gray)
+        texture = np.maximum(0, texture - blank)
+        texture_ldr, texture_thr = linear_map(texture)
+        mask = texture > texture_thr * 0.002
 
-    clean = np.maximum(0, image - blank)
-    processed = clean / (texture + 1e-6)
-    processed[~mask] = 0
+        processed = clean / (texture + 1e-6)
+        processed[~mask] = 0
+    else:
+        processed = clean
 
     if save:
         path = os.path.dirname(image_filename) + "/" + out_dir + "/"
-        if not os.path.exists(path):
-            os.makedirs(path, exist_ok=True)
+        ensure_exists(path)
 
         new_filename = path + os.path.basename(image_filename)[:-4] + ".exr"
         save_openexr(new_filename, processed)
@@ -97,16 +108,11 @@ def process_single(image_filename, blank_filename, texture_filename, auto_map=No
     if plot:
         name = new_filename or image_filename
 
-        def plot_image(img, title, **kw):
-            plt.figure(title, (12, 9))
-            plt.imshow(img, **kw)
-            plt.colorbar()
-            plt.tight_layout()
-
         plot_image(processed, name + " - Processed HDR", vmin=0, vmax=1)
         plot_image(linear_map(processed)[0], name + " - Processed LDR")
-        plot_image(texture_ldr, name + " - Texture LDR")
-        plot_image(mask, name + " - Mask")
+        if texture_filename is not None:
+            plot_image(texture_ldr, name + " - Texture LDR")
+            plot_image(mask, name + " - Mask")
 
     return processed if return_image else None, new_filename
 
@@ -114,7 +120,7 @@ def process_single(image_filename, blank_filename, texture_filename, auto_map=No
 def process_all(image_template, blank_template, texture_template, auto_map=None, out_dir="processed", return_images=True, **kw):
     images = glob.glob(image_template)
     blanks = glob.glob(blank_template)
-    textures = glob.glob(texture_template)
+    textures = glob.glob(texture_template) if texture_template is not None else [None] * len(images)
 
     jobs = [joblib.delayed(process_single, check_pickle=False)
             (image, blank, texture, auto_map=auto_map, out_dir=out_dir, return_image=return_images, **kw)

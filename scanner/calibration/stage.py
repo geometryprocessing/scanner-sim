@@ -124,7 +124,7 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
             plt.savefig(data_path + "/errors.png", dpi=160)
 
     if save:
-        with open("stage.json", "w") as f:
+        with open("stage/stage_calibration.json", "w") as f:
             json.dump({"p": p,
                        "dir": dir,
                        "mean_error, mm": np.mean(axis_errors),

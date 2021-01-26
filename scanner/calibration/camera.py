@@ -204,7 +204,7 @@ if __name__ == "__main__":
 
     calibration, errors = calibrate_intrinsic(data_path + "charuco/", error_thr=0.9, save=True, plot=True)
     # calibration, errors = calibrate_intrinsic(data_path + "checker/", error_thr=0.8, save=True, plot=True)
-    save_camera_calibration(calibration, "camera/calibration.json", mean_error=errors[0])
+    save_camera_calibration(calibration, "camera/camera_calibration.json", mean_error=errors[0])
 
     calib = load_camera_calibration(data_path + "charuco/calibration.json")
     center = calib["mtx"][:2, 2]

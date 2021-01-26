@@ -122,7 +122,7 @@ def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, n
             plt.savefig(data_path + "/calibration_errors.png", dpi=160)
 
     if save:
-        save_projector_calibration(intrinsic, extrinsic, data_path + "/calibration.json", mean_error=full_errors[0])
+        save_projector_calibration(intrinsic, extrinsic, data_path + "/projector_calibration.json", mean_error=full_errors[0])
 
     return intrinsic, extrinsic, full_errors
 
@@ -319,7 +319,7 @@ def calibrate_white_balance(data_path, R_filename, G_filename, B_filename, expos
         plt.tight_layout()
         plt.savefig(save_path + "white_balance.png", dpi=160)
 
-    with open("white_balance.json", "w") as f:
+    with open("projector/white_balance.json", "w") as f:
         json.dump({"g/r": np.mean(g / r),
                    "g/b": np.mean(g / b)}, f, indent=4)
 
@@ -333,8 +333,8 @@ if __name__ == "__main__":
     data_path = "D:/Scanner/Calibration/projector_extrinsic/data/charuco_checker_5mm/"
     # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
 
-    # save_projector_calibration(intrinsic, extrinsic, "projector/calibration.json", mean_error=errors[0])
-    intrinsic, extrinsic, all = load_projector_calibration("projector/calibration.json")
+    # save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration.json", mean_error=errors[0])
+    intrinsic, extrinsic, all = load_projector_calibration("scanner/calibration/projector/projector_calibration.json")
     # center = all["mtx"][:2, 2]
 
     data_path = "D:/Scanner/Calibration/projector_vignetting/data/"
