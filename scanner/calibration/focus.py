@@ -223,48 +223,48 @@ def calibrate_projector(crops, calib_params, pos, plot=False, save_figures=None,
         n = crops.shape[0]
         m = int(np.sqrt(n))
 
-        plt.figure("Original Crops (%d, %d)" % (pos[0], pos[1]), (16, 16))
-        for i in range(n):
-            plt.subplot(m, m, i+1, title=str(i))
-            plt.imshow(crops[i, pos[0], pos[1]])
-            p = params[i]
-            plt.plot(p[0], p[1], ".r")
-        plt.tight_layout()
-        # plt.suptitle("Original Crops (%d, %d)" % (pos[0], pos[1]))
+        # plt.figure("Original Crops (%d, %d)" % (pos[0], pos[1]), (16, 16))
+        # for i in range(n):
+        #     plt.subplot(m, m, i+1, title=str(i))
+        #     plt.imshow(crops[i, pos[0], pos[1]])
+        #     p = params[i]
+        #     plt.plot(p[0], p[1], ".r")
+        # plt.tight_layout()
+        # # plt.suptitle("Original Crops (%d, %d)" % (pos[0], pos[1]))
+        #
+        # if save_figures is not None:
+        #     plt.savefig(save_figures + "original_crops.png", dpi=160)
+        #
+        # plt.figure("Fitted Crops (%d, %d)" % (pos[0], pos[1]), (16, 16))
+        # for i in range(n):
+        #     plt.subplot(m, m, i+1, title=str(i))
+        #     z = polar_sigmoid(rc, *params[i])
+        #     plt.imshow(z.reshape(dim))
+        # plt.tight_layout()
+        # # plt.suptitle("Fitted Crops (%d, %d)" % (pos[0], pos[1]))
+        #
+        # if save_figures is not None:
+        #     plt.savefig(save_figures + "fitted_crops.png", dpi=160)
 
-        if save_figures is not None:
-            plt.savefig(save_figures + "original_crops.png", dpi=160)
-
-        plt.figure("Fitted Crops (%d, %d)" % (pos[0], pos[1]), (16, 16))
-        for i in range(n):
-            plt.subplot(m, m, i+1, title=str(i))
-            z = polar_sigmoid(rc, *params[i])
-            plt.imshow(z.reshape(dim))
-        plt.tight_layout()
-        # plt.suptitle("Fitted Crops (%d, %d)" % (pos[0], pos[1]))
-
-        if save_figures is not None:
-            plt.savefig(save_figures + "fitted_crops.png", dpi=160)
-
-        plt.figure("Projector Resolution", (12, 7))
-        plt.plot(dist, sigma, ".b", label="Measured Sigma")
-        plt.plot(dist, 2*R, ".g", label="Measured Diameter")
+        plt.figure("Projector Resolution", (5, 3))
+        # plt.plot(dist, sigma, ".g", label="Measured Sigma")
+        plt.plot(dist, 2*R, ".b", markersize=3.5, label="Measured Points")
 
         x = np.linspace(0, dist[thr], int(dist[thr]))
-        plt.plot(x, np.polyval(ap, x), "-r", label="Fitted Aperture")
+        plt.plot(x, np.polyval(ap, x), "-r", linewidth=1.25, label="Aperture Extrapolation")
 
         x = np.linspace(dist[thr], dist[0], int(dist[0] - dist[thr]))
-        plt.plot(x, np.polyval(fp, x), "-m", label="Fitted Focus")
-        plt.xlim([0, 650])
+        plt.plot(x, np.polyval(fp, x), "-m", linewidth=1.25, label="Polynomial Focus Fit")
+        plt.xlim([0, 600])
         plt.ylim([0, aperture])
         plt.xlabel("Distance, mm")
-        plt.ylabel("Resolution, mm")
-        plt.title("Projector Resolution")
+        plt.ylabel("Diameter, mm")
+        # plt.title("Projector Resolution")
         plt.legend()
         plt.tight_layout()
 
         if save_figures is not None:
-            plt.savefig(save_figures + "projector_resolution.png", dpi=160)
+            plt.savefig(save_figures + "projector_resolution.png", dpi=300)
 
     with open("projector/projector_focus.json", "w") as f:
         json.dump({"aperture, mm": aperture,
@@ -307,7 +307,7 @@ if __name__ == "__main__":
     cam_crops, proj_crops = np.load(data_path + "cam_crops.npy"), np.load(data_path + "proj_crops.npy")
 
     # Run one at a time to prevent fitting failure on a second call (a bug)
-    cam_focus, cam_res, cam_dof = calibrate_camera(cam_crops, calib_params, plot=True, save_figures=checker_path)
-    # proj_aperture, proj_focus, proj_res, proj_dof = calibrate_projector(proj_crops[:64, ...], calib_params, (4, 8), plot=True, save_figures=dots_path)
+    # cam_focus, cam_res, cam_dof = calibrate_camera(cam_crops, calib_params, plot=True, save_figures=checker_path)
+    proj_aperture, proj_focus, proj_res, proj_dof = calibrate_projector(proj_crops[:64, ...], calib_params, (4, 8), plot=True, save_figures=dots_path)
 
     plt.show()

@@ -220,14 +220,14 @@ def board(ax, T, R, *args, label="", **kwargs):
     basis(ax, T, R, length=10)
 
 
-def axis_equal_3d(ax):
+def axis_equal_3d(ax, zoom=1):
     extents = np.array([getattr(ax, 'get_{}lim'.format(dim))() for dim in 'xyz'])
     sz = extents[:,1] - extents[:,0]
     centers = np.mean(extents, axis=1)
     maxsize = max(abs(sz))
     r = maxsize/2
     for ctr, dim in zip(centers, 'xyz'):
-        getattr(ax, 'set_{}lim'.format(dim))(ctr - r, ctr + r)
+        getattr(ax, 'set_{}lim'.format(dim))(ctr - r/zoom, ctr + r/zoom)
 
 
 def fit_plane(p, ax=None, **kwargs):

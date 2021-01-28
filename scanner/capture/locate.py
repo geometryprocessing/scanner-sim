@@ -234,38 +234,18 @@ def locate_shapes(data_path, plot=False):
 
 
 if __name__ == "__main__":
-    # data_path = "D:/scanner_sim/captures/plane/gray/decoded/reconstructed/"
-    # data_path = "D:/scanner_sim/captures/plane/default_scan/decoded/reconstructed/"
-    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/decoded"
-    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/decoded/reconstructed/"
-
     stage_calib = numpinize(json.load(open("../calibration/stage/stage_calibration.json", "r")))
 
-    # # all, groups = load_decoded(data_path)
-    # p = load_points(data_path + "/group_points.ply")
-    # c = np.average(p, axis=0)
-    # dist = np.linalg.norm(p - c, axis=1)
-    # idx = np.nonzero(dist < 40)[0]
-    # _, _, T0, _, R0 = fit_plane(p)
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
+    # _, stage_base = locate_pawn(data_path, stage_calib, plot=True)
     #
-    # p = p[idx, :]
-    # _, _, T, _, R = fit_plane(p)
-    # ax = plot_3d(p[::100, :], "Plane Fit")
-    # basis(ax, T, R.T, length=20)
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/"
+    # locate_rook(data_path, stage_calib, stage_base, plot=True)
     #
-    #
-    # # print(p.shape, cam.shape)
-    # compute_pca_variation(p, plot=True)
-    # plt.show()
-    # exit()
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_0/gray/"
+    # locate_shapes(data_path, plot=True)
 
-    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
-    _, stage_base = locate_pawn(data_path, stage_calib, plot=True)
-
-    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/"
-    locate_rook(data_path, stage_calib, stage_base, plot=True)
-
-    data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_0/gray/"
+    data_path = "D:/scanner_sim/captures/stage_batch_2/shapes_30_deg/position_0/gray/"
     locate_shapes(data_path, plot=True)
 
     plt.show()

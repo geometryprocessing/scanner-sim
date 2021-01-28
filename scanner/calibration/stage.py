@@ -75,53 +75,61 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
     print("Incline, deg:", angle)
 
     if plot:
-        plt.figure("Stage Calibration", (12, 12))
+        plt.figure("Stage Calibration", (9, 8))
         plt.clf()
         ax = plt.subplot(111, projection='3d', proj_type='ortho')
-        ax.set_title("Stage Calibration")
+        # ax.set_title("Stage Calibration")
 
-        skip = 10
+        skip = 16
         for i in range(len(charuco_frame)):
-            if i % skip == 0:
+            if i % skip == 0 and i != 0:
                 Ti, Ri = charuco_frame[i]
-                board(ax, Ti, Ri, label="Charuco Boards" if i == 0 else "")
+                board(ax, Ti, Ri, label="Charuco Boards" if i == skip else "")
 
-        scatter(ax, np.concatenate(charuco_3d[::skip], axis=0), c="g", s=5, label="Detected Corners")
-        scatter(ax, np.array(c_centers), c="r", s=15, label="Circle Centers")
-        line(ax, p - 150 * dir, p + 150 * dir, "-b", label="Stage Axis")
+        scatter(ax, np.concatenate(charuco_3d[skip::skip], axis=0), c="g", s=4, label="Detected Corners")
+        scatter(ax, np.array(c_centers), c="r", s=16, label="Circle Centers")
+        line(ax, p - 200 * dir, p + 225 * dir, "-b", label="Stage Axis")
 
         ax.set_xlabel("x, mm")
         ax.set_ylabel("z, mm")
         ax.set_zlabel("-y, mm")
         plt.legend()
         plt.tight_layout()
-        axis_equal_3d(ax)
+        axis_equal_3d(ax, zoom=1.5)
 
         if save_figures:
             ax.view_init(elev=10, azim=-20)
             plt.savefig(data_path + "/calibration_view1.png", dpi=320)
             ax.view_init(elev=12, azim=26)
             plt.savefig(data_path + "/calibration_view2.png", dpi=320)
+            ax.view_init(elev=30, azim=-50)
+            plt.savefig(data_path + "/stage_calibration_3d.png", dpi=400)
 
-        plt.figure("Errors", (12, 7))
+        plt.figure("Errors", (7, 3.2))
         plt.clf()
-        plt.subplot(1, 3, 1, title="Camera reprojection")
-        plt.hist(np.concatenate(charuco_errors[1]), bins=50)
-        plt.xlabel("Error, pixels")
+        # plt.subplot(1, 3, 1, title="Camera reprojection")
+        # plt.hist(np.concatenate(charuco_errors[1]), bins=50)
+        # plt.xlabel("Error, pixels")
+        # plt.tight_layout()
+
+        plt.subplot(1, 2, 1)#, title="Circle Fit")
+        plt.title("Circle Fit", fontsize=11)
+        plt.hist(c_errors, bins=40, range=[-0.3, 0.3])
+        plt.xlim([-0.3, 0.3])
+        plt.xlabel("Error, mm")
+        plt.ylabel("Counts")
         plt.tight_layout()
 
-        plt.subplot(1, 3, 2, title="Circle fit")
-        plt.hist(c_errors, bins=50)
+        plt.subplot(1, 2, 2)#, title="Axis Fit")
+        plt.title("Axis Fit", fontsize=11)
+        plt.hist(axis_errors, bins=40, range=[0, 0.2])
+        plt.xlim([0, 0.2])
         plt.xlabel("Error, mm")
-        plt.tight_layout()
-
-        plt.subplot(1, 3, 3, title="Axis fit")
-        plt.hist(axis_errors, bins=50)
-        plt.xlabel("Error, mm")
+        plt.ylabel("Counts")
         plt.tight_layout()
 
         if save_figures:
-            plt.savefig(data_path + "/errors.png", dpi=160)
+            plt.savefig(data_path + "/stage_errors.png", dpi=300)
 
     if save:
         with open("stage/stage_calibration.json", "w") as f:
