@@ -21,9 +21,10 @@ def render_object(config_path):
     
     patterns = prepare_patterns(parameters)
     rotations = prepare_rotations(parameters)
+    translations = prepare_translations(parameters)
     #print(len(patterns), len(rotations), rotations)
     
-    render_all_patterns_and_rotations(parameters, patterns, rotations)
+    render_all_patterns_and_rotations(parameters, patterns, rotations, translations)
 
 
 # Prepare the list of rotations for rendering
@@ -45,11 +46,20 @@ def prepare_rotations(parameters):
     return rotations
 
 # Prepare the list of translations for rendering
-#def prepare_translations(parameters):
-                
+def prepare_translations(parameters):
+    if parameters["trans_type"] == "Random":
+        translations = []
+        for i in range(parameters["trans_range"][3]):
+            trans_x = np.random.rand() * (parameters["trans_range"][0][1] - parameters["trans_range"][0][0]) + parameters["trans_range"][0][0]
+            trans_y = np.random.rand() * (parameters["trans_range"][1][1] - parameters["trans_range"][1][0]) + parameters["trans_range"][1][0]
+            trans_z = np.random.rand() * (parameters["trans_range"][2][1] - parameters["trans_range"][2][0]) + parameters["trans_range"][2][0]
+            translations.append({"name": "trans_%03i"%i, "trans_x": trans_x, "trans_y": trans_y, "trans_z": trans_z})
+    elif parameters["trans_type"] == "Fixed":
+        translations = [{"name": "trans_fixed", "trans_x": parameters["trans_x"], "trans_y": parameters["trans_y"], "trans_z": parameters["trans_z"]}]
+    return translations
 
 # Render all patterns and rotations with the given parameters
-def render_all_patterns_and_rotations(parameters, patterns, rotations):
+def render_all_patterns_and_rotations(parameters, patterns, rotations, translations):
     scheduler = Scheduler.getInstance()
     scheduler.stop()
     pars = parameters
@@ -65,38 +75,66 @@ def render_all_patterns_and_rotations(parameters, patterns, rotations):
     
     # Iterate over all rotations
     for r_cnt, rotation in enumerate(rotations):
-        res_path = os.path.join(pars["root_path"], pars["result_path"], rotation["name"])
-        os.makedirs(res_path, exist_ok=parameters["result_overwrite"])
+        if len(rotations) > 1:
+            rot_path = os.path.join(pars["root_path"], pars["result_path"], rotation["name"])
+        else: 
+            rot_path = os.path.join(pars["root_path"], pars["result_path"])
+        os.makedirs(rot_path, exist_ok=parameters["result_overwrite"])
+        
+        # Iterate over all translations
+        for t_cnt, translation in enumerate(translations):
+            if len(translations) > 1:
+                res_path = os.path.join(rot_path, translation["name"])
+            else:
+                res_path = rot_path
+            os.makedirs(res_path, exist_ok=parameters["result_overwrite"])
 
-        # Iterate over all patterns
-        for p_cnt, pattern in enumerate(patterns):
-            param_map = map_render_parameters(pars, rotation, pattern)
-            param_map["result_name"] = res_path + "/img_%03i"%p_cnt
-            
-            img = render_scene(scheduler, queue, pars, param_map)
-            if not parameters["pattern_colored"]:
-                img = rgb2gray(img)
+            # Iterate over all patterns
+            for p_cnt, pattern in enumerate(patterns):
+                param_map = map_render_parameters(pars, rotation, pattern, translation)
+                param_map["result_name"] = res_path + "/img_%03i"%p_cnt
                 
-            #print(img.dtype, img.shape)
-            img = Image.fromarray(img.astype(np.uint8))
-            img.save(param_map["result_name"] + ".png")
-            
-        # Render with ambient illumination
-        if pars["render_ambient"]:
-            param_map = map_render_parameters(pars, rotation, patterns[1]) # TODO proper selection of black pattern
-            param_map["result_name"] = res_path + "/img_amb"
-            param_map["const_radiance"] = "0.25"
+                p_dict = {}
+                for k in param_map:
+                    sk = str(k)
+                    key = sk.split(", ")[0][1:]
+                    tm = sk.split(", ")
+                    if len(tm) == 2:
+                        data = sk.split(", ")[1][:-1]
+                    else: 
+                        data = ",".join(sk.split(", ")[1:])[:-1]
+                    #print(dir(k), key, data)
+                    p_dict[key] = data
+                    
+                with open(res_path+"/pars.json", "w") as fi:
+                    json.dump(p_dict, fi, indent=2, sort_keys=True)
 
-            img = render_scene(scheduler, queue, pars, param_map)
-            if not parameters["pattern_colored"]:
-                img = rgb2gray(img)
+                img = render_scene(scheduler, queue, pars, param_map)
+                img = img[pars["cam_crop_offset_y"]:pars["cam_crop_offset_y"]+pars["cam_crop_height"], pars["cam_crop_offset_x"]:pars["cam_crop_offset_x"]+pars["cam_crop_width"]]
+                if not parameters["pattern_colored"]:
+                    img = rgb2gray(img)
 
-            img = Image.fromarray(img.astype(np.uint8))
-            img.save(param_map["result_name"] + ".png")
+                #print(img.dtype, img.shape)
+                img = Image.fromarray(img.astype(np.uint8))
+                img.save(param_map["result_name"] + ".png")
+
+            # Render with ambient illumination
+            if pars["render_ambient"] and len(patterns) > 1:
+                param_map = map_render_parameters(pars, rotation, patterns[1], translation) # TODO proper selection of black pattern
+                param_map["result_name"] = res_path + "/img_amb"
+                param_map["const_radiance"] = "0.25"
+
+                img = render_scene(scheduler, queue, pars, param_map)
+                img = img[pars["cam_crop_offset_y"]:pars["cam_crop_offset_y"]+pars["cam_crop_height"], pars["cam_crop_offset_x"]:pars["cam_crop_offset_x"]+pars["cam_crop_width"]]
+                if not parameters["pattern_colored"]:
+                    img = rgb2gray(img)
+
+                img = Image.fromarray(img.astype(np.uint8))
+                img.save(param_map["result_name"] + ".png")
 
 
 # Map the render configuration to mitsuba friendly string map
-def map_render_parameters(pars, rotation, pattern):
+def map_render_parameters(pars, rotation, pattern, translation):
     # TODO cleanup
     paramMap = StringMap()
     paramMap['pattern_name'] = pattern
@@ -148,6 +186,10 @@ def map_render_parameters(pars, rotation, pattern):
     paramMap['rot_x'] = str(rotation["rot_x"])
     paramMap['rot_y'] = str(rotation["rot_y"])
     paramMap['rot_z'] = str(rotation["rot_z"])
+    paramMap['trans_x'] = str(translation["trans_x"])
+    paramMap['trans_y'] = str(translation["trans_y"])
+    paramMap['trans_z'] = str(translation["trans_z"])
+
     return paramMap
 
 
@@ -210,16 +252,24 @@ def prepare_patterns(parameters):
             pass
             # TODO: Apply distortion and calibration
             
+        if parameters["pattern_flip_ud"]:
+            tex = np.flipud(tex)
+            
         if parameters["pattern_quadrify"]:
-            if tex_width > tex_height:
-                if channels > 1:
-                    z = np.zeros((tex_width-tex_height, tex_width, channels), dtype="uint8")
-                else:
-                    z = np.zeros((tex_width-tex_height, tex_width), dtype="uint8")                    
-                if parameters["pattern_pad_below"]:
-                    tex = np.concatenate((tex, z), axis=0)
-                else:
-                    tex = np.concatenate((z, tex), axis=0)
+#             if tex_width > tex_height:
+#                 if channels > 1:
+#                     z = np.zeros((tex_width-tex_height, tex_width, channels), dtype="uint8")
+#                 else:
+#                     z = np.zeros((tex_width-tex_height, tex_width), dtype="uint8")                    
+#                 if parameters["pattern_pad_below"]:
+#                     tex = np.concatenate((tex, z), axis=0)
+#                 else:
+#                     tex = np.concatenate((z, tex), axis=0)
+            z = np.zeros((tex_height, 138), dtype="uint8")
+            z2 = np.zeros((tex_height, 133), dtype="uint8")
+            tex = np.concatenate((z, tex, z2), axis=1)
+            z = np.zeros((1111, 2191), dtype="uint8")
+            tex = np.concatenate((tex, z), axis=0)
 
         if parameters["pattern_overwrite"] or not os.path.isfile(calib_path + "/" + stem.replace(".png", "_calib.png")):
             tex = Image.fromarray(tex)
