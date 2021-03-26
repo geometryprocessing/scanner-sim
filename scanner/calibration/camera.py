@@ -35,6 +35,21 @@ def calibrate_intrinsic(data_path, max_images=70, min_points=80, save=False, plo
         u_points = cv2.undistortPoints(points, mtx, dist, None, new_mtx).reshape(-1, 2)
 
     if plot:
+        all_errors = []
+        for error in errors[1][1]:
+            all_errors.extend(error)
+
+        plt.figure("All errors", (4, 3))
+        plt.clf()
+        plt.hist(all_errors, bins=50, range=[0, 2])
+        plt.xlabel("Error, pixels")
+        plt.ylabel("Counts")
+        plt.xlim([0, 2])
+        plt.tight_layout()
+
+        if save:
+            plt.savefig(data_path + "/all_camera_reprojection_errors.png", dpi=300)
+
         def plot_rec(p):
             plt.plot(p[:, 0], p[:, 1], ".g")
             tl, tr = np.argmin(p[:, 0] + p[:, 1]), np.argmin(-p[:, 0] + p[:, 1])
@@ -168,50 +183,50 @@ def calibrate_vignetting(data_path, light_on_filename, light_off_filename, dark_
     cv2.imwrite(path_prefix + "smooth.png", np.repeat(smooth[:, :, None], 3, axis=2))
 
     if plot:
-        plt.figure("Geometric Correction", (16, 9))
-        plt.imshow(correction)
-        plt.title("Geometric Correction")
-        plt.colorbar()
-        plt.tight_layout()
-        plt.savefig(path_prefix + "correction.png", dpi=160)
+        # plt.figure("Geometric Correction", (16, 9))
+        # plt.imshow(correction)
+        # plt.title("Geometric Correction")
+        # plt.colorbar()
+        # plt.tight_layout()
+        # plt.savefig(path_prefix + "correction.png", dpi=160)
 
-        plt.figure("Corrected Vignetting", (16, 9))
-        plt.imshow(clean, vmin=vmin, vmax=vmax)
-        plt.plot(center[0], center[1], ".r")
-        plt.title("Corrected Vignetting")
-        plt.colorbar()
-        plt.tight_layout()
-        plt.savefig(path_prefix + "corrected.png", dpi=160)
+        # plt.figure("Corrected Vignetting", (16, 9))
+        # plt.imshow(clean, vmin=vmin, vmax=vmax)
+        # plt.plot(center[0], center[1], ".r")
+        # plt.title("Corrected Vignetting")
+        # plt.colorbar()
+        # plt.tight_layout()
+        # plt.savefig(path_prefix + "corrected.png", dpi=160)
 
-        plt.figure("Radial Profile", (16, 9))
-        idx = np.random.randint(0, w*h, size=3000)
+        plt.figure("Radial Profile", (6, 3.5))
+        idx = np.random.randint(0, w*h, size=500)
         x = R.ravel()[idx]
-        plt.plot(x, (clean/correction).ravel()[idx], ".r", markersize=4, label="No Correction")
-        plt.plot(x, clean.ravel()[idx], ".b", markersize=4, label="With Correction")
+        plt.plot(x, (clean/correction).ravel()[idx], ".b", markersize=3, label="No Correction")
+        plt.plot(x, clean.ravel()[idx], ".g", markersize=3, label="With Correction")
         x = np.sort(x)
-        plt.plot(x, profile_func(p, x), "-g", linewidth=2.5, label="Fitted")
+        plt.plot(x, profile_func(p, x), "-r", linewidth=2, label="Polynomial Fit")
         plt.xlim([0, np.max(R)])
         plt.xlabel("Radial distance, pixels")
         plt.ylabel("Intensity")
         plt.legend()
-        plt.title("Radial Profile")
+        # plt.title("Radial Profile")
         plt.tight_layout()
-        plt.savefig(path_prefix + "profile.png", dpi=160)
+        plt.savefig(path_prefix + "profile.png", dpi=300)
 
 
 if __name__ == "__main__":
     data_path = "D:/Scanner/Calibration/camera_intrinsics/data/"
 
-    calibration, errors = calibrate_intrinsic(data_path + "charuco/", error_thr=0.9, save=True, plot=True)
+    # calibration, errors = calibrate_intrinsic(data_path + "charuco/", error_thr=0.9, save=True, plot=True)
     # calibration, errors = calibrate_intrinsic(data_path + "checker/", error_thr=0.8, save=True, plot=True)
-    save_camera_calibration(calibration, "camera/camera_calibration.json", mean_error=errors[0])
+    # save_camera_calibration(calibration, "camera/camera_calibration.json", mean_error=errors[0])
 
     calib = load_camera_calibration(data_path + "charuco/calibration.json")
     center = calib["mtx"][:2, 2]
 
     data_path = "D:/Scanner/Calibration/camera_vignetting/data/"
     # Run one at a time to prevent fitting failure on a second call (a bug)
-    # calibrate_vignetting(data_path, "inverted_softbox_8s.png", "dark_room_8s.png", "dark_frame_8s.png", center, plot=True)
+    calibrate_vignetting(data_path, "inverted_softbox_8s.png", "dark_room_8s.png", "dark_frame_8s.png", center, plot=True)
     # calibrate_vignetting(data_path, "neatfi_light_10s.png", "dark_room_10s.png", "dark_frame_10s.png", center, plot=True)
 
     plt.show()

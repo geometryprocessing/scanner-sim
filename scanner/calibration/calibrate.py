@@ -61,19 +61,20 @@ def calibrate(obj_points, img_points, dim, error_thr=1.0, mtx_guess=None, no_tan
     print("\nroi:", roi)
 
     if plot:
-        plt.figure("Calibration", (12, 9))
+        plt.figure("Calibration", (4.4, 3))
         plt.clf()
-        plt.plot(np.arange(n), initial_errors[0], ".r", label="Initial")
-        plt.plot(selected, refined_errors[0], ".b", label="Refined")
-        plt.plot([0, n], [error_thr, error_thr], '--k', label="Threshold")
-        plt.title("Projection Errors")
-        plt.xlabel("Image #")
+        plt.plot(np.arange(n), initial_errors[0], ".r", markersize=3.5, label="Initial Errors")
+        plt.plot(selected, refined_errors[0], ".b", markersize=3.5, label="Selected Stops")
+        plt.plot([-1, n], [error_thr, error_thr], '--k', linewidth=1.25, label="Threshold")
+        # plt.title("Projection Errors")
+        plt.xlabel("Stop #")
         plt.ylabel("Error, pixels")
+        plt.xlim([-2, n+1])
         plt.ylim([0, 1.1 * np.max(initial_errors[0])])
         plt.legend()
         plt.tight_layout()
         if save_figures:
-            plt.savefig(out_dir + "/projection_errors.png", dpi=160)
+            plt.savefig(out_dir + "/initial_projection_errors.png", dpi=300)
 
     calibration = mtx, dist.ravel(), new_mtx, np.array(roi)
     errors = initial_errors, refined_errors, selected

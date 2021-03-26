@@ -106,20 +106,22 @@ def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, n
         if save_figures:
             plt.savefig(data_path + "/distortions.png", dpi=160)
 
-        plt.figure("Errors", (12, 7))
+        plt.figure("Errors", (3.3, 3))
         plt.clf()
-        plt.subplot(2, 1, 1, title="Camera projection")
-        plt.hist(np.concatenate(all_plane_errors), bins=50)
-        plt.xlabel("Error, pixels")
-        plt.tight_layout()
+        # plt.subplot(2, 1, 1, title="Camera projection")
+        # plt.hist(np.concatenate(all_plane_errors), bins=50)
+        # plt.xlabel("Error, pixels")
+        # plt.tight_layout()
 
-        plt.subplot(2, 1, 2, title="Projector projection")
-        plt.hist(full_errors[1], bins=50)
+        # plt.subplot(2, 1, 2, title="Projector projection")
+        plt.hist(full_errors[1], bins=40, range=[0, 0.8])
         plt.xlabel("Error, pixels")
+        plt.ylabel("Counts")
+        plt.xlim([0, 0.8])
         plt.tight_layout()
 
         if save_figures:
-            plt.savefig(data_path + "/calibration_errors.png", dpi=160)
+            plt.savefig(data_path + "/all_projector_reprojection_errors.png", dpi=300)
 
     if save:
         save_projector_calibration(intrinsic, extrinsic, data_path + "/projector_calibration.json", mean_error=full_errors[0])
@@ -223,46 +225,46 @@ def calibrate_vignetting(data_path, camera_vignetting, light_on_filename, light_
 
     if plot:
         plt.close("all")
-        plt.figure("Original Vignetting", (16, 9))
-        plt.imshow(clean, vmin=vmin, vmax=vmax)
-        plt.title("Original Vignetting")
-        plt.colorbar()
-        plt.tight_layout()
-        plt.savefig(path_prefix + "original.png", dpi=160)
+        # plt.figure("Original Vignetting", (16, 9))
+        # plt.imshow(clean, vmin=vmin, vmax=vmax)
+        # plt.title("Original Vignetting")
+        # plt.colorbar()
+        # plt.tight_layout()
+        # plt.savefig(path_prefix + "original.png", dpi=160)
 
-        plt.figure("Corrected Vignetting", (16, 9))
-        plt.imshow(corrected, vmin=vmin, vmax=vmax)
-        plt.title("Corrected Vignetting")
-        points = points.reshape((-1, 2))
-        plt.plot(points[:, 0], points[:, 1], ".r")
-        plt.plot(tl[0], tl[1], ".g")
-        plt.plot(tr[0], tr[1], ".g")
-        plt.plot(bl[0], bl[1], ".g")
-        plt.plot(br[0], br[1], ".g")
-        plt.colorbar()
-        plt.tight_layout()
-        plt.savefig(path_prefix + "corrected.png", dpi=160)
+        # plt.figure("Corrected Vignetting", (16, 9))
+        # plt.imshow(corrected, vmin=vmin, vmax=vmax)
+        # plt.title("Corrected Vignetting")
+        # points = points.reshape((-1, 2))
+        # plt.plot(points[:, 0], points[:, 1], ".r")
+        # plt.plot(tl[0], tl[1], ".g")
+        # plt.plot(tr[0], tr[1], ".g")
+        # plt.plot(bl[0], bl[1], ".g")
+        # plt.plot(br[0], br[1], ".g")
+        # plt.colorbar()
+        # plt.tight_layout()
+        # plt.savefig(path_prefix + "corrected.png", dpi=160)
 
-        plt.figure("Cropped", (16, 9))
-        plt.imshow(z)
-        plt.title("Cropped Vignetting")
+        plt.figure("Cropped", (6.7, 3.5))
+        plt.imshow(z, vmin=100)
+        # plt.title("Cropped Vignetting")
         plt.colorbar()
         plt.tight_layout()
-        plt.savefig(path_prefix + "cropped.png", dpi=160)
+        plt.savefig(path_prefix + "cropped.png", dpi=300)
 
-        plt.figure("Smooth", (16, 9))
-        plt.imshow(zopt)
-        plt.title("Smooth Vignetting")
-        plt.colorbar()
-        plt.tight_layout()
-        plt.savefig(path_prefix + "smooth.png", dpi=160)
+        # plt.figure("Smooth", (16, 9))
+        # plt.imshow(zopt)
+        # plt.title("Smooth Vignetting")
+        # plt.colorbar()
+        # plt.tight_layout()
+        # plt.savefig(path_prefix + "smooth.png", dpi=160)
 
-        plt.figure("Difference", (16, 9))
-        plt.imshow(z - zopt)
-        plt.title("Difference")
-        plt.colorbar()
-        plt.tight_layout()
-        plt.savefig(path_prefix + "smooth.png", dpi=160)
+        # plt.figure("Difference", (16, 9))
+        # plt.imshow(z - zopt)
+        # plt.title("Difference")
+        # plt.colorbar()
+        # plt.tight_layout()
+        # plt.savefig(path_prefix + "smooth.png", dpi=160)
 
 
 def calibrate_white_balance(data_path, R_filename, G_filename, B_filename, exposures=None, plot=False):
@@ -325,7 +327,8 @@ def calibrate_white_balance(data_path, R_filename, G_filename, B_filename, expos
 
 
 if __name__ == "__main__":
-    camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
+    # camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
+    camera_calib = load_camera_calibration("camera/camera_calibration.json")
 
     data_path = "D:/Scanner/Calibration/projector_intrinsics/data/charuco_checker_5mm/"
     # intrinsic, _, _ = calibrate_geometry(data_path, camera_calib, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
@@ -334,14 +337,14 @@ if __name__ == "__main__":
     # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
 
     # save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration.json", mean_error=errors[0])
-    intrinsic, extrinsic, all = load_projector_calibration("scanner/calibration/projector/projector_calibration.json")
+    # intrinsic, extrinsic, all = load_projector_calibration("scanner/calibration/projector/projector_calibration.json")
     # center = all["mtx"][:2, 2]
 
     data_path = "D:/Scanner/Calibration/projector_vignetting/data/"
     camera_vignetting = load_ldr("camera/vignetting/inverted_softbox_smooth.png", make_gray=True)
     calibrate_vignetting(data_path, camera_vignetting, "White_200ms.png", "Black_200ms.png", "Dark_200ms.png", "White_Checker_200ms.png", plot=True)
 
-    calibrate_white_balance(data_path, "R_800ms.png", "G_400ms.png", "B_800ms.png", exposures=[0.8, 0.4, 0.8], plot=True)
+    # calibrate_white_balance(data_path, "R_800ms.png", "G_400ms.png", "B_800ms.png", exposures=[0.8, 0.4, 0.8], plot=True)
 
     data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/merged/"
     # calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, center=True, no_tangent=True, save=True, plot=True, save_figures=True)

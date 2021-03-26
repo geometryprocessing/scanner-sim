@@ -75,14 +75,18 @@ if __name__ == "__main__":
     stage_calib = numpinize(json.load(open("../calibration/stage/stage_calibration.json", "r")))
 
     # Debug
-    # merge_both_30_deg("D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/", "pawn", stage_calib, plot=True)
+    merge_both_30_deg("D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/", "pawn", stage_calib, plot=True)
+
+    data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/"
+    for object_name in ["pawn", "rook", "shapes"]:
+        merge_both_30_deg(data_path_template % object_name, object_name, stage_calib, plot=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/no_ambient/%s_30_deg/"
     # for object_name in ["pawn", "rook", "shapes"]:
     #     merge_both_30_deg(data_path_template % object_name, object_name, stage_calib, plot=True)
 
-    data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/"
-    for object_name in ["dodo", "avocado", "house", "chair", "vase", "bird", "radio"]:
-        merge_both_30_deg(data_path_template % object_name, object_name, stage_calib, max_dist=70, plot=True)
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/"
+    # for object_name in ["dodo", "avocado", "house", "chair", "vase", "bird", "radio"]:
+    #     merge_both_30_deg(data_path_template % object_name, object_name, stage_calib, max_dist=70, plot=True)
 
     plt.show()

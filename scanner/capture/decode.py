@@ -242,10 +242,14 @@ if __name__ == "__main__":
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/"
     # decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
 
+    data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
+    for object in ["pawn", "rook", "shapes"]:
+        decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
+
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/no_ambient/%s_30_deg/position_*"
     # for object in ["pawn", "rook", "shapes"]:
     #     decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
-    #
+
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
     # for object in ["dodo", "avocado", "house", "chair", "vase", "bird", "radio"]:
     #     decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1600, group=True, plot=True, verbose=True)
