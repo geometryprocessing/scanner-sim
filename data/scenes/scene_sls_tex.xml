@@ -62,21 +62,23 @@
 
     <shape type="$shape_type">
         <string name="filename" value='$object_name'/>
-        <float name="maxSmoothAngle" value="30.0"/>
+        <boolean name="flipNormals" value="false"/>
+        
+<!--         <bsdf type="roughplastic">
+          <rgb name="diffuseReflectance" value="0.2, 0.6, 0.3"/>
+        </bsdf> -->
 
-<!--        <bsdf type="diffuse">-->
-<!--            <spectrum name="reflectance" value="0.0 1.0 1.0"/>-->
-<!--            <texture type='vertexcolors' name="reflectance"/>-->
-<!--        </bsdf>-->
+<!--         <bsdf type="diffuse">
+           <spectrum name="reflectance" value="0.0 1.0 1.0"/>
+           <texture type='vertexcolors' name="reflectance"/>
+        </bsdf> -->
 
-        <bsdf type="roughplastic">
+<!--          <bsdf type="roughplastic">
             <string name="distribution" value="beckmann"/>
-            <float name="intIOR" value="$mat_ior"/> <!-- 1.1-->
-            <!--<float name="extIOR" value="1.01"/> -->
+            <float name="intIOR" value="$mat_ior"/>
             <float name="alpha" value="$mat_alpha"/>
-<!--             <spectrum name="specularReflectance" value="0.1"/> -->
-            <spectrum name="diffuseReflectance" value="$mat_diff"/> <!--0.4-->
-        </bsdf>
+            <spectrum name="diffuseReflectance" value="$mat_diff"/>
+        </bsdf> -->
 
         <transform name="toWorld">
             <scale x="$scale" y="$scale" z="$scale"/>

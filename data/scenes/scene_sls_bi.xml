@@ -4,18 +4,11 @@
 <!--        <integer name="maxDepth" value="128"/>-->
 <!--    </integrator>-->
 
-<integrator type="multichannel">
-    <integrator type="path">
-        <integer name="maxDepth" value="128"/>
-        <boolean name="hideEmitters" value="true"/>
-    </integrator>
-<!--     <integrator type="bdpt">
-        <integer name="maxDepth" value="128"/>
-    </integrator> -->
-    <integrator type="field">
-        <string name="field" value="distance"/>
-    </integrator>
+
+<integrator type="bdpt">
+    <integer name="maxDepth" value="128"/>
 </integrator>
+
 
     <sensor type="thinlens">
         <float name="nearClip" value="0.001"/>
@@ -41,9 +34,9 @@
 <!--        </film>-->
 
 		<film type="hdrfilm">
-            <string name="pixelFormat" value="rgba,luminance"/>
+            <string name="pixelFormat" value="rgb"/>
             <string name="fileFormat" value="openexr"/>
-            <string name="channelNames" value="color, distance"/>
+            <string name="channelNames" value="color"/>
             <string name="componentFormat" value="float32"/>
 			<boolean name="banner" value="false"/>
             <integer name="width" value='$cam_width'/>
@@ -74,7 +67,6 @@
             <float name="intIOR" value="$mat_ior"/> <!-- 1.1-->
             <!--<float name="extIOR" value="1.01"/> -->
             <float name="alpha" value="$mat_alpha"/>
-<!--             <spectrum name="specularReflectance" value="0.1"/> -->
             <spectrum name="diffuseReflectance" value="$mat_diff"/> <!--0.4-->
         </bsdf>
 
