@@ -326,6 +326,126 @@ def calibrate_white_balance(data_path, R_filename, G_filename, B_filename, expos
                    "g/b": np.mean(g / b)}, f, indent=4)
 
 
+def calibrate_response(data_path, cache=True, save=False, plot=False, save_figures=True, **kw):
+    colors = ["gray", "red", "green", "blue"]
+
+    def process_single(filename, id, plot=False):
+        print("Loading %d:" % id, filename)
+        img = load_openexr(filename)
+
+        ambient = np.average(img[100:150, 5000:5050])
+        parasitic = np.average(img[1000:1050, 3250:3300])
+        signal = np.average(img[2000:2050, 3250:3300])
+
+        print(id, "-", ambient, parasitic, signal)
+
+        if plot:
+            m = np.max(img)
+            img[100:150, 5000:5050] = m
+            img[1000:1050, 3250:3300] = m
+            img[2000:2050, 3250:3300] = m
+
+            plt.figure(filename, (16, 10))
+            plt.imshow(img, vmax=m/0.9)
+            plt.colorbar()
+            plt.tight_layout()
+
+        return id, ambient, parasitic, signal
+
+    intensities = {}
+    for color in colors:
+    # for color in ["gray"]:
+        filename = data_path + "/%s.json" % color
+
+        if os.path.exists(filename) and cache:
+            print("Reuse cache:", filename)
+            with open(filename, "r") as f:
+                intensities[color] = numpinize(json.load(f))
+        else:
+            files = glob.glob(data_path + "/%s_*.exr" % color)
+            ids = [int(file[file.rfind("_")+1:-4]) for file in files]
+
+            order = [i[0] for i in sorted(enumerate(ids), key=lambda x:x[1])]
+            files = [files[i] for i in order]
+            ids = [ids[i] for i in order]
+
+            print(len(files), color, "files:", files)
+            print("ids:", ids)
+
+            # process_single(files[-1], ids[-1], plot=True)
+
+            jobs = [joblib.delayed(process_single)(file, id) for file, id in zip(files, ids)]
+            results = joblib.Parallel(verbose=15, n_jobs=-1, batch_size=1, pre_dispatch="all")(jobs)
+
+            results = {"ids": np.array(ids),
+                       "ambient": np.array([r[1] for r in results]),
+                       "parasitic": np.array([r[2] for r in results]),
+                       "signal": np.array([r[3] for r in results])}
+
+            intensities[color] = results
+            # print(results)
+
+            if cache:
+                with open(filename, "w") as f:
+                    json.dump(results, f, indent=4, cls=NumpyEncoder)
+
+    gammas, polies = {"func": "log10(y) = p[0] * log10(x) + p[1]"}, {"func": "y = p[0] * x^2 + p[1] * x + p[2]"}
+    print("\nFitting...")
+
+    for i, color in enumerate(colors):
+        x = intensities[color]["ids"][1:]
+        y = intensities[color]["signal"][1:] - intensities[color]["signal"][0]
+        gam = np.polyfit(np.log10(x), np.log10(y), 1)
+        poly = np.polyfit(x, y, 2)
+        print(color, gam, poly)
+        gammas[color] = gam
+        polies[color] = poly
+
+    if save:
+        with open(data_path + "/projector_gammas.json", "w") as f:
+            json.dump(gammas, f, indent=4, cls=NumpyEncoder)
+
+        with open(data_path + "/projector_polies.json", "w") as f:
+            json.dump(polies, f, indent=4, cls=NumpyEncoder)
+
+    if plot:
+        plt.figure("Projector Response", (16, 10))
+        for i, color in enumerate(colors):
+            data = intensities[color]
+            ids, amb, par, sig = data["ids"], data["ambient"], data["parasitic"], data["signal"]
+            resp = sig - sig[0]
+
+            print("\n%s:" % color.capitalize())
+            print("sig_0:", sig[0])
+            print("sig_250:", sig[-2])
+            print("sig_250 / sig_0:", sig[-2] / sig[0])
+            print("par_250 / par_0:", par[-2] / par[0])
+            print("par_0 / sig_0:", par[0] / sig[0])
+            print("amb_250 / amb_0:", amb[-2] / amb[0])
+            print("amb_0 / sig_0:", amb[0] / sig[0])
+
+            # plt.figure(color.capitalize(), (16, 10))
+            plt.subplot(221 + i)
+            plt.plot(ids, amb, "-", label="Ambient")
+            plt.plot(ids, par, "-", label="Parasitic")
+            plt.plot(ids, sig, "-", label="Signal")
+            plt.plot(ids, resp, "b.", label="Response")
+            plt.plot(ids, resp[-2] * np.power(ids / ids[-2], gammas[color][0]), "r-", label="Gamma (g = %.3f)" % gammas[color][0])
+            plt.plot(ids, np.polyval(polies[color], ids), "m-", label="Polynomial (deg = 2)")
+            plt.legend()
+            plt.xlabel("Pixel value")
+            plt.ylabel("Intensity")
+            # plt.loglog()
+            # plt.semilogy()
+            plt.title(color.capitalize())
+            plt.tight_layout()
+
+            # if save_figures:
+            #     plt.savefig(data_path + "%s_response.png" % color, dpi=120)
+
+        plt.savefig(data_path + "/projector_response.png", dpi=120)
+
+
 if __name__ == "__main__":
     # camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
     camera_calib = load_camera_calibration("camera/camera_calibration.json")
@@ -353,7 +473,10 @@ if __name__ == "__main__":
     # calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=50, center=True, no_tangent=True, save=True, plot=True, save_figures=True)
 
     data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
-    _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, error_thr=0.8, no_tangent=True, save=True, plot=True, save_figures=True)
-    save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration_test.json", mean_error=errors[0])
+    # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, error_thr=0.8, no_tangent=True, save=True, plot=True, save_figures=True)
+    # save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration_test.json", mean_error=errors[0])
+
+    data_path = "D:/scanner_sim/calibration/projector_response/data/"
+    calibrate_response(data_path, save=True, plot=True, save_figures=True)
 
     plt.show()
