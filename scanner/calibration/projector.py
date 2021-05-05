@@ -337,12 +337,12 @@ if __name__ == "__main__":
     # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
 
     # save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration.json", mean_error=errors[0])
-    # intrinsic, extrinsic, all = load_projector_calibration("scanner/calibration/projector/projector_calibration.json")
+    intrinsic, extrinsic, all = load_projector_calibration("projector/projector_calibration.json")
     # center = all["mtx"][:2, 2]
 
     data_path = "D:/Scanner/Calibration/projector_vignetting/data/"
-    camera_vignetting = load_ldr("camera/vignetting/inverted_softbox_smooth.png", make_gray=True)
-    calibrate_vignetting(data_path, camera_vignetting, "White_200ms.png", "Black_200ms.png", "Dark_200ms.png", "White_Checker_200ms.png", plot=True)
+    # camera_vignetting = load_ldr("camera/vignetting/inverted_softbox_smooth.png", make_gray=True)
+    # calibrate_vignetting(data_path, camera_vignetting, "White_200ms.png", "Black_200ms.png", "Dark_200ms.png", "White_Checker_200ms.png", plot=True)
 
     # calibrate_white_balance(data_path, "R_800ms.png", "G_400ms.png", "B_800ms.png", exposures=[0.8, 0.4, 0.8], plot=True)
 
@@ -351,5 +351,9 @@ if __name__ == "__main__":
 
     data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/merged/"
     # calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=50, center=True, no_tangent=True, save=True, plot=True, save_figures=True)
+
+    data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
+    _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, error_thr=0.8, no_tangent=True, save=True, plot=True, save_figures=True)
+    save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration_test.json", mean_error=errors[0])
 
     plt.show()

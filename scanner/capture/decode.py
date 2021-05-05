@@ -54,7 +54,7 @@ def get_all_bit_masks(template, inverted_template, ids=None, undistort=None, **k
     else:
         filenames, inverted_filenames = template, inverted_template
 
-    jobs = [joblib.delayed(get_single_bit_mask, check_pickle=False)
+    jobs = [joblib.delayed(get_single_bit_mask)
             (filename, inverted_filename, undistort=undistort, plot=False, **kw)
             for filename, inverted_filename in zip(filenames, inverted_filenames)]
 
@@ -240,11 +240,13 @@ if __name__ == "__main__":
     # Planes
     # data_path = "D:/scanner_sim/captures/plane/gray/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/"
-    # decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
+    data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/gray/"
+    data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/gray/"
+    decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
 
-    data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
-    for object in ["pawn", "rook", "shapes"]:
-        decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
+    # for object in ["pawn", "rook", "shapes"]:
+    #     decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/no_ambient/%s_30_deg/position_*"
     # for object in ["pawn", "rook", "shapes"]:
