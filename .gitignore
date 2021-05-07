@@ -2,3 +2,10 @@
 old_scanner
 __pycache__
 .ipynb_checkpoints
+data/configs
+data/datasets
+data/models/abc_00
+data/models/abc_rand
+data/objects/abc_filter1
+data/objects/abc_filter2
+

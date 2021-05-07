@@ -265,10 +265,10 @@ def prepare_patterns(parameters):
 #                     tex = np.concatenate((tex, z), axis=0)
 #                 else:
 #                     tex = np.concatenate((z, tex), axis=0)
-            z = np.zeros((tex_height, 138), dtype="uint8")
-            z2 = np.zeros((tex_height, 133), dtype="uint8")
+            z = np.zeros((tex_height, 138), dtype="uint8") # TODO fix magic numbers
+            z2 = np.zeros((tex_height, 134), dtype="uint8")
             tex = np.concatenate((z, tex, z2), axis=1)
-            z = np.zeros((1111, 2191), dtype="uint8")
+            z = np.zeros((1112, 2192), dtype="uint8")
             tex = np.concatenate((tex, z), axis=0)
 
         if parameters["pattern_overwrite"] or not os.path.isfile(calib_path + "/" + stem.replace(".png", "_calib.png")):
