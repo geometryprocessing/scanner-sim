@@ -127,7 +127,7 @@ def detect_single(filename, detect_func, resize=1, out_dir="detected", draw=Fals
 def detect_all(filename_template, detect_func, out_dir="detected", save_json=True, **kw):
     filenames = glob.glob(filename_template)
 
-    jobs = [joblib.delayed(detect_single, check_pickle=False)
+    jobs = [joblib.delayed(detect_single)
             (name, detect_func, return_image=False, out_dir=out_dir, **kw) for name in filenames]
 
     results = joblib.Parallel(verbose=15, n_jobs=-1, batch_size=1, pre_dispatch="all")(jobs)
@@ -179,9 +179,12 @@ def test(data_path):
 
 
 if __name__ == "__main__":
-    data_path = "D:/Scanner/Calibration/camera_intrinsics/data/"
+    # data_path = "D:/Scanner/Calibration/camera_intrinsics/data/"
 
     # test(data_path)
 
-    detect_all(data_path + "/checker/*.bmp", detect_checker, draw=True, save=True, pre_scale=5, draw_scale=1)
+    # detect_all(data_path + "/checker/*.bmp", detect_checker, draw=True, save=True, pre_scale=5, draw_scale=1)
+    # detect_all(data_path + "/charuco/*.bmp", detect_charuco, draw=True, save=True, pre_scale=2, draw_scale=1)
+
+    data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
     detect_all(data_path + "/charuco/*.bmp", detect_charuco, draw=True, save=True, pre_scale=2, draw_scale=1)

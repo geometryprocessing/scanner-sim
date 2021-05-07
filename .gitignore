@@ -8,4 +8,5 @@ data/models/abc_00
 data/models/abc_rand
 data/objects/abc_filter1
 data/objects/abc_filter2
+checker_undistorted_gamma.png
 

@@ -233,6 +233,66 @@ def locate_shapes(data_path, plot=False):
     return T, R
 
 
+def locate_plane(data_path, plot=False):
+    print("\n\tLocating Plane\n")
+
+    def fit(filename, ax=None, **kwargs):
+        p = np.asarray(o3d.io.read_point_cloud(filename).points)
+        print("\n" + filename, p.shape)
+
+        pca = PCA(n_components=3)
+        p2 = pca.fit_transform(p)
+        print(pca.mean_, pca.singular_values_, "\n", pca.components_)
+
+        if ax:
+            scatter(ax, p[::200, :], s=5, label="p", **kwargs)
+            basis(ax, pca.mean_, pca.components_.T, length=20, **kwargs)
+
+        return p, p2, pca.mean_, pca.singular_values_, pca.components_
+
+    if plot:
+        plt.figure("Plane Target Origin", (12, 12))
+        ax = plt.subplot(111, projection='3d', proj_type='ortho')
+    else:
+        ax = None
+
+    plane = fit(data_path + "/reconstructed/plane.ply", ax)
+    T, R = plane[2], plane[4]
+
+    print("Plane location:")
+    print("T:", T, "\nR:\n", R)
+
+    if plot:
+        basis(ax, T, R.T, length=50)
+
+        ax.set_title("Plane Target Origin")
+        ax.set_xlabel("x, mm")
+        ax.set_ylabel("z, mm")
+        ax.set_zlabel("-y, mm")
+        plt.tight_layout()
+        axis_equal_3d(ax)
+
+        z = plane[1][:, 2]
+        std = np.std(z)
+        plt.figure("Plane Variance", (12, 8))
+        plt.hist(z, bins=200)
+        plt.title("Plane Variance (std=%.3f mm)" % std)
+        plt.xlabel("mm")
+        plt.ylabel("Counts")
+        plt.tight_layout()
+
+        plt.savefig(data_path + "/reconstructed/plane_variance.png", dpi=150)
+
+    with open(data_path + "/reconstructed/plane_location.json", "w") as f:
+        json.dump({"T": T,
+                   "R": R,
+                   "T_Help": "[x, y, z] in mm in camera's frame of reference",
+                   "R_Help": "[ex, ey, ez]",
+                   "Camera": "https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html"},
+                  f, indent=4, cls=NumpyEncoder)
+
+    return T, R
+
 if __name__ == "__main__":
     stage_calib = numpinize(json.load(open("../calibration/stage/stage_calibration.json", "r")))
 
@@ -245,7 +305,11 @@ if __name__ == "__main__":
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_0/gray/"
     # locate_shapes(data_path, plot=True)
 
-    data_path = "D:/scanner_sim/captures/stage_batch_2/shapes_30_deg/position_0/gray/"
-    locate_shapes(data_path, plot=True)
+    # data_path = "D:/scanner_sim/captures/stage_batch_2/shapes_30_deg/position_0/gray/"
+    # locate_shapes(data_path, plot=True)
+
+    data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/gray/"
+    # data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/gray/"
+    locate_plane(data_path, plot=True)
 
     plt.show()

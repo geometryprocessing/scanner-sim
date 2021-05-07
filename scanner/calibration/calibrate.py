@@ -97,7 +97,7 @@ def lift_to_3d(p_img, mtx, T, R, offset=0.0):
     return p_world
 
 
-def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=False, charuco_only=False, **kw):
+def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=False, charuco_only=False, extra_output=False, **kw):
     cam_mtx, cam_dist, cam_new_mtx = camera_calib["mtx"], camera_calib["dist"], camera_calib["new_mtx"]
     charuco = load_corners(data_path + "/charuco/corners.json")
 
@@ -112,8 +112,8 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
             half_offsets = [[400 + 160, 190]] * n
 
     charuco_template, checker_template = "blank_%d.png", "checker_%d.png"
-    charuco_3d, charuco_id, charuco_frame = [], [], []
-    checker_3d, checker_2d, checker_local = [], [], []
+    charuco_img, charuco_3d, charuco_id, charuco_frame = [], [], [], []
+    checker_img, checker_3d, checker_2d, checker_local = [], [], [], []
 
     avg_errors, all_errors = [], []
     for i, id in enumerate(sorted([int(name[name.rfind("_") + 1:-4]) for name in charuco.keys()])):
@@ -138,6 +138,7 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
         avg_errors.append(np.average(all_errors[-1]))
 
         c_3d = np.matmul(R, c_obj.T) + tvec
+        charuco_img.append(c_img)
         charuco_3d.append(c_3d.T)
         charuco_id.append(c_idx)
         charuco_frame.append((T, R))
@@ -148,6 +149,7 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
             p_prj = src[pair]["obj"][:, :2] + (full_offsets[i] if pair in full else half_offsets[i])
 
             p_3d = lift_to_3d(p_img, cam_new_mtx, T, R, offset=0)
+            checker_img.append(p_img)
             checker_3d.append(p_3d)
             checker_2d.append(p_prj.astype(np.float32))
 
@@ -156,7 +158,10 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
             local[:, 1] = np.dot(p_3d - T, R[:, 1])
             checker_local.append(local.astype(np.float32))
 
+    chrk = (charuco_img, charuco_3d, charuco_id, charuco_frame) if extra_output else (charuco_3d, charuco_id, charuco_frame)
+    chck = (checker_img, checker_3d, checker_2d, checker_local) if extra_output else (checker_3d, checker_2d, checker_local)
+
     if charuco_only:
-        return (charuco_3d, charuco_id, charuco_frame), (avg_errors, all_errors)
+        return chrk, (avg_errors, all_errors)
     else:
-        return (charuco_3d, charuco_id, charuco_frame), (checker_3d, checker_2d, checker_local), (avg_errors, all_errors)
+        return chrk, chck, (avg_errors, all_errors)

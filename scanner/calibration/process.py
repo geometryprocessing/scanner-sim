@@ -65,7 +65,7 @@ def map_single(filename, method=None, return_image=True, is_gray=True, suffix=""
 def map_all(filename_template, method, return_images=True, **kw):
     filenames = glob.glob(filename_template)
 
-    jobs = [joblib.delayed(map_single, check_pickle=False)
+    jobs = [joblib.delayed(map_single)
             (filename, method=method, return_image=return_images, **kw) for filename in filenames]
 
     return joblib.Parallel(verbose=15, n_jobs=-1, batch_size=1, pre_dispatch="all")(jobs)
@@ -122,7 +122,7 @@ def process_all(image_template, blank_template, texture_template, auto_map=None,
     blanks = glob.glob(blank_template)
     textures = glob.glob(texture_template) if texture_template is not None else [None] * len(images)
 
-    jobs = [joblib.delayed(process_single, check_pickle=False)
+    jobs = [joblib.delayed(process_single)
             (image, blank, texture, auto_map=auto_map, out_dir=out_dir, return_image=return_images, **kw)
             for image, blank, texture in zip(images, blanks, textures)]
 
@@ -208,5 +208,9 @@ if __name__ == "__main__":
 
     # test_stage(data_path + "/merged/", id=70, n=9, m=8)
     # process_stage(data_path + "/merged/")
+
+    # data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
+    data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
+    process_stage(data_path)
 
     plt.show()

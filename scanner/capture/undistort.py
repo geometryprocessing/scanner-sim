@@ -47,10 +47,14 @@ if __name__ == "__main__":
 
     # images_path = "D:/scanner_sim/captures/plane/gray/"
     # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/position_0/color/"
-    images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/"
+    # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/"
     # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/position_0/gray/"
     # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/position_0/gray/"
     # images_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/shapes_30_deg/position_0/gray/"
+    # images_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/gray/"
+    # images_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/color/"
+    images_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/gray/"
+    # images_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/color/"
     images = glob.glob(images_path + "*.exr")
     print("Found %d images:" % len(images), images)
     ensure_exists(images_path + "undistorted/")

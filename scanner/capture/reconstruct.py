@@ -134,7 +134,8 @@ def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/", **kw)
 
 if __name__ == "__main__":
     cam_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
-    proj_calib = load_projector_calibration("../calibration/projector/projector_calibration.json")[2]
+    # proj_calib = load_projector_calibration("../calibration/projector/projector_calibration.json")[2]
+    proj_calib = load_projector_calibration("../calibration/projector/projector_calibration_test.json")[2]
 
     # Debug / Development
     # data_path = "D:/scanner_sim/captures/plane/"
@@ -149,11 +150,13 @@ if __name__ == "__main__":
     # Planes
     # data_path = "D:/scanner_sim/captures/plane/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/"
-    # reconstruct_single(data_path + "gray/", cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+    # data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/"
+    data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/"
+    reconstruct_single(data_path + "gray/", cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
 
-    data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
-    for object in ["pawn", "rook", "shapes"]:
-        reconstruct_many(data_path_template % object, cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
+    # for object in ["pawn", "rook", "shapes"]:
+    #     reconstruct_many(data_path_template % object, cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/no_ambient/%s_30_deg/position_*"
     # # for object in ["pawn", "rook", "shapes"]:

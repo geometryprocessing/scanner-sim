@@ -42,4 +42,4 @@ if __name__ == "__main__":
         print(rgb.shape)
         filename = data_path + "%s_color.exr" % object
         save_openexr(filename, rgb, keep_rgb=True)
-        print("Svaed", filename)
+        print("Saved", filename)
