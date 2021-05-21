@@ -14,7 +14,7 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
     save = save or False
     save_figures = save_figures or save
 
-    charuco, charuco_errors = reconstruct_planes(data_path,camera_calib, min_points=min_plane_points, charuco_only=True, **kw)
+    charuco, charuco_errors = reconstruct_planes(data_path, camera_calib, min_points=min_plane_points, charuco_only=True, **kw)
     charuco_3d, charuco_id, charuco_frame = charuco
     print("\nReconstructed planes:", len(charuco_3d))
     print("Mean plane error", np.mean(charuco_errors[0]))
@@ -132,7 +132,7 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
             plt.savefig(data_path + "/stage_errors.png", dpi=300)
 
     if save:
-        with open("stage/stage_calibration.json", "w") as f:
+        with open(data_path + "/stage_calibration.json", "w") as f:
             json.dump({"p": p,
                        "dir": dir,
                        "mean_error, mm": np.mean(axis_errors),
@@ -142,11 +142,14 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
 
 
 if __name__ == "__main__":
-    camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
+    # camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
+    camera_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
 
     # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/merged/"
-    data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/merged/"
-    calibrate_axis(data_path, camera_calib, min_circle_points=70, save=True, plot=True, save_figures=True)
+    # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/merged/"
+    # calibrate_axis(data_path, camera_calib, min_circle_points=70, save=True, plot=True, save_figures=True)
+    data_path = "D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/merged/"
+    calibrate_axis(data_path, camera_calib, min_circle_points=50, save=True, plot=True, save_figures=True)
 
     plt.show()
 

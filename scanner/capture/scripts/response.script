@@ -1,0 +1,418 @@
+prefix response/
+color 0 c
+hdr gray_0
+color 0 0 0 c
+hdr red_0
+color 0 0 0 c
+hdr green_0
+color 0 0 0 c
+hdr blue_0
+color 5 c
+hdr gray_5
+color 5 0 0 c
+hdr red_5
+color 0 5 0 c
+hdr green_5
+color 0 0 5 c
+hdr blue_5
+color 10 c
+hdr gray_10
+color 10 0 0 c
+hdr red_10
+color 0 10 0 c
+hdr green_10
+color 0 0 10 c
+hdr blue_10
+color 15 c
+hdr gray_15
+color 15 0 0 c
+hdr red_15
+color 0 15 0 c
+hdr green_15
+color 0 0 15 c
+hdr blue_15
+color 20 c
+hdr gray_20
+color 20 0 0 c
+hdr red_20
+color 0 20 0 c
+hdr green_20
+color 0 0 20 c
+hdr blue_20
+color 25 c
+hdr gray_25
+color 25 0 0 c
+hdr red_25
+color 0 25 0 c
+hdr green_25
+color 0 0 25 c
+hdr blue_25
+color 30 c
+hdr gray_30
+color 30 0 0 c
+hdr red_30
+color 0 30 0 c
+hdr green_30
+color 0 0 30 c
+hdr blue_30
+color 35 c
+hdr gray_35
+color 35 0 0 c
+hdr red_35
+color 0 35 0 c
+hdr green_35
+color 0 0 35 c
+hdr blue_35
+color 40 c
+hdr gray_40
+color 40 0 0 c
+hdr red_40
+color 0 40 0 c
+hdr green_40
+color 0 0 40 c
+hdr blue_40
+color 45 c
+hdr gray_45
+color 45 0 0 c
+hdr red_45
+color 0 45 0 c
+hdr green_45
+color 0 0 45 c
+hdr blue_45
+color 50 c
+hdr gray_50
+color 50 0 0 c
+hdr red_50
+color 0 50 0 c
+hdr green_50
+color 0 0 50 c
+hdr blue_50
+color 55 c
+hdr gray_55
+color 55 0 0 c
+hdr red_55
+color 0 55 0 c
+hdr green_55
+color 0 0 55 c
+hdr blue_55
+color 60 c
+hdr gray_60
+color 60 0 0 c
+hdr red_60
+color 0 60 0 c
+hdr green_60
+color 0 0 60 c
+hdr blue_60
+color 65 c
+hdr gray_65
+color 65 0 0 c
+hdr red_65
+color 0 65 0 c
+hdr green_65
+color 0 0 65 c
+hdr blue_65
+color 70 c
+hdr gray_70
+color 70 0 0 c
+hdr red_70
+color 0 70 0 c
+hdr green_70
+color 0 0 70 c
+hdr blue_70
+color 75 c
+hdr gray_75
+color 75 0 0 c
+hdr red_75
+color 0 75 0 c
+hdr green_75
+color 0 0 75 c
+hdr blue_75
+color 80 c
+hdr gray_80
+color 80 0 0 c
+hdr red_80
+color 0 80 0 c
+hdr green_80
+color 0 0 80 c
+hdr blue_80
+color 85 c
+hdr gray_85
+color 85 0 0 c
+hdr red_85
+color 0 85 0 c
+hdr green_85
+color 0 0 85 c
+hdr blue_85
+color 90 c
+hdr gray_90
+color 90 0 0 c
+hdr red_90
+color 0 90 0 c
+hdr green_90
+color 0 0 90 c
+hdr blue_90
+color 95 c
+hdr gray_95
+color 95 0 0 c
+hdr red_95
+color 0 95 0 c
+hdr green_95
+color 0 0 95 c
+hdr blue_95
+color 100 c
+hdr gray_100
+color 100 0 0 c
+hdr red_100
+color 0 100 0 c
+hdr green_100
+color 0 0 100 c
+hdr blue_100
+color 105 c
+hdr gray_105
+color 105 0 0 c
+hdr red_105
+color 0 105 0 c
+hdr green_105
+color 0 0 105 c
+hdr blue_105
+color 110 c
+hdr gray_110
+color 110 0 0 c
+hdr red_110
+color 0 110 0 c
+hdr green_110
+color 0 0 110 c
+hdr blue_110
+color 115 c
+hdr gray_115
+color 115 0 0 c
+hdr red_115
+color 0 115 0 c
+hdr green_115
+color 0 0 115 c
+hdr blue_115
+color 120 c
+hdr gray_120
+color 120 0 0 c
+hdr red_120
+color 0 120 0 c
+hdr green_120
+color 0 0 120 c
+hdr blue_120
+color 125 c
+hdr gray_125
+color 125 0 0 c
+hdr red_125
+color 0 125 0 c
+hdr green_125
+color 0 0 125 c
+hdr blue_125
+color 130 c
+hdr gray_130
+color 130 0 0 c
+hdr red_130
+color 0 130 0 c
+hdr green_130
+color 0 0 130 c
+hdr blue_130
+color 135 c
+hdr gray_135
+color 135 0 0 c
+hdr red_135
+color 0 135 0 c
+hdr green_135
+color 0 0 135 c
+hdr blue_135
+color 140 c
+hdr gray_140
+color 140 0 0 c
+hdr red_140
+color 0 140 0 c
+hdr green_140
+color 0 0 140 c
+hdr blue_140
+color 145 c
+hdr gray_145
+color 145 0 0 c
+hdr red_145
+color 0 145 0 c
+hdr green_145
+color 0 0 145 c
+hdr blue_145
+color 150 c
+hdr gray_150
+color 150 0 0 c
+hdr red_150
+color 0 150 0 c
+hdr green_150
+color 0 0 150 c
+hdr blue_150
+color 155 c
+hdr gray_155
+color 155 0 0 c
+hdr red_155
+color 0 155 0 c
+hdr green_155
+color 0 0 155 c
+hdr blue_155
+color 160 c
+hdr gray_160
+color 160 0 0 c
+hdr red_160
+color 0 160 0 c
+hdr green_160
+color 0 0 160 c
+hdr blue_160
+color 165 c
+hdr gray_165
+color 165 0 0 c
+hdr red_165
+color 0 165 0 c
+hdr green_165
+color 0 0 165 c
+hdr blue_165
+color 170 c
+hdr gray_170
+color 170 0 0 c
+hdr red_170
+color 0 170 0 c
+hdr green_170
+color 0 0 170 c
+hdr blue_170
+color 175 c
+hdr gray_175
+color 175 0 0 c
+hdr red_175
+color 0 175 0 c
+hdr green_175
+color 0 0 175 c
+hdr blue_175
+color 180 c
+hdr gray_180
+color 180 0 0 c
+hdr red_180
+color 0 180 0 c
+hdr green_180
+color 0 0 180 c
+hdr blue_180
+color 185 c
+hdr gray_185
+color 185 0 0 c
+hdr red_185
+color 0 185 0 c
+hdr green_185
+color 0 0 185 c
+hdr blue_185
+color 190 c
+hdr gray_190
+color 190 0 0 c
+hdr red_190
+color 0 190 0 c
+hdr green_190
+color 0 0 190 c
+hdr blue_190
+color 195 c
+hdr gray_195
+color 195 0 0 c
+hdr red_195
+color 0 195 0 c
+hdr green_195
+color 0 0 195 c
+hdr blue_195
+color 200 c
+hdr gray_200
+color 200 0 0 c
+hdr red_200
+color 0 200 0 c
+hdr green_200
+color 0 0 200 c
+hdr blue_200
+color 205 c
+hdr gray_205
+color 205 0 0 c
+hdr red_205
+color 0 205 0 c
+hdr green_205
+color 0 0 205 c
+hdr blue_205
+color 210 c
+hdr gray_210
+color 210 0 0 c
+hdr red_210
+color 0 210 0 c
+hdr green_210
+color 0 0 210 c
+hdr blue_210
+color 215 c
+hdr gray_215
+color 215 0 0 c
+hdr red_215
+color 0 215 0 c
+hdr green_215
+color 0 0 215 c
+hdr blue_215
+color 220 c
+hdr gray_220
+color 220 0 0 c
+hdr red_220
+color 0 220 0 c
+hdr green_220
+color 0 0 220 c
+hdr blue_220
+color 225 c
+hdr gray_225
+color 225 0 0 c
+hdr red_225
+color 0 225 0 c
+hdr green_225
+color 0 0 225 c
+hdr blue_225
+color 230 c
+hdr gray_230
+color 230 0 0 c
+hdr red_230
+color 0 230 0 c
+hdr green_230
+color 0 0 230 c
+hdr blue_230
+color 235 c
+hdr gray_235
+color 235 0 0 c
+hdr red_235
+color 0 235 0 c
+hdr green_235
+color 0 0 235 c
+hdr blue_235
+color 240 c
+hdr gray_240
+color 240 0 0 c
+hdr red_240
+color 0 240 0 c
+hdr green_240
+color 0 0 240 c
+hdr blue_240
+color 245 c
+hdr gray_245
+color 245 0 0 c
+hdr red_245
+color 0 245 0 c
+hdr green_245
+color 0 0 245 c
+hdr blue_245
+color 250 c
+hdr gray_250
+color 250 0 0 c
+hdr red_250
+color 0 250 0 c
+hdr green_250
+color 0 0 250 c
+hdr blue_250
+color 255 c
+hdr gray_255
+color 255 0 0 c
+hdr red_255
+color 0 255 0 c
+hdr green_255
+color 0 0 255 c
+hdr blue_255
+status

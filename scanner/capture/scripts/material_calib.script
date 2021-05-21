@@ -1,0 +1,388 @@
+prefix material_calib/
+prefix material_calib/position_0/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_2/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_4/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_6/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_8/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_10/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_12/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_14/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_16/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_18/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_20/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_22/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_24/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_26/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_28/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_30/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_32/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_34/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_36/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_38/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_40/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_42/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_44/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_46/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_48/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_50/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_52/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_54/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_56/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_58/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_60/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_62/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_64/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_66/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_68/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_70/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_72/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_74/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_76/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_78/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_80/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_82/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_84/
+subscript material_scan
+suffix default_scan
+subscript default_scan
+subscript gray
+subscript mps_16
+subscript mps_32
+subscript mps_64
+subscript ulp_5
+subscript ulp_10
+subscript ulp_15
+status
+move 2
+delay 2.000000
+prefix material_calib/position_86/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_88/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_90/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_92/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_94/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_96/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_98/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_100/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_102/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_104/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_106/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_108/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_110/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_112/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_114/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_116/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_118/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_120/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_122/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_124/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_126/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_128/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_130/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_132/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_134/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_136/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_138/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_140/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_142/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_144/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_146/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_148/
+subscript material_scan
+status
+move 2
+delay 2.000000
+prefix material_calib/position_150/
+subscript material_scan
+status

@@ -409,6 +409,19 @@ def calibrate_response(data_path, cache=True, save=False, plot=False, save_figur
             json.dump(polies, f, indent=4, cls=NumpyEncoder)
 
     if plot:
+        plt.figure("Projector Response - Paper Edition", (4, 3.5))
+        data = intensities["gray"]
+        ids, amb, par, sig = data["ids"], data["ambient"], data["parasitic"], data["signal"]
+        resp = sig - sig[0]
+        m = np.max(resp)
+        plt.plot(ids, resp / m, "b.", label="Measurements")
+        plt.plot(ids, np.polyval(polies["gray"], ids) / m, "r-", label="Polynomial Fit", linewidth=1.2)
+        plt.legend()
+        plt.xlabel("Pixel value")
+        plt.ylabel("Projected intensity (relative)")
+        plt.tight_layout()
+        plt.savefig(data_path + "/projector_response_paper.png", dpi=300)
+
         plt.figure("Projector Response", (16, 10))
         for i, color in enumerate(colors):
             data = intensities[color]
@@ -476,7 +489,7 @@ if __name__ == "__main__":
     # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, error_thr=0.8, no_tangent=True, save=True, plot=True, save_figures=True)
     # save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration_test.json", mean_error=errors[0])
 
-    data_path = "D:/scanner_sim/calibration/projector_response/data/"
+    data_path = "E:/scanner_sim/calibration/projector_response/data/"
     calibrate_response(data_path, save=True, plot=True, save_figures=True)
 
     plt.show()

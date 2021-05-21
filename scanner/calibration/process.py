@@ -203,14 +203,15 @@ if __name__ == "__main__":
     # test_stage(data_path + "/merged/", id=70, n=9, m=8)
     # process_stage(data_path + "/merged/")
 
-    data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/"
+    # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/"
+    data_path = "D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/"
     # merge_positions(data_path)
 
     # test_stage(data_path + "/merged/", id=70, n=9, m=8)
-    # process_stage(data_path + "/merged/")
+    process_stage(data_path + "/merged/")
 
     # data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
     data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
-    process_stage(data_path)
+    # process_stage(data_path)
 
     plt.show()

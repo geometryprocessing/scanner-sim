@@ -152,7 +152,17 @@ def test_accuracy(data_path, camera_calib, proj_calib, captured=None, rendered=N
                 plt.tight_layout()
 
                 if save_figures:
-                    plt.savefig(data_path + "/rendering errors.png", dpi=120)
+                    plt.savefig(data_path + "/rendering_errors.png", dpi=120)
+
+                plt.figure("Rendering Errors - Paper Edition", (4, 3.5))
+                plt.hist(ch_d, bins=50, range=[0, 5])
+                plt.xlabel("Rendering error, camera pixels")
+                plt.ylabel("Checker corner counts")
+                plt.tight_layout()
+
+                if save_figures:
+                    plt.savefig(data_path + "/rendering_errors_paper.png", dpi=300)
+
 
         plt.figure("Triangulation errors", (16, 9))
         plt.subplot(211)
@@ -183,7 +193,7 @@ if __name__ == "__main__":
     camera_calib = load_camera_calibration("camera/camera_calibration.json")
     proj_calib = load_projector_calibration("projector/projector_calibration_test.json")[2]
 
-    data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
+    data_path = "E:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
 
     # captured = imageio.imread("accuracy/checker_undistorted_gamma.png")[:, :, 0]
     captured = imageio.imread("accuracy/checker_undistorted_tone.png")[:, :, 0]

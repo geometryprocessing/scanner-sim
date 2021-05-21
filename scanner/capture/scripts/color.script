@@ -1,0 +1,11 @@
+suffix color
+checker
+hdr checker
+load patterns/color/blue.png
+hdr blue
+load patterns/color/green.png
+hdr green
+load patterns/color/red.png
+hdr red
+suffix /
+status

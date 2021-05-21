@@ -1,0 +1,114 @@
+prefix stage_calib/
+prefix stage_calib/position_0/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_5/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_10/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_15/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_20/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_25/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_30/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_35/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_40/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_45/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_50/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_55/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_60/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_65/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_70/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_75/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_80/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_85/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_90/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_95/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_100/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_105/
+subscript checker_center
+status
+move 5
+delay 2.000000
+prefix stage_calib/position_110/
+subscript checker_center
+status
