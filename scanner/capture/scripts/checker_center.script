@@ -1,7 +1,0 @@
-prefix checker/
-color 0
-hdr blank
-color 255
-hdr white
-checker center
-hdr checker

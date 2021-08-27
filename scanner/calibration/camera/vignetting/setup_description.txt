@@ -1,9 +1,0 @@
-Camera to Spectralon distance: 65 cm
-Camera focus distance: 80 cm
-Camera focal length: 51 mm
-Camera aperture: F/13
-Camera sensor: Sony IMX342
-Spectralon dimensions: 1' x 1'
-Light Angle: 45 deg
-Light Distance: 20.5'
-Light Scale: 1'
