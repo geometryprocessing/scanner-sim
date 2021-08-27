@@ -14,7 +14,7 @@ layout: default
 
 
 
-# Dataset
+# Paper
 
 We co-develop a 3D structured light scanning hardware setup together with a corresponding light transport simulation with the objective of minimizing the difference of per-pixel values. For diffusely reflecting objects we show that differences between the real image taken by the camera and the synthesized image are negligible. This provides an ideal test-bed for developing data-driven algorithms in the area of 3D reconstruction, as the synthetic data is indistinguishable from real data. Pixel-wise matching also provides an effective way to evaluate data-driven reconstruction algorithms objectively.
 
@@ -36,14 +36,14 @@ The work was supported in part through the NYU IT High Performance Computing res
 
 
 
-### Paper/Citation
+### Documents
 
 
 
 <!--<div style="display: flex; justify-content: center; margin-bottom:20px;">-->
-<a href="https://arxiv.org/pdf/1812.06216.pdf" target="_blank"><img src="assets/images/paper.png" alt="Paper" class="paper"/></a>
-<a href="https://arxiv.org/pdf/1812.06216.pdf" target="_blank"><img src="assets/images/paper_technical.png" alt="Technical Design" class="paper"/></a>
-<a href="https://arxiv.org/pdf/1812.06216.pdf" target="_blank"><img src="assets/images/paper_datasheet.png" alt="Dataset Description" class="paper"/></a>
+<a href="data/scan_sim_paper.pdf" target="_blank"><img src="assets/images/paper_preview.png" alt="Paper" class="paper"/></a>
+<a href="data/scan_sim_technical.pdf" target="_blank"><img src="assets/images/technical_preview.png" alt="Technical Design" class="paper"/></a>
+<a href="data/scan_sim_dataset.pdf" target="_blank"><img src="assets/images/dataset_preview.png" alt="Dataset Description" class="paper"/></a>
 <!--<img src="assets/images/supp.png" alt="Supplementary Material" style="border:1px solid #bbbbbb; border-radius: 6px; margin-left: auto; margin-right: auto;"/>-->
 <!--</div>-->
 
@@ -51,15 +51,19 @@ Please cite our paper if you use the LSD dataset or our scanning simulation to g
 
 ```
 @InProceedings{Koch_Piadyk_2021,
-
+tbd.
 }
 ```
 
 ### License
 
-The code is available under the [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html){:target="_blank"}.
+The code is available partly under the [MIT license](https://opensource.org/licenses/MIT){:target="_blank"} and partly under the [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html){:target="_blank"}.
 
 Our datasets are available under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/){:target="_blank"} except for the 7 textured/colored 3D models, which are licensed by their respective creators under various Creative Commons licenses (see supplementary material).
+
+By downloading the dataset or software framework you agree to the following terms:
+
+* The authors give no warranties regarding the dataset or the software framework.
 
 
 
@@ -68,12 +72,10 @@ Our datasets are available under the [CC BY 4.0 license](https://creativecommons
 
 
 
-# Download
+# Dataset
 
-By downloading the dataset you agree to the following terms:
 
-* The authors give no warranties regarding the dataset or the data generation framework.
-
+Our dataset consists of the following parts. The files are hosted on NYU digital archive. If you notice download problems, try to limit the amount of concurrent downloads.
 
 
 
@@ -187,14 +189,14 @@ To obtain the preinstalled version of the SLS pipeline, you can pull the Docker 
 runs a Jupyter notebook for easy evaluation.
 In order to do so, you need to follow these steps:
 
-1. Install docker according to https://www.docker.com/get-started.
+1. Install docker according to the [docker documentation](https://www.docker.com/get-started){:target="_blank"}.
 
-2. Pull the anonymized docker demo container with 'docker pull fsls/demo'.
+2. Pull the anonymized docker demo container with `docker pull fsls/demo`.
 
-3. Run the docker container with 'docker run -v <myresults>:/sls/scanner-sim/data/results -p 8888:8888 fsls/demo'
+3. Run the docker container with `docker run -v <myresults>:/sls/scanner-sim/data/results -p 8888:8888 fsls/demo`.
 Replace <myresults> with an accessible folder on your machine, where the results should be stored.
 
-4. Read the jupyter notebook url from the terminal that looks something like: 'http://127.0.0.1:8888/?token=d39e4ad140694134cf23ec4ceff4b543211e9b63ecaae531' and open the url in a web browser.
+4. Read the jupyter notebook url from the terminal that looks something like: `http://127.0.0.1:8888/?token=d39e4ad140694134cf23ec4ceff4b543211e9b63ecaae531` and open the url in a web browser.
 
 5. Open the 'Structured Light Scanning' notebook and follow the stages from rendering over decoding to reconstruction.
 
