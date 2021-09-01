@@ -1,0 +1,7 @@
+Rotating Stage Location: +2" (axis)
+Calibration Object: Pawn
+Projector Color Temperature: Medium
+Projector LED Currents: 10 A each (R, G and B)
+Neutral Filer: Installed (x4)
+Room Lights: Bright
+Ambient Lights: On

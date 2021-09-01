@@ -82,11 +82,11 @@ Our dataset consists of the following parts. The files are hosted on NYU digital
 
 ### Calibration Data
 
-For the calibration of the physical scanner, we recorded the following data which can be used to reproduce the calibration. **The calibration data can be downloaded from [here](https://archive.nyu.edu/handle/2451/63307){:target="_blank"}**. 
+For the calibration of the physical scanner, we recorded a larger set of raw data. **The raw calibration data can be downloaded from [here](https://archive.nyu.edu/handle/2451/63307){:target="_blank"}**. This data can be used to understand the calibration process or to reproduce the calibration on a recreated hardware setup. 
 
-| Format         | Description          | Amount | Example |
-|:---------------|:---------------------|:-------|:--------|
-| Image (exr)    | Scans of the calibration board | 25 | [exr](data/calib_board.png){:target="_blank"} | 
+In addition to the raw data, we also supply the processed calibration data that can be used to process physical scans as well as to set up and run the scan simulation. **This data can be found [here](https://github.com/geometryprocessing/scanner-sim/tree/master/scanner/calibration){:target="_blank"}**.
+
+
 
 
 
@@ -97,12 +97,12 @@ For the calibration of the physical scanner, we recorded the following data whic
 
 | Format         | Description          | Amount | Example |
 |:---------------|:---------------------|:-------|:--------|
-| HDR Image (exr)    | Unprocessed HDR images acquired for different rotating stage positions and collections of patterns, such as gray codes and uniform color | 46 | [exr](data/calib_board.png){:target="_blank"} | 
-| HDR Image (exr)    | Unprocessed HDR images acquired in the initial or final position of the rotating stage for additional collections of patterns, such as micro-phase shifting or unstructured light | 23 | [exr](data/calib_board.png){:target="_blank"} | 
-| HDR Image (exr)    | A background image with scanned object removed | 1 | [exr](data/calib_board.png){:target="_blank"} | 
-| LDR Image (jpg)    | A photo of the setup with object installed | 1 | [jpg](data/calib_board.png){:target="_blank"} | 
-| Textfile (txt)    | A brief description of the scanning conditions and settings | 1 | [txt](data/calib_board.png){:target="_blank"} | 
-| Script (sh)    | A scanning script used to acquire the HDR images | 1 | [sh](data/calib_board.png){:target="_blank"} | 
+| HDR Image (exr)    | Unprocessed HDR images acquired for different rotating stage positions and collections of patterns, such as gray codes and uniform color | 47*12 | [exr](data/img_40.exr){:target="_blank"} | 
+| HDR Image (exr)    | Unprocessed HDR images acquired in the initial or final position of the rotating stage for additional collections of patterns, such as micro-phase shifting or unstructured light | - | [exr](data/leo_010.exr){:target="_blank"} | 
+| HDR Image (exr)    | A background image with scanned object removed | 1 | [exr](data/background.exr){:target="_blank"} | 
+| LDR Image (jpg)    | A photo of the setup with object installed | 1 | [jpg](data/pawn.jpg){:target="_blank"} | 
+| Textfile (txt)    | A brief description of the scanning conditions and settings | 1 | [txt](data/setup_description.txt){:target="_blank"} | 
+| Script (txt)    | A scanning script used to acquire the HDR images | 1 | [sh](data/complete_multiscan.script){:target="_blank"} | 
 
 
 ### Synthetic Scans
@@ -111,11 +111,11 @@ For the calibration of the physical scanner, we recorded the following data whic
 
 | Format         | Description          | Name | Example |
 |:---------------|:---------------------|:-----|:-----|
-| HDR Image (exr)    | Scan images of 3D objects illuminated with ambient light and white projector light | 46 | [exr](data/calib_board.png){:target="_blank"} | 
-| LDR Image (png)    | Scan images of 3D objects illuminated with ambient light and white projector light | 46 | [png](data/calib_board.png){:target="_blank"} | 
-| Depthmap (npy)    | Depth maps from reconstruction and ground-truth | 2 | [npy](data/calib_board.png){:target="_blank"} | 
-| Pointcloud (ply)    | Reconstructed point cloud | 1 | [ply](data/calib_board.png){:target="_blank"} | 
-| Mesh (obj)    | The original object geometry/mesh | 1 | [obj](data/calib_board.png){:target="_blank"} | 
+| HDR Image (exr)    | Scan images of 3D objects illuminated with ambient light and white projector light | 47 | [exr](data/img_014.exr){:target="_blank"} | 
+| LDR Image (png)    | Scan images of 3D objects illuminated with ambient light and white projector light | 47 | [png](data/img_014.png){:target="_blank"} | 
+| Depthmap (npy)    | Depth maps from reconstruction and ground-truth | 2 | [npy](data/depth_gt.npy){:target="_blank"} | 
+| Pointcloud (ply)    | Reconstructed point cloud | 1 | [ply](data/group_points.ply){:target="_blank"} | 
+| Mesh (obj)    | The original object geometry/mesh | 1 | [obj](data/pawn.obj){:target="_blank"} | 
 
 
 
