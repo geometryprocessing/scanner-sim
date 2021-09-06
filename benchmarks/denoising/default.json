@@ -1,0 +1,25 @@
+{
+    "input": {
+        "train" : {
+            "base_dir": "./data/ABC_440/train",
+            "repetitions": 4,
+            "transform": "CropImage(256)"
+        },
+
+        "test" : {
+            "base_dir": "./data/ABC_440/test",
+            "repetitions": 4,
+            "transform": "CropImage(256)"
+        }
+    },
+
+    "network" : {
+        "architecture": "unet_256",
+        "ngf": 64,
+        "use_offset": true,
+        "max_offset": 0.01,
+        "min_depth": 0.1,
+        "max_depth": 2.0
+    },
+    "loss_function" : "l1"
+}
