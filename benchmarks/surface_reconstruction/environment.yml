@@ -1,0 +1,10 @@
+name: sls-poisson
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8.0
+  - pip
+  - pip:
+    - -r file:requirements.txt
