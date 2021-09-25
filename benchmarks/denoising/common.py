@@ -4,6 +4,7 @@ import math
 import numpy as np
 from pathlib import Path
 import torch
+from tqdm import tqdm
 from typing import Any, Optional, Union
 
 def hwc_to_chw(tensor):
@@ -51,6 +52,29 @@ def load_network(path, device):
     checkpoint.restore_model(network)
 
     return network, checkpoint, config
+
+def predict(network, sample, device, tiler=None):
+    input = torch.tensor(sample['depth'])
+
+    if 'color' in sample:
+        input = torch.cat([input, torch.tensor(sample['color'])], dim=-1)
+
+    if 'ambient' in sample:
+        input = torch.cat([input, torch.tensor(sample['ambient'])], dim=-1)
+
+    if not tiler:
+        tiler = Tiler(256, overlap=0.94, margin=100) 
+
+    tiles = tiler.split(input)
+
+    with torch.no_grad():
+        for chunk in tqdm(torch.split(tiles, 16), leave=False):
+            chunk[...] = chw_to_hwc(network(hwc_to_chw(chunk).to(device)).cpu())
+
+    depth_predicted = tiler.join(sample['depth'].shape, tiles)
+    depth_predicted[sample['depth'] == 0] = 0
+
+    return depth_predicted
 
 def get_new_version(experiment_directory: Path):
     if not experiment_directory.exists():

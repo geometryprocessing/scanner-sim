@@ -11,34 +11,8 @@ from baselines import bilateral_depth_filter, laplace_depth_filter
 from data import SLSDataset
 
 from common import (
-    hwc_to_chw, chw_to_hwc, Tiler, load_network
+    hwc_to_chw, chw_to_hwc, Tiler, load_network, predict
 )
-
-def predict(network, sample, device, tiler=None):
-    input = torch.tensor(sample['depth'])
-
-    if 'color' in sample:
-        input = torch.cat([input, torch.tensor(sample['color'])], dim=-1)
-
-    if 'ambient' in sample:
-        input = torch.cat([input, torch.tensor(sample['ambient'])], dim=-1)
-
-    if not tiler:
-        # tiler = Tiler(256, overlap=0.75, margin=0) 
-        # Tiler used for the qualitative experiment (rook, pawn, ..)
-        tiler = Tiler(256, overlap=0.94, margin=100) 
-        # tiler = Tiler(256, overlap=0.875, margin=64) # best
-
-    tiles = tiler.split(input)
-
-    with torch.no_grad():
-        for chunk in tqdm(torch.split(tiles, 16), leave=False):
-            chunk[...] = chw_to_hwc(network(hwc_to_chw(chunk).to(device)).cpu())
-
-    depth_predicted = tiler.join(sample['depth'].shape, tiles)
-    depth_predicted[sample['depth'] == 0] = 0
-
-    return depth_predicted
 
 if __name__ == '__main__':
     parser = ArgumentParser()
@@ -114,13 +88,3 @@ if __name__ == '__main__':
     for k, v in metric_meters.items():
         print(k)
         print(v.suffix)
-
-        # # TODO: We need the calibration for normal angle deviation
-        # normals_groundtruth = -estimate_normals(unproject(sample['target'], K=K, R=R, t=t, depth_is_distance=True))
-        # normals_scan = -estimate_normals(unproject(sample['depth'], K=K, R=R, t=t, depth_is_distance=True))
-        # normals_denoised = -estimate_normals(unproject(depth_predicted, K=K, R=R, t=t, depth_is_distance=True))
-        # print(np.min(normals_groundtruth), np.max(normals_groundtruth))
-        # N_VIZ = np.diag([1, -1, -1])
-        # imageio.imwrite(args.output_dir / f"{sample_idx}_normals.jpg", 0.5*(normals_groundtruth@N_VIZ.T + 1))
-        # print(depth_predicted.shape)
-        # np.save(args.output_dir / f"{sample_idx}.npy", depth_predicted)

@@ -43,3 +43,11 @@ The evaluation on the test set can be performed as follows
 ```
 python eval.py --checkpoint path/to/the/checkpoint.ckpt --dataset path/to/ABC_440/test
 ```
+
+## Notebooks
+
+We provide three jupyter notebooks that reproduce some experiments from the paper
+
+1. `analysis.ipynb`: Show the small-scale depth error in the simulated and real scans (Figure 9).
+2. `comparison.ipynb`: Compare the CNN, bilateral and Laplacian depth denoising on a set of samples (Figure 10).
+3. `generalization.ipynb`: Denoise a real scan of the Rook calibration object with a model trained on synthetic scans (Figure 11). 
