@@ -240,9 +240,10 @@ if __name__ == "__main__":
     # Planes
     # data_path = "D:/scanner_sim/captures/plane/gray/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/gray/"
-    data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/gray/"
-    data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/gray/"
-    # decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
+    # data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/gray/"
+    # data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/gray/"
+    data_path = "/media/yurii/EXTRA/scanner-sim-data/material_calib_2_deg/position_84/gray/"
+    decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
     # for object in ["pawn", "rook", "shapes"]:
@@ -252,9 +253,9 @@ if __name__ == "__main__":
     # for object in ["pawn", "rook", "shapes"]:
     #     decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
 
-    data_path_template = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_%s/position_*"
-    for object in ["matte", "gloss"]:
-        decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_%s/position_*"
+    # for object in ["matte", "gloss"]:
+    #     decode_many(data_path_template % object, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
     # for object in ["dodo", "avocado", "house", "chair", "vase", "bird", "radio"]:

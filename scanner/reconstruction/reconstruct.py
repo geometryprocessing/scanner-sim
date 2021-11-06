@@ -19,6 +19,7 @@ from camera import load_camera_calibration
 from projector import load_projector_calibration
 from skimage import measure
 from skimage import filters
+print(cv2.__version__)
 
 
 def img_to_ray(p_img, mtx):
@@ -27,7 +28,7 @@ def img_to_ray(p_img, mtx):
 
 
 def triangulate(cam_rays, proj_xy, proj_calib):
-    u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float), proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
+    u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float).reshape((-1, 1, 2)), proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
     proj_rays = np.concatenate([u_proj_xy, np.ones((u_proj_xy.shape[0], 1))], axis=1)
     proj_rays = np.matmul(proj_calib["basis"].T, proj_rays.T).T
     proj_origin = proj_calib["origin"]
@@ -56,9 +57,9 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
     print("Loaded:", data_path)
 
     if undistorted:
-        u_cam_xy = cv2.undistortPoints(cam_xy.astype(np.float), cam_calib["new_mtx"], None).reshape((-1, 2))
+        u_cam_xy = cv2.undistortPoints(cam_xy.astype(np.float).reshape((-1, 1, 2)), cam_calib["new_mtx"], None).reshape((-1, 2))
         if groups:
-            u_group_cam_xy = cv2.undistortPoints(group_cam_xy.astype(np.float), cam_calib["new_mtx"], None).reshape((-1, 2))
+            u_group_cam_xy = cv2.undistortPoints(group_cam_xy.astype(np.float).reshape((-1, 1, 2)), cam_calib["new_mtx"], None).reshape((-1, 2))
     else:
         u_cam_xy = cv2.undistortPoints(cam_xy.astype(np.float), cam_calib["mtx"], cam_calib["dist"]).reshape((-1, 2))
         if groups:
@@ -134,8 +135,8 @@ def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/", **kw)
 
 if __name__ == "__main__":
     cam_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
-    # proj_calib = load_projector_calibration("../calibration/projector/projector_calibration.json")[2]
-    proj_calib = load_projector_calibration("../calibration/projector/projector_calibration_test.json")[2]
+    proj_calib = load_projector_calibration("../calibration/projector/projector_calibration.json")[2]
+    # proj_calib = load_projector_calibration("../calibration/projector/projector_calibration_test.json")[2]
 
     # Debug / Development
     # data_path = "D:/scanner_sim/captures/plane/"
@@ -151,12 +152,13 @@ if __name__ == "__main__":
     # data_path = "D:/scanner_sim/captures/plane/"
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/material_calib_2_deg/position_84/"
     # data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/"
-    data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/"
-    # reconstruct_single(data_path + "gray/", cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+    # data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/"
+    data_path = "/media/yurii/EXTRA/scanner-sim-data/material_calib_2_deg/position_84/"
+    reconstruct_single(data_path + "gray/", cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
 
-    data_path_template = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_%s/position_*"
-    for object in ["matte", "gloss"]:
-        reconstruct_many(data_path_template % object, cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_%s/position_*"
+    # for object in ["matte", "gloss"]:
+    #     reconstruct_many(data_path_template % object, cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
     # for object in ["pawn", "rook", "shapes"]:

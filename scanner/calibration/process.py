@@ -10,7 +10,7 @@ def linear_map(img, thr=None, mask=None, gamma=1.0):
         if pixels.shape[0] > 1e+6:
             pixels = pixels[::int(pixels.shape[0] / 1e+6)]
 
-        thr = 1.1 * np.sort(pixels)[int(0.99*pixels.shape[0])]  # threshold at 99th percentile
+        thr = 1.2 * np.sort(pixels)[int(0.99*pixels.shape[0])]  # threshold at 99th percentile
 
     img = img / thr
     if abs(gamma - 1.0) > 1e-6:
