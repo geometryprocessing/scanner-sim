@@ -1,7 +1,8 @@
 {
+    "aperture, mm": 4.0,
     "focus, mm": 810.3669534556511,
-    "best_res, mm": 1.75212467819739,
-    "dof (dist, res), mm": [
+    "best_res, pixels": 1.75212467819739,
+    "dof (dist, res), pixels": [
         [
             972.1298501316097,
             967.1012635414477,

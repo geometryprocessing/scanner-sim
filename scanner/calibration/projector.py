@@ -2,7 +2,6 @@ import json
 import cv2
 import scipy
 import numpy as np
-from camera import load_camera_calibration
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
@@ -124,7 +123,7 @@ def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, n
             plt.savefig(data_path + "/all_projector_reprojection_errors.png", dpi=300)
 
     if save:
-        save_projector_calibration(intrinsic, extrinsic, data_path + "/projector_calibration.json", mean_error=full_errors[0])
+        save_projector_calibration(intrinsic, extrinsic, data_path + "/projector_geometry.json", mean_error=full_errors[0])
 
     return intrinsic, extrinsic, full_errors
 
@@ -143,16 +142,6 @@ def save_projector_calibration(intrinsic, extrinsic, filename, mean_error=0.0):
                    "image_height, pixels": 1080,
                    "focus_distance, cm": 50,
                    "aperture, mm": 7.5}, f, indent=4, cls=NumpyEncoder)
-
-
-def load_projector_calibration(filename):
-    with open(filename, "r") as f:
-        calib = numpinize(json.load(f))
-
-    intrinsic = calib["mtx"], calib["dist"], calib["new_mtx"], calib["roi"]
-    extrinsic = calib["origin"], calib["basis"]
-
-    return intrinsic, extrinsic, calib
 
 
 def calibrate_vignetting(data_path, camera_vignetting, light_on_filename, light_off_filename, dark_frame_filename, checker_filename, plot=False):
@@ -222,6 +211,14 @@ def calibrate_vignetting(data_path, camera_vignetting, light_on_filename, light_
     Z = surf_func(np.vstack([R.ravel(), C.ravel()]), popt).reshape((H, W))
 
     save_ldr(path_prefix + "vignetting.png", (255 * Z / np.max(Z)).astype(np.uint8))
+
+    # TODO: Save projector vignetting profile as json file similar to camera vignetting (not just evaluated png image)
+    # with open(path_prefix + "profile.json", "w") as f:
+    #     json.dump({"function": "intensity = p[0] + p[1]*r^2 + p[2]*r^3 + p[3]*r^4" +
+    #                            ", where r is distance fron the center in pixels",
+    #                "center": center.tolist(),
+    #                "p": (p / p[0]).tolist()}, f, indent=4)
+
 
     if plot:
         plt.close("all")
@@ -460,8 +457,8 @@ def calibrate_response(data_path, cache=True, save=False, plot=False, save_figur
 
 
 if __name__ == "__main__":
-    # camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
-    camera_calib = load_camera_calibration("camera/camera_calibration.json")
+    # camera_calib = load_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
+    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
 
     data_path = "D:/Scanner/Calibration/projector_intrinsics/data/charuco_checker_5mm/"
     # intrinsic, _, _ = calibrate_geometry(data_path, camera_calib, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
@@ -469,9 +466,13 @@ if __name__ == "__main__":
     data_path = "D:/Scanner/Calibration/projector_extrinsic/data/charuco_checker_5mm/"
     # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
 
-    # save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration.json", mean_error=errors[0])
-    intrinsic, extrinsic, all = load_projector_calibration("projector/projector_calibration.json")
-    # center = all["mtx"][:2, 2]
+    # save_projector_calibration(intrinsic, extrinsic, "projector/projector_geometry.json", mean_error=errors[0])
+    proj_calib = load_calibration("calibration/projector/projector_geometry_test.json")
+    intrinsic = proj_calib["mtx"], proj_calib["dist"], proj_calib["new_mtx"], proj_calib["roi"]
+    extrinsic = proj_calib["origin"], proj_calib["basis"]
+
+    # center = proj_calib["mtx"][:2, 2]
+    # print("center:", center)
 
     data_path = "D:/Scanner/Calibration/projector_vignetting/data/"
     # camera_vignetting = load_ldr("camera/vignetting/inverted_softbox_smooth.png", make_gray=True)
@@ -487,7 +488,7 @@ if __name__ == "__main__":
 
     data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
     # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, error_thr=0.8, no_tangent=True, save=True, plot=True, save_figures=True)
-    # save_projector_calibration(intrinsic, extrinsic, "projector/projector_calibration_test.json", mean_error=errors[0])
+    # save_projector_calibration(intrinsic, extrinsic, "projector/projector_geometry_test.json", mean_error=errors[0])
 
     data_path = "E:/scanner_sim/calibration/projector_response/data/"
     calibrate_response(data_path, save=True, plot=True, save_figures=True)

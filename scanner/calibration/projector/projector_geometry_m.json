@@ -17,11 +17,11 @@
         ]
     ],
     "dist": [
-        -0.048537465999938696,
-        -0.19407555502150123,
         0.0,
         0.0,
-        0.7381890249004583
+        0.0,
+        0.0,
+        0.0
     ],
     "new_mtx": [
         [
@@ -71,7 +71,5 @@
     "mean_projection_error, pixels": 0.6457518935203552,
     "projector": "Texas Instrument DPL4710LC",
     "image_width, pixels": 1920,
-    "image_height, pixels": 1080,
-    "focus_distance, cm": 50,
-    "aperture, mm": 7.5
+    "image_height, pixels": 1080
 }

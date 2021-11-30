@@ -2,8 +2,6 @@ import json
 import cv2
 import scipy
 import numpy as np
-from camera import load_camera_calibration
-from projector import load_projector_calibration
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
@@ -22,7 +20,7 @@ def process_checkers(checker_path, planes, projector_calib, plot=False):
     corners, avg_errors, all_errors = [], [], []
     mm_scales, projector_dist, camera_dist = [], [], []
     charuco, checker, plane_errors = planes
-    origin, basis = projector_calib[1]
+    origin, basis = projector_calib["origin"], projector_calib["basis"]
 
     if plot:
         plt.figure("Corners")
@@ -169,9 +167,10 @@ def calibrate_camera(crops, calib_params, skip=10, plot=False, save_figures=None
             plt.savefig(save_figures + "camera_resolution.png", dpi=160)
 
     with open("camera/camera_focus.json", "w") as f:
-        json.dump({"focus, mm": focus,
-                   "best_res, mm": best_res,
-                   "dof (dist, res), mm": (dist, res)}, f, indent=4, cls=NumpyEncoder)
+        json.dump({"aperture, mm": 4.0,
+                   "focus, mm": focus,
+                   "best_res, pixels": best_res,
+                   "dof (dist, res), pixels": (dist, res)}, f, indent=4, cls=NumpyEncoder)
 
     return focus, best_res, (dist, res)
 
@@ -280,8 +279,8 @@ if __name__ == "__main__":
     checker_path = data_path + "color_checker_5mm/"
     dots_path = data_path + "color_dots_5mm/"
 
-    camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
-    projector_calib = load_projector_calibration(data_path + "charuco_checker_5mm/calibration.json")
+    camera_calib = load_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
+    projector_calib = load_calibration(data_path + "charuco_checker_5mm/calibration.json")
 
     planes = reconstruct_planes(data_path + "charuco_checker_5mm/", camera_calib)
     print("\nReconstructed:", len(planes[0][0]))

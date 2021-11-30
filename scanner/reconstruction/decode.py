@@ -18,7 +18,6 @@ from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
 from skimage import measure
 from skimage import filters
-from camera import load_camera_calibration
 
 
 def gray_to_bin(num):
@@ -222,7 +221,7 @@ def decode_many(path_template, suffix="gray/", **kw):
 
 
 if __name__ == "__main__":
-    camera_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
+    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
 
     # Debug / Development
     # data_path = "D:/scanner_sim/captures/plane/default_scan/"

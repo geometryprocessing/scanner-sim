@@ -3,7 +3,6 @@ import cv2
 import imageio
 import scipy
 import numpy as np
-from camera import load_camera_calibration
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
@@ -190,8 +189,8 @@ def test_accuracy(data_path, camera_calib, proj_calib, captured=None, rendered=N
 
 
 if __name__ == "__main__":
-    camera_calib = load_camera_calibration("camera/camera_calibration.json")
-    proj_calib = load_projector_calibration("projector/projector_calibration_test.json")[2]
+    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
+    proj_calib = load_calibration("calibration/projector/projector_geometry_test.json")
 
     data_path = "E:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
 
@@ -200,8 +199,6 @@ if __name__ == "__main__":
     # rendered = imageio.imread("accuracy/textured_render.png")
     rendered = imageio.imread("accuracy/clear_render_offset.png")
     # rendered = np.repeat(np.repeat(imageio.imread("accuracy/rendered_half_res.png"), 2, axis=0), 2, axis=1)
-
-    intrinsic, extrinsic, all = load_projector_calibration("projector/projector_calibration_test.json")
 
     T, R = test_accuracy(data_path, camera_calib, proj_calib, captured=captured, rendered=rendered,
                          save=True, plot=True, save_figures=True)

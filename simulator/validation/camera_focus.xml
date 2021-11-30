@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<scene version="0.6.0">
+    <default name="cam_samples" value="128"/>
+	<sensor type="thinlens">
+		<transform name="toWorld">
+			<lookat origin="0, 0, 0" target="0, 0, 1" up="0, -1, 0"/>
+		</transform>
+        <float name="fov" value="$cam_fov_y"/>
+        <string name="fovAxis" value="y"/>
+        <float name="pixelAspect" value="1.0"/>
+        <float name="diffLimit" value="2.65"/>
+		<float name="focusDistance" value="$cam_focus"/>
+		<float name="apertureRadius" value="$cam_aperture"/>
+
+		<sampler type="halton">
+		    <integer name="sampleCount" value="$cam_samples"/>
+		</sampler>
+
+		<film type="hdrfilm">
+            <string name="pixelFormat" value="rgba,luminance"/>
+            <string name="fileFormat" value="openexr"/>
+            <string name="channelNames" value="color, distance"/>
+            <string name="componentFormat" value="float32"/>
+		    <integer name="width" value="$cam_width"/>
+		    <integer name="height" value="$cam_height"/>
+            <!--<integer name="cropOffsetX" value="0"/>
+            <integer name="cropOffsetY" value="0"/>
+            <integer name="cropWidth" value="800"/>
+            <integer name="cropHeight" value="600"/>-->
+            <boolean name="banner" value="false"/>
+            <rfilter type="box"/>
+		</film>
+	</sensor>
+
+    <integrator type="multichannel">
+        <integrator type="path">
+            <integer name="maxDepth" value="128"/>
+            <boolean name="hideEmitters" value="true"/>
+        </integrator>
+    <!--     <integrator type="bdpt">
+            <integer name="maxDepth" value="128"/>
+        </integrator> -->
+        <integrator type="field">
+            <string name="field" value="distance"/>
+        </integrator>
+    </integrator>
+
+    <shape type="cube">
+        <transform name="toWorld">
+            <scale value="0.5"/>
+            <rotate y="-1" angle="0"/>
+            <translate x="0.5" y="0" z="$dist"/>
+        </transform>
+
+        <bsdf type="diffuse">
+            <srgb name="reflectance" value="#FFFFFF"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cube">
+        <transform name="toWorld">
+            <scale value="0.5"/>
+            <rotate y="-1" angle="0"/>
+            <translate x="-0.5" y="0" z="$dist"/>
+        </transform>
+
+        <bsdf type="diffuse">
+            <srgb name="reflectance" value="#000000"/>
+        </bsdf>
+    </shape>
+
+    <emitter type="directional">
+        <vector name="direction" x="0.0" y="0.0" z="1.0"/>
+        <spectrum name="irradiance" value="10.0"/>
+        <float name="samplingWeight" value="1.0"/>
+    </emitter>
+
+    <emitter type="constant">
+        <spectrum name="radiance" value="0.1"/>
+        <float name="samplingWeight" value="1.0"/>
+    </emitter>
+</scene>

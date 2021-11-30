@@ -1,9 +1,11 @@
 import itertools
 import os
 import cv2
+import glob
 import json
 import Imath
 import OpenEXR
+import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -11,6 +13,12 @@ from sklearn.decomposition import PCA
 from scipy.optimize import least_squares
 import meshio
 import open3d as o3d
+
+import matplotlib
+
+# font = {'family': 'serif', 'weight': 'normal', 'size': 32}
+font = {'weight': 'normal', 'size': 14}
+matplotlib.rc('font', **font)
 
 
 class NumpyEncoder(json.JSONEncoder):
@@ -31,6 +39,7 @@ def numpinize(data):
 
 
 def ensure_exists(path):
+    path = os.path.dirname(path)
     if not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
 
@@ -141,24 +150,58 @@ def save_openexr(filename, image, keep_rgb=False):
     exr.close()
 
 
+# # Gray scale by default
+# def load_openexr(filename, make_gray=True):
+#     with open(filename, "rb") as f:
+#         in_file = OpenEXR.InputFile(f)
+#         try:
+#             dw = in_file.header()['dataWindow']
+#             dim = (dw.max.y - dw.min.y + 1, dw.max.x - dw.min.x + 1)
+#             (r, g, b) = in_file.channels("RGB", pixel_type=Imath.PixelType(Imath.PixelType.FLOAT))
+#
+#             r = np.reshape(np.frombuffer(r, dtype=np.float32), dim)
+#             g = np.reshape(np.frombuffer(g, dtype=np.float32), dim)
+#             b = np.reshape(np.frombuffer(b, dtype=np.float32), dim)
+#             rgb = np.stack([r, g, b], axis=2)
+#
+#             if make_gray:
+#                 return cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
+#             else:
+#                 return rgb
+#         finally:
+#             in_file.close()
+
 # Gray scale by default
-def load_openexr(filename, make_gray=True):
+def load_openexr(filename, make_gray=True, load_depth=False):
     with open(filename, "rb") as f:
         in_file = OpenEXR.InputFile(f)
         try:
             dw = in_file.header()['dataWindow']
+            pt = Imath.PixelType(Imath.PixelType.FLOAT)
             dim = (dw.max.y - dw.min.y + 1, dw.max.x - dw.min.x + 1)
-            (r, g, b) = in_file.channels("RGB", pixel_type=Imath.PixelType(Imath.PixelType.FLOAT))
+            # print(dim)
+            if len(in_file.header()['channels']) == 3:  # Scan
+                (r, g, b) = in_file.channels("RGB", pixel_type=pt)
+                d = None
+            elif len(in_file.header()['channels']) >= 4:  # Sim
+                r = in_file.channel('color.R', pt)
+                g = in_file.channel('color.G', pt)
+                b = in_file.channel('color.B', pt)
+
+                if load_depth:
+                    d = in_file.channel("distance.Y", pt)
+                    d = np.reshape(np.frombuffer(d, dtype=np.float32), dim)
+                else:
+                    d = None
 
             r = np.reshape(np.frombuffer(r, dtype=np.float32), dim)
             g = np.reshape(np.frombuffer(g, dtype=np.float32), dim)
             b = np.reshape(np.frombuffer(b, dtype=np.float32), dim)
             rgb = np.stack([r, g, b], axis=2)
 
-            if make_gray:
-                return cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
-            else:
-                return rgb
+            ret = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY) if make_gray else rgb
+            return ret, d if load_depth else ret
+
         finally:
             in_file.close()
 
@@ -182,6 +225,11 @@ def load_ldr(filename, make_gray=False):
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
     return img
+
+
+def load_calibration(filename):
+    with open(filename, "r") as f:
+        return numpinize(json.load(f))
 
 
 def save_ply(filename, points):

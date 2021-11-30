@@ -84,7 +84,5 @@
     "image_height, pixels": 2426,
     "pixel size, us": 3.45,
     "focal_length, mm": 51,
-    "focus_distance, cm": 80,
-    "f-number": "f/12.75",
-    "aperture, mm": 4
+    "f-number": "f/12.75"
 }

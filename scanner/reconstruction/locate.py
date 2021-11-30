@@ -18,8 +18,6 @@ from process import *
 from decode import *
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
-from camera import load_camera_calibration
-from projector import load_projector_calibration
 
 
 def unit_vector(data, axis=None, out=None):
@@ -397,8 +395,8 @@ def rotate(T, R, stage_calib, angle=0, ax=None):
 
 
 if __name__ == "__main__":
-    stage_calib = numpinize(json.load(open("../calibration/stage/stage_calibration.json", "r")))
-    # stage_calib = numpinize(json.load(open("D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/merged/stage/stage_calibration.json", "r")))
+    stage_calib = load_calibration("calibration/stage/stage_geometry.json")
+    # stage_calib = load_calibration("D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/merged/stage/stage_geometry.json")
 
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
     data_path = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_matte/"

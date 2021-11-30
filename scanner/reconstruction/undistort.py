@@ -15,8 +15,6 @@ from process import *
 from decode import *
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
-from camera import load_camera_calibration
-from projector import load_projector_calibration
 from skimage import measure
 from skimage import filters
 
@@ -98,8 +96,8 @@ def remove_parasitic_light(images_path, patterns=("checker.exr"), parasitic="bla
 
 
 if __name__ == "__main__":
-    cam_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
-    proj_calib = load_projector_calibration("../calibration/projector/projector_calibration.json")[2]
+    cam_calib = load_calibration("calibration/camera/camera_geometry.json")
+    proj_calib = load_calibration("calibration/projector/projector_geometry.json")
 
     # patterns_path = "../capture/patterns/checker/"
     # predistord_patterns(patterns_path, proj_calib, x4=True)

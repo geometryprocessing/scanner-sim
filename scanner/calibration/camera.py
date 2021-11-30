@@ -91,7 +91,7 @@ def calibrate_intrinsic(data_path, max_images=70, min_points=80, save=False, plo
         undistorted = cv2.circle(undistorted, tuple(new_mtx[:2, 2].astype(np.int)), 5, (255, 0, 0), thickness=10)
 
     if save:
-        save_camera_calibration(calibration, data_path + "calibration.json", mean_error=np.mean(errors[1][0]))
+        save_camera_calibration(calibration, data_path + "geometry.json", mean_error=np.mean(errors[1][0]))
         cv2.imwrite(data_path + name[:-4] + '_original.png', img)
         cv2.imwrite(data_path + name[:-4] + '_undistorted.png', undistorted)
 
@@ -109,15 +109,10 @@ def save_camera_calibration(calibration, filename, mean_error=0.0):
                    "image_width, pixels": 6464,
                    "image_height, pixels": 4852,
                    "pixel size, us": 3.45,
+                   # "focus_distance, cm": 81,
+                   # "aperture_diameter, mm": 4,
                    "focal_length, mm": 51,
-                   "focus_distance, cm": 80,
-                   "f-number": "f/12.75",
-                   "aperture, mm": 4}, f, indent=4, cls=NumpyEncoder)
-
-
-def load_camera_calibration(filename):
-    with open(filename, "r") as f:
-        return numpinize(json.load(f))
+                   "f-number": "f/12.75"}, f, indent=4, cls=NumpyEncoder)
 
 
 def calibrate_vignetting(data_path, light_on_filename, light_off_filename, dark_frame_filename, center, plot=False):
@@ -219,9 +214,9 @@ if __name__ == "__main__":
 
     # calibration, errors = calibrate_intrinsic(data_path + "charuco/", error_thr=0.9, save=True, plot=True)
     # calibration, errors = calibrate_intrinsic(data_path + "checker/", error_thr=0.8, save=True, plot=True)
-    # save_camera_calibration(calibration, "camera/camera_calibration.json", mean_error=errors[0])
+    # save_camera_calibration(calibration, "camera/camera_geometry.json", mean_error=errors[0])
 
-    calib = load_camera_calibration(data_path + "charuco/calibration.json")
+    calib = load_calibration(data_path + "charuco/calibration.json")
     center = calib["mtx"][:2, 2]
 
     data_path = "D:/Scanner/Calibration/camera_vignetting/data/"

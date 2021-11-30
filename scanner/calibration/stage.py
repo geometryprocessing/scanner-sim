@@ -1,7 +1,6 @@
 import json
 import cv2
 import numpy as np
-from camera import load_camera_calibration
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 from scipy.optimize import least_squares
@@ -132,7 +131,7 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
             plt.savefig(data_path + "/stage_errors.png", dpi=300)
 
     if save:
-        with open(data_path + "/stage_calibration.json", "w") as f:
+        with open(data_path + "/stage_geometry.json", "w") as f:
             json.dump({"p": p,
                        "dir": dir,
                        "mean_error, mm": np.mean(axis_errors),
@@ -142,8 +141,8 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
 
 
 if __name__ == "__main__":
-    # camera_calib = load_camera_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
-    camera_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
+    # camera_calib = load_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
+    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
 
     # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/merged/"
     # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/merged/"

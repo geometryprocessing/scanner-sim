@@ -15,8 +15,6 @@ from process import *
 from decode import *
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
-from camera import load_camera_calibration
-from projector import load_projector_calibration
 from skimage import measure
 from skimage import filters
 print(cv2.__version__)
@@ -134,9 +132,9 @@ def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/", **kw)
 
 
 if __name__ == "__main__":
-    cam_calib = load_camera_calibration("../calibration/camera/camera_calibration.json")
-    proj_calib = load_projector_calibration("../calibration/projector/projector_calibration.json")[2]
-    # proj_calib = load_projector_calibration("../calibration/projector/projector_calibration_test.json")[2]
+    cam_calib = load_calibration("calibration/camera/camera_geometry.json")
+    proj_calib = load_calibration("calibration/projector/projector_geometry.json")
+    # proj_calib = load_calibration("../calibration/projector/projector_geometry_test.json")
 
     # Debug / Development
     # data_path = "D:/scanner_sim/captures/plane/"

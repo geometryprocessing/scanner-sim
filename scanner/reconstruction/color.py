@@ -15,14 +15,12 @@ from process import *
 from decode import *
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
-from camera import load_camera_calibration
-from projector import load_projector_calibration
 from skimage import measure
 from skimage import filters
 
 
 if __name__ == "__main__":
-    wb = numpinize(json.load(open("../calibration/projector/white_balance.json")))
+    wb = load_calibration("../calibration/projector/white_balance.json")
     print("White Balance:", wb)
 
     data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_0/color/"
