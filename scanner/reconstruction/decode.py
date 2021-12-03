@@ -221,7 +221,7 @@ def decode_many(path_template, suffix="gray/", **kw):
 
 
 if __name__ == "__main__":
-    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
+    camera_calib = load_calibration("../calibration/camera/camera_geometry.json")
 
     # Debug / Development
     # data_path = "D:/scanner_sim/captures/plane/default_scan/"

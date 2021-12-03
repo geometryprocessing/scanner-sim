@@ -395,7 +395,7 @@ def rotate(T, R, stage_calib, angle=0, ax=None):
 
 
 if __name__ == "__main__":
-    stage_calib = load_calibration("calibration/stage/stage_geometry.json")
+    stage_calib = load_calibration("../calibration/stage/stage_geometry.json")
     # stage_calib = load_calibration("D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/merged/stage/stage_geometry.json")
 
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"

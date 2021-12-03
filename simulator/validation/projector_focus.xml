@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <scene version="0.6.0">
-    <default name="cam_samples" value="128"/>
+    <default name="cam_samples" value="2048"/>
 	<sensor type="thinlens">
 		<transform name="toWorld">
 			<lookat origin="0, 0, 0" target="0, 0, 1" up="0, -1, 0"/>
@@ -17,7 +17,7 @@
 		</sampler>
 
 		<film type="hdrfilm">
-            <string name="pixelFormat" value="rgba,luminance"/>
+            <string name="pixelFormat" value="rgba, luminance"/>
             <string name="fileFormat" value="openexr"/>
             <string name="channelNames" value="color, distance"/>
             <string name="componentFormat" value="float32"/>
@@ -35,7 +35,7 @@
     <integrator type="multichannel">
         <integrator type="path">
             <integer name="maxDepth" value="128"/>
-            <boolean name="hideEmitters" value="true"/>
+            <boolean name="hideEmitters" value="false"/>
         </integrator>
     <!--     <integrator type="bdpt">
             <integer name="maxDepth" value="128"/>
@@ -45,38 +45,55 @@
         </integrator>
     </integrator>
 
+    <texture type="bitmap" id="pattern">
+        <string name="filename" value="pattern.png"/>
+        <string name="wrapMode" value="zero"/>
+        <string name="filterType" value="nearest"/>
+        <boolean name="cache" value="false"/>
+        <float name="gamma" value="1.0"/>
+    </texture>
+
+    <emitter type="spot">
+        <transform name="toWorld">
+            <!--<lookat origin="0, 0, 0" target="0, 0, 1" up="0, -1, 0"/>-->
+            <translate x="0.0" y="0" z="$offset"/>
+        </transform>
+        <ref name="texture" id="pattern"/>
+        <spectrum name="intensity" value="$proj_intensity"/>
+        <float name="scaleX" value="$proj_scaleX"/>
+        <float name="scaleY" value="$proj_scaleY"/>
+        <float name="offX" value="$proj_offsetX"/>
+        <float name="offY" value="$proj_offsetY"/>
+        <integer name="width" value="$proj_width"/>
+        <integer name="height" value="$proj_height"/>
+        <float name="apertureRadius" value="$proj_aperture"/>
+        <float name="focusDistance" value="$proj_focus"/>
+        <float name="diffLimit" value="$proj_diffLimit"/>
+        <float name="gapSize" value="$proj_gapSize"/>
+        <float name="samplingWeight" value="5.0"/>
+    </emitter>
+
     <shape type="cube">
         <transform name="toWorld">
-            <scale value="0.5"/>
+            <scale value="$scale"/>
             <rotate y="-1" angle="0"/>
-            <translate x="0.5" y="0" z="$dist"/>
+            <translate x="0.0" y="0" z="$dist"/>
         </transform>
 
         <bsdf type="diffuse">
             <srgb name="reflectance" value="#FFFFFF"/>
-        </bsdf>
-    </shape>
-
-    <shape type="cube">
-        <transform name="toWorld">
-            <scale value="0.5"/>
-            <rotate y="-1" angle="0"/>
-            <translate x="-0.5" y="0" z="$dist"/>
-        </transform>
-
-        <bsdf type="diffuse">
-            <srgb name="reflectance" value="#000000"/>
+            <!--<ref id="pattern" name="reflectance"/>-->
         </bsdf>
     </shape>
 
     <emitter type="directional">
         <vector name="direction" x="0.0" y="0.0" z="1.0"/>
-        <spectrum name="irradiance" value="10.0"/>
+        <spectrum name="irradiance" value="0.0"/>
         <float name="samplingWeight" value="1.0"/>
     </emitter>
 
-    <emitter type="constant">
-        <spectrum name="radiance" value="0.1"/>
+    <!--<emitter type="constant">
+        <spectrum name="radiance" value="1.0"/>
         <float name="samplingWeight" value="1.0"/>
-    </emitter>
+    </emitter> -->
 </scene>

@@ -142,7 +142,7 @@ def calibrate_axis(data_path, camera_calib, min_plane_points=80, min_circle_poin
 
 if __name__ == "__main__":
     # camera_calib = load_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
-    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
+    camera_calib = load_calibration("camera/camera_geometry.json")
 
     # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_5_deg_before/merged/"
     # data_path = "D:/Scanner/Captures/stage_batch_2/stage_calib_2_deg_after/merged/"

@@ -458,7 +458,7 @@ def calibrate_response(data_path, cache=True, save=False, plot=False, save_figur
 
 if __name__ == "__main__":
     # camera_calib = load_calibration("D:/Scanner/Calibration/camera_intrinsics/data/charuco/calibration.json")
-    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
+    camera_calib = load_calibration("camera/camera_geometry.json")
 
     data_path = "D:/Scanner/Calibration/projector_intrinsics/data/charuco_checker_5mm/"
     # intrinsic, _, _ = calibrate_geometry(data_path, camera_calib, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
@@ -467,7 +467,7 @@ if __name__ == "__main__":
     # _, extrinsic, errors = calibrate_geometry(data_path, camera_calib, intrinsic=intrinsic, max_planes=500, no_tangent=True, save=True, plot=True, save_figures=True)
 
     # save_projector_calibration(intrinsic, extrinsic, "projector/projector_geometry.json", mean_error=errors[0])
-    proj_calib = load_calibration("calibration/projector/projector_geometry_test.json")
+    proj_calib = load_calibration("projector/projector_geometry_test.json")
     intrinsic = proj_calib["mtx"], proj_calib["dist"], proj_calib["new_mtx"], proj_calib["roi"]
     extrinsic = proj_calib["origin"], proj_calib["basis"]
 
