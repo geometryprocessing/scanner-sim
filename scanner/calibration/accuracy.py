@@ -189,8 +189,8 @@ def test_accuracy(data_path, camera_calib, proj_calib, captured=None, rendered=N
 
 
 if __name__ == "__main__":
-    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
-    proj_calib = load_calibration("calibration/projector/projector_geometry_test.json")
+    camera_calib = load_calibration("camera/camera_geometry.json")
+    proj_calib = load_calibration("projector/projector_geometry_test.json")
 
     data_path = "E:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
 

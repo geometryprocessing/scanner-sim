@@ -132,8 +132,8 @@ def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/", **kw)
 
 
 if __name__ == "__main__":
-    cam_calib = load_calibration("calibration/camera/camera_geometry.json")
-    proj_calib = load_calibration("calibration/projector/projector_geometry.json")
+    cam_calib = load_calibration("../calibration/camera/camera_geometry.json")
+    proj_calib = load_calibration("../calibration/projector/projector_geometry.json")
     # proj_calib = load_calibration("../calibration/projector/projector_geometry_test.json")
 
     # Debug / Development

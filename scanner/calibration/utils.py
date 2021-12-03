@@ -13,6 +13,7 @@ from sklearn.decomposition import PCA
 from scipy.optimize import least_squares
 import meshio
 import open3d as o3d
+import imageio
 
 import matplotlib
 
@@ -200,8 +201,10 @@ def load_openexr(filename, make_gray=True, load_depth=False):
             rgb = np.stack([r, g, b], axis=2)
 
             ret = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY) if make_gray else rgb
-            return ret, d if load_depth else ret
-
+            if load_depth:
+                return ret, d
+            else:
+                return ret
         finally:
             in_file.close()
 

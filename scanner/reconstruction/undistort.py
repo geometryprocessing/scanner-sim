@@ -96,8 +96,8 @@ def remove_parasitic_light(images_path, patterns=("checker.exr"), parasitic="bla
 
 
 if __name__ == "__main__":
-    cam_calib = load_calibration("calibration/camera/camera_geometry.json")
-    proj_calib = load_calibration("calibration/projector/projector_geometry.json")
+    cam_calib = load_calibration("../calibration/camera/camera_geometry.json")
+    proj_calib = load_calibration("../calibration/projector/projector_geometry.json")
 
     # patterns_path = "../capture/patterns/checker/"
     # predistord_patterns(patterns_path, proj_calib, x4=True)

@@ -5,8 +5,8 @@ from scipy.optimize import curve_fit
 def simulate_camera_focus(data_path, mitsuba_path, range_cm=(65, 96), verbose=True, **kw):
     config, cam_geom = {}, load_calibration("../../scanner/calibration/camera/camera_geometry.json")
     # Render small crop (200 pixels high) only for optimal performance
-    cam_geom["image_width, pixels"] = 400
-    cam_geom["image_height, pixels"] = 200
+    cam_geom["image_width, pixels"] = 200
+    cam_geom["image_height, pixels"] = 100
 
     configure_camera_geometry(config, cam_geom)
     configure_camera_focus(config, "../../scanner/calibration/camera/camera_focus.json", **kw)
@@ -30,6 +30,8 @@ def simulate_camera_focus(data_path, mitsuba_path, range_cm=(65, 96), verbose=Tr
 def analyze_camera_focus(data_path, reference=None):
     if reference is not None:
         ref = load_calibration(reference)["dof (dist, res), pixels"]
+    else:
+        ref = None
 
     files = sorted(glob.glob(data_path + "/dist_*.exr"))
 
@@ -44,14 +46,15 @@ def analyze_camera_focus(data_path, reference=None):
         d = int(file[file.rfind("_")+1:][:-4])
         print("Dist: %d cm" % d)
 
-        img = load_openexr(file)[0]
+        img = load_openexr(file)
+        h, w = img.shape
         prof = np.average(img, axis=0)
         prof /= prof[-1]
 
         x = np.arange(prof.shape[0])
         y = prof
 
-        par, cov = curve_fit(sigmoid, x, y, [1, 100, np.max(y), np.min(y)])
+        par, cov = curve_fit(sigmoid, x, y, [1, w/2, np.max(y), np.min(y)])
         print('Fitted:', par)
         dist.append(d * 10)
         res.append(2 * par[0])
@@ -75,14 +78,16 @@ def analyze_camera_focus(data_path, reference=None):
     plt.title("Camera resolution (%.1f %% contrast)" % contrast)
     plt.legend()
     plt.tight_layout()
-    plt.savefig("camera_resolution.png", dpi=200)
+    plt.savefig("camera_focus.png", dpi=200)
 
 
 if __name__ == "__main__":
     mitsuba_path = "/home/yurii/software/mitsuba"
     data_path = mitsuba_path + "/scenes"
+    ensure_exists(data_path)
 
-    # simulate_camera_focus(data_path + "/camera_focus", mitsuba_path)
+    simulate_camera_focus(data_path + "/camera_focus", mitsuba_path)
 
-    analyze_camera_focus(data_path + "/camera_focus", reference="../../scanner/calibration/camera/camera_focus.json")
+    analyze_camera_focus(data_path + "/camera_focus",
+                         reference="../../scanner/calibration/camera/camera_focus.json")
     plt.show()
