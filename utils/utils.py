@@ -235,14 +235,22 @@ def load_calibration(filename):
         return numpinize(json.load(f))
 
 
-def save_ply(filename, points):
+def save_ply(filename, points, normals=None, colors=None):
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points.astype(np.float32))
+
+    #print(colors.shape, normals.shape, colors.dtype, normals.dtype)
+    if type(normals) != type(None):
+        pcd.normals = o3d.utility.Vector3dVector(normals.astype(np.float32))
+    if type(colors) != type(None):
+        pcd.colors = o3d.utility.Vector3dVector(colors.astype(np.float32))
     o3d.io.write_point_cloud(filename, pcd, compressed=False, print_progress=True)
 
 
 def load_ply(filename):
-    return np.asarray(o3d.io.read_point_cloud(filename, print_progress=True).points)
+    pc = o3d.io.read_point_cloud(filename, print_progress=True)
+    
+    return np.asarray(pc.points), np.asarray(pc.normals), np.asarray(pc.colors)
 
 
 def scatter(ax, p, *args, **kwargs):
