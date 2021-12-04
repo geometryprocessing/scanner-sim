@@ -1,7 +1,6 @@
 import itertools
 import os
 import pickle
-
 import cv2
 import json
 import Imath
@@ -60,38 +59,33 @@ def get_all_bit_masks(template, inverted_template, ids=None, undistort=None, **k
     return np.array(joblib.Parallel(verbose=15, n_jobs=-1, batch_size=1, pre_dispatch="all")(jobs))
 
 
-def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, mask_iter=6, crop=None, offset=-150,
-                  undistort=None, group=False, save=True, plot=False, save_figures=True, verbose=False, **kw):
+def decode_gray(data_path, out_dir="decoded", mask_sigma=3, mask_iter=6, crop=None, offset=-150,
+                  undistort=None, file_pattern="img_%02d.exr", load_depth=False, group=False, save=True, plot=False, threshold=0, save_figures=True, verbose=False, **kw):
 
-    if symmetric:
-        all_names = ["img_%02d.exr" % i for i in range(46)]
-        v_names, v_inv_names = reversed(all_names[2:24:2]), reversed(all_names[3:24:2])
-        h_names, h_inv_names = reversed(all_names[24::2]), reversed(all_names[25::2])
+    all_names = [file_pattern % i for i in range(46)]
+    v_names, v_inv_names = reversed(all_names[2:24:2]), reversed(all_names[3:24:2])
+    h_names, h_inv_names = reversed(all_names[24::2]), reversed(all_names[25::2])
 
-        h_masks = get_all_bit_masks([data_path + n for n in h_names], [data_path + n for n in h_inv_names], undistort=undistort, **kw)
-        v_masks = get_all_bit_masks([data_path + n for n in v_names], [data_path + n for n in v_inv_names], undistort=undistort, **kw)
-        bit_masks = h_masks, v_masks
-    else:
-        bit_masks = [get_all_bit_masks(data_path + dir + "_%d.exr", data_path + dir + "_%d_inv.exr",
-                                       ids=range(11), undistort=undistort, **kw)
-                     for dir in ["horizontal", "vertical"]]
+    h_masks = get_all_bit_masks([data_path + n for n in h_names], [data_path + n for n in h_inv_names], undistort=undistort, **kw)
+    v_masks = get_all_bit_masks([data_path + n for n in v_names], [data_path + n for n in v_inv_names], undistort=undistort, **kw)
+    bit_masks = h_masks, v_masks
 
     if verbose:
         print("Bit masks:", bit_masks[0].shape, bit_masks[0].size / 1024**2, "MB")
 
-    if symmetric:
-        white = load_openexr(data_path + "/img_00.exr", make_gray=True)
-        blank = load_openexr(data_path + "/img_01.exr", make_gray=True)
+    if load_depth:
+        white, depth_gt = load_openexr(data_path + "/" + file_pattern%0, make_gray=True, load_depth=load_depth) #TODO switch to proper path handling
     else:
-        blank = load_openexr(data_path + "/blank.exr", make_gray=True)
-        white = load_openexr(data_path + "/white.exr", make_gray=True)
+        white = load_openexr(data_path + "/" + file_pattern%0, make_gray=True, load_depth=load_depth) #TODO switch to proper path handling
+        depth_gt = None
+    blank = load_openexr(data_path + "/" + file_pattern%1, make_gray=True)
 
     clean = white - blank
     if crop:
         clean[:, :crop] = 0  # crop to the left of the rotating stage
         clean[:, clean.shape[1] - crop + 2*offset:] = 0  # and to the right
     ldr, thr_ldr = linear_map(gaussian_filter(clean, sigma=mask_sigma))
-    thr_otsu, mask = cv2.threshold(ldr, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    thr_otsu, mask = cv2.threshold(ldr, threshold, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     print("Thresholds:", thr_ldr, thr_otsu)
 
     struct = scipy.ndimage.generate_binary_structure(2, 1)
@@ -159,6 +153,8 @@ def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, ma
         save_path = data_path + "/" + out_dir + "/"
         ensure_exists(save_path)
 
+        if load_depth:
+            np.save(save_path + "depth_gt.npy", depth_gt)
         np.save(save_path + "camera_xy.npy", cam_xy.astype(np.uint16))
         np.save(save_path + "projector_xy.npy", proj_xy.astype(np.uint16))
         np.save(save_path + "mask.npy", mask)
@@ -193,6 +189,11 @@ def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, ma
             plot_image(labels, "Groups", data_path + " - Groups", save_as=save_path + "groups" if save_path else None)
             plot_hist(group_counts, "Counts", data_path + " - Group Counts", bins=np.max(group_counts), save_as=save_path + "group_counts" if save_path else None)
 
+    #img2 = img.copy()
+    #img2[r, c] = p_r
+    #img3 = img.copy()
+    #img3[r, c] = p_c
+    #return img2, img3# p_r, p_c, img#(cam_xy, proj_xy, mask), (group_cam_xy, group_proj_xy, group_counts, group_rcs) if group else None
     return (cam_xy, proj_xy, mask), (group_cam_xy, group_proj_xy, group_counts, group_rcs) if group else None
 
 

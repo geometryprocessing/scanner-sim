@@ -17,7 +17,7 @@ from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
 from skimage import measure
 from skimage import filters
-print(cv2.__version__)
+from scipy.spatial.transform import Rotation as R
 
 
 def img_to_ray(p_img, mtx):
@@ -25,8 +25,13 @@ def img_to_ray(p_img, mtx):
     return np.concatenate([p_img, np.ones((p_img.shape[0], 1))], axis=1)
 
 
-def triangulate(cam_rays, proj_xy, proj_calib):
-    u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float).reshape((-1, 1, 2)), proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
+def triangulate(cam_rays, proj_xy, proj_calib, undistort=True):
+    if undistort:
+        u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float), proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
+    else:
+        #print("No undistort")
+        u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float), proj_calib["new_mtx"], None).reshape((-1, 2))
+    #print(u_proj_xy[:10, :])
     proj_rays = np.concatenate([u_proj_xy, np.ones((u_proj_xy.shape[0], 1))], axis=1)
     proj_rays = np.matmul(proj_calib["basis"].T, proj_rays.T).T
     proj_origin = proj_calib["origin"]
@@ -37,9 +42,28 @@ def triangulate(cam_rays, proj_xy, proj_calib):
 
     return cam_rays * L[:, None]
 
+def calculate_normals_from_p3d(points, mask):
+    dx = (np.roll(points, -1, axis=1) - np.roll(points, 1, axis=1)) / 1
+    dy = (np.roll(points, -1, axis=0) - np.roll(points, 1, axis=0)) / 1
+    normals = - np.cross(dx, dy)
+    #normals = normals / np.linalg.norm(normals, axis=1)[:, None]
+    return normals
+    
+def calculate_normals_from_dm(dm):
+    zy, zx = np.gradient(dm)
+    normals = np.dstack((zx, zy, -np.ones_like(dm)))
+#    n = np.linalg.norm(normals, axis=2)
+    normals = normals / np.linalg.norm(normals, axis=2)[:, :, None]
+    return normals
 
 def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed", max_group=25, gen_depth_map=True,
-                       save=True, plot=False, save_figures=True, verbose=False, **kw):
+                       save=True, plot=False, save_figures=True, verbose=False, extract_normals=True, extract_colors=True, sim=False, **kw):
+    
+    if sim:
+        white_path = data_path + "/img_000.exr"
+    else: 
+        white_path = data_path + "/img_color.exr"
+    
     if save:
         save_path = data_path + out_dir + "/"
         ensure_exists(save_path)
@@ -75,7 +99,27 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
         idx = np.nonzero(group_counts < max_group)[0]
         print("%d groups larger than %d excluded" % (group_counts.shape[0] - idx.shape[0], max_group))
         group_points = group_points[idx, :]
+        group_cam_xy = group_cam_xy[idx, :]
+        
+    # Extract colors        
+    all_colors = group_colors = None
+    if extract_colors:
+        
+        white, _ = load_openexr(white_path, make_gray=False, load_depth=False)
+        #print(np.min(white), np.max(white))
+        ma = np.max(white)
+        mi = np.min(white)
+        white = (white - mi) / (ma - mi)
+        all_colors = white
+        all_colors = all_colors[mask]
+        all_colors = all_colors.reshape(-1, 3)
 
+        group_idxs = group_cam_xy.astype("int32")
+        #print(group_idxs.shape)
+        group_colors = white[group_idxs[:, 1], group_idxs[:, 0]]
+
+
+    # Generate depth maps
     if gen_depth_map:
         print("Generating depth map(s)")
         full_depth_map = np.zeros_like(mask, dtype=np.float32)
@@ -88,11 +132,34 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
                 if i % 100000 == 0 and verbose:
                     print("Group", i)
                 group_depth_map[rcs[:, 0], rcs[:, 1]] = np.linalg.norm(group_points[i, :])
+                
+    # Generate normals
+    all_normals = group_normals = None
+    if extract_normals:
+        full_points = np.zeros((mask.shape[0], mask.shape[1], 3), dtype=np.float32)
+        full_points[cam_xy[:, 1], cam_xy[:, 0], :] = all_points
+        all_normals = calculate_normals_from_p3d(full_points, mask)
+        #all_normals = calculate_normals_from_dm(full_depth_map)
+
+        group_idxs = group_cam_xy.astype("int32")
+        group_normals = all_normals[group_idxs[:, 1], group_idxs[:, 0]]
+        
+        all_normals = all_normals[mask]
+        
+        all_norm = np.linalg.norm(all_normals, axis=1)
+        all_nonzero = all_norm > 0
+        all_normals[all_nonzero] /= all_norm[all_nonzero, None]
+        
+        group_norm = np.linalg.norm(group_normals, axis=1)
+        group_nonzero = group_norm > 0
+        group_normals[group_nonzero] /= group_norm[group_nonzero, None]
+
 
     if save:
-        save_ply(save_path + "all_points.ply", all_points)
+        save_ply(save_path + "all_points.ply", all_points, all_normals, all_colors)
         if groups:
-            save_ply(save_path + "group_points.ply", group_points)
+            #print(group_points.shape, group_normals.shape, group_colors.shape)
+            save_ply(save_path + "group_points.ply", group_points, group_normals, group_colors)
             with open(save_path + "max_group_size.txt", "w") as f:
                 f.write(str(max_group))
 
@@ -116,14 +183,14 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
                 vmin = np.min(full_depth_map[group_depth_map > 1])
                 plot_image(group_depth_map, "Group Depth Map", data_path + " - Group Depth Map", vmin=vmin, save_as=save_path + "group_depth_map" if save_path else None)
 
-    return all_points, group_points if groups else None
+    return all_points, group_points, group_colors, group_depth_map/1000.0 if groups else None
 
 
 def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/", **kw):
     paths = glob.glob(path_template)
     print("Found %d directories:" % len(paths), paths)
 
-    jobs = [joblib.delayed(reconstruct_single)
+    jobs = [joblib.delayed(reconstruct_single, check_pickle=False)
             (path + "/" + suffix, cam_calib, proj_calib, **kw) for path in paths]
 
     results = joblib.Parallel(verbose=15, n_jobs=8, batch_size=1, pre_dispatch="all")(jobs)
