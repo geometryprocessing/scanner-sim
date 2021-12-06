@@ -4,7 +4,19 @@ import pickle
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from detect import load_corners
+
+
+# Duplicate from detect.py in scanner
+def load_corners(filename):
+    corners = {}
+
+    for name, points in json.load(open(filename, "r")).items():
+        img_points = np.array(points["img_points"]).reshape(-1, 2).astype(np.float32)
+        obj_points = np.array(points["obj_points"]).reshape(-1, 3).astype(np.float32)
+        ids = np.array(points["ids"]).ravel().astype(np.int32)
+        corners[name] = {"img": img_points, "obj": obj_points, "idx": ids}
+
+    return corners
 
 
 def fit_line(points):
