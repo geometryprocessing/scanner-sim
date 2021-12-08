@@ -4,8 +4,8 @@ import glob
 import subprocess
 
 
-def write_scene_config(config, scene_path, scene_filename, template_file):
-    template = xml.etree.ElementTree.parse(template_file)
+def write_scene_file(config, scene_filename, template_filename):
+    template = xml.etree.ElementTree.parse(template_filename)
     valid = True
     for e in template.findall("default"):
         n = e.get("name")
@@ -20,7 +20,7 @@ def write_scene_config(config, scene_path, scene_filename, template_file):
         print("Missing parameters, invalid config is not written to file.")
         return
 
-    template.write(os.path.join(scene_path, scene_filename))
+    template.write(scene_filename)
     
 
 def source(script, update=True):

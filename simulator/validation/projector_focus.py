@@ -1,4 +1,5 @@
 from configuration import *
+from rendering import *
 from scipy.optimize import curve_fit
 
 

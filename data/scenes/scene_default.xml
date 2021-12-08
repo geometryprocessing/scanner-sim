@@ -19,7 +19,7 @@
     <default name="cam_crop_offset_y" value="0"/>
     
     <!-- Projector defaults -->
-    <default name="pro_pattern_file" value="N/A"/>
+    <default name="pro_pattern_file" value="pattern.png"/>
     <default name="pro_wrap_mode" value="black"/>
     <default name="pro_gamma" value="1.0"/>
     <default name="pro_transform" value="0.878272 0.011952 -0.478011 0.226090 -0.016316 0.999854 -0.004977 0.074063 0.477882 0.012170 0.878340 0.414295 0.000000 0.000000 0.000000 1.000000"/>
@@ -33,7 +33,7 @@
     <default name="pro_aperture_radius" value="0.0035951384447263915"/>
     <default name="pro_focus_distance" value="0.4902099376513703"/>
     <default name="pro_diff_limit" value="0.0057211497483984144"/>
-    <default name="pro_gap_size" value="0"/>
+    <default name="pro_pixel_gap" value="0"/>
     <default name="pro_sampling_weight" value="5.0"/>
     
     <default name="amb_radiance" value="0.0"/>
@@ -41,7 +41,7 @@
 
     <!-- Object defaults -->
     <default name="obj_type" value="obj"/>
-    <default name="obj_file" value="N/A"/>
+    <default name="obj_file" value="object.obj"/>
     <default name="obj_max_smooth_angle" value="30.0"/>
     <default name="obj_mat_ior" value="1.0634878252015734"/>
     <default name="obj_mat_alpha" value="0.22150848706292028"/>    
@@ -118,7 +118,7 @@
         <float name="apertureRadius" value="$pro_aperture_radius"/>
         <float name="focusDistance" value="$pro_focus_distance"/>
         <float name="diffLimit" value="$pro_diff_limit"/>
-        <float name="gapSize" value="$pro_gap_size"/>
+        <float name="pixelGap" value="pro_pixel_gap"/>
         <float name="samplingWeight" value="$pro_sampling_weight"/>        
     </emitter>
    
