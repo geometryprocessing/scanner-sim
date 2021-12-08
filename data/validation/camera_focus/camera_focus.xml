@@ -1,45 +1,64 @@
 <?xml version="1.0" ?>
 <scene version="0.6.0">
+    <!-- Camera defaults -->
     <default name="cam_samples" value="128"/>
-	<sensor type="thinlens">
-		<transform name="toWorld">
-			<lookat origin="0, 0, 0" target="0, 0, 1" up="0, -1, 0"/>
-		</transform>
+    <default name="cam_fov_y" value="18.728258538852586"/>
+    <default name="cam_focus_distance" value="0.8103669534556511"/>
+    <default name="cam_pixel_aspect" value="0.9992771751028543"/>
+    <default name="cam_aperture_radius" value="0.002"/>
+    <default name="cam_diff_limit" value="0.01028416270425193"/>
+    <default name="cam_pixel_format" value="rgba,luminance"/>
+    <default name="cam_channel_names" value="color, distance"/>
+    <default name="cam_image_width" value="6464"/>
+    <default name="cam_image_height" value="4852"/>
+    <default name="cam_crop_width" value="$cam_image_width"/>
+    <default name="cam_crop_height" value="$cam_image_height"/>
+    <default name="cam_crop_offset_x" value="0"/>
+    <default name="cam_crop_offset_y" value="0"/>
+
+    <!-- Scene geometry defaults -->
+    <default name="scale" value="0.5"/>
+    <default name="dist" value="1.31"/>
+
+    <!-- Camera settings -->
+    <sensor type="thinlens">
+        <transform name="toWorld">
+            <lookat origin="0, 0, 0" target="0, 0, 1" up="0, -1, 0"/>
+        </transform>
         <float name="fov" value="$cam_fov_y"/>
         <string name="fovAxis" value="y"/>
-        <float name="pixelAspect" value="$cam_pixelAspect"/>
-		<float name="focusDistance" value="$cam_focus"/>
-		<float name="apertureRadius" value="$cam_aperture"/>
-        <float name="diffLimit" value="$cam_diffLimit"/>
+        <float name="pixelAspect" value="$cam_pixel_aspect"/>
+        <float name="focusDistance" value="$cam_focus_distance"/>
+        <float name="apertureRadius" value="$cam_aperture_radius"/>
+        <float name="diffLimit" value="$cam_diff_limit"/>
+        <float name="nearClip" value="0.001"/>
+        <float name="farClip" value="100000"/>
 
-		<sampler type="halton">
-		    <integer name="sampleCount" value="$cam_samples"/>
-		</sampler>
+        <sampler type="halton">
+            <integer name="sampleCount" value="$cam_samples"/>
+        </sampler>
 
-		<film type="hdrfilm">
-            <string name="pixelFormat" value="rgba,luminance"/>
+        <film type="hdrfilm">
+            <string name="pixelFormat" value="$cam_pixel_format"/>
             <string name="fileFormat" value="openexr"/>
-            <string name="channelNames" value="color, distance"/>
+            <string name="channelNames" value="$cam_channel_names"/>
             <string name="componentFormat" value="float32"/>
-		    <integer name="width" value="$cam_width"/>
-		    <integer name="height" value="$cam_height"/>
-            <!--<integer name="cropOffsetX" value="0"/>
-            <integer name="cropOffsetY" value="0"/>
-            <integer name="cropWidth" value="800"/>
-            <integer name="cropHeight" value="600"/>-->
+            <integer name="width" value="$cam_image_width"/>
+            <integer name="height" value="$cam_image_height"/>
+            <integer name="cropOffsetX" value="$cam_crop_offset_x"/>
+            <integer name="cropOffsetY" value="$cam_crop_offset_y"/>
+            <integer name="cropWidth" value="$cam_crop_width"/>
+            <integer name="cropHeight" value="$cam_crop_height"/>
             <boolean name="banner" value="false"/>
             <rfilter type="box"/>
-		</film>
-	</sensor>
-
+        </film>
+    </sensor>
+    <!-- TODO Integrator settings need to be synced with hdrfilm channels/pixelformat -->
     <integrator type="multichannel">
         <integrator type="path">
             <integer name="maxDepth" value="128"/>
             <boolean name="hideEmitters" value="true"/>
         </integrator>
-    <!--     <integrator type="bdpt">
-            <integer name="maxDepth" value="128"/>
-        </integrator> -->
         <integrator type="field">
             <string name="field" value="distance"/>
         </integrator>

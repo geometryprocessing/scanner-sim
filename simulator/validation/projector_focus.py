@@ -3,52 +3,53 @@ from rendering import *
 from scipy.optimize import curve_fit
 
 
+calib_path = "../../data/calibrations/"
+valid_path = "../../data/validation/projector_focus/"
+
+
 def simulate_projector_focus(data_path, mitsuba_path, range_cm=(61, 94), scale=0.05, ideal_camera=False, verbose=True, **kw):
-    config, cam_geom = {}, load_calibration("../../scanner/calibration/camera/camera_geometry.json")
-    # Render small crop (200 pixels high) only for optimal performance
-    cam_geom["image_width, pixels"] = 100
-    cam_geom["image_height, pixels"] = 100
+    config, cam_geom = {}, load_calibration(calib_path + "camera_geometry.json")
+    # Render small crop (100 pixels high) only for optimal performance
+    w, h = 100, 100
+    cam_geom["image_width, pixels"] = w
+    cam_geom["image_height, pixels"] = h
+    cam_geom["new_mtx"][:2, 2] = (w-1)/2, (h-1)/2
 
     configure_camera_geometry(config, cam_geom)
-    configure_camera_focus(config, "../../scanner/calibration/camera/camera_focus.json", **kw)
+    configure_camera_focus(config, calib_path + "camera_focus.json", **kw)
 
-    configure_projector_geometry(config, "../../scanner/calibration/projector/projector_geometry.json", **kw)
-    configure_projector_focus(config, "../../scanner/calibration/projector/projector_focus.json", **kw)
-    config["proj_diffLimit"] = config["cam_diffLimit"] * config["cam_aperture"] / config["proj_aperture"]
-    # config["proj_diffLimit"] = 0
-    # config["proj_aperture"] = 0.001
+    configure_projector_geometry(config, calib_path + "projector_geometry.json", **kw)
+    configure_projector_focus(config, calib_path + "projector_focus.json", **kw)
+    # config["pro_diff_limit"] = 0
 
     if ideal_camera:
-        config["cam_aperture"] = 0
-        config["cam_diffLimit"] = 0
-        config["cam_pixelAspect"] = 1.0
+        config["cam_aperture_radius"] = 0
+        config["cam_diff_limit"] = 0
+        config["cam_pixel_aspect"] = 1.0
 
     if verbose:
         print("Config:", config)
         print("Range:", range_cm)
 
-    header, body = load_template("projector_focus.xml")
     ensure_exists(data_path + "/")
 
     h, w = 1080, 1920
     pattern = np.zeros((h, w, 3), dtype=np.uint8)
-    # pattern[:, :, 0] = np.random.randint(255, size=(h, w))
-    pattern[h-1, w//2, :] = 255
     # pattern[:, w//2 - 10, :] = 255
     # pattern[:, w//2 - 8, :] = 255
     # pattern[h-10, :, :] = 255
     # pattern[h-8, :, :] = 255
+    pattern[h-1, w//2, :] = 255
     imageio.imwrite(data_path + "/pattern.png", pattern)
-    # imageio.imwrite(data_path + "/pattern.png", pattern[::10, ::10, :])
+    config["pro_offset_x"], config["pro_offset_y"] = w/2, h
 
     config["scale"] = scale
-    config["offset"] = config["cam_focus"] - config["proj_focus"]
-    config["proj_offsetX"], config["proj_offsetY"] = w/2, h
+    config["offset"] = config["cam_focus_distance"] - config["pro_focus_distance"]
 
     for dist_cm in range(*range_cm):
         # Geometry cube is 2*scale meters in size
         config["dist"] = config["scale"] + dist_cm / 100.
-        generate_scene(header, body, config, data_path + "/dist_%d.xml" % dist_cm)
+        write_scene_file(config, data_path + "/dist_%d.xml" % dist_cm, valid_path + "projector_focus.xml")
 
     source(mitsuba_path + "/setpath.sh")
     render_scenes(data_path + "/dist_*.xml", verbose=verbose)
@@ -127,7 +128,7 @@ def analyze_projector_focus(data_path, reference=None, dist_offset_mm=320, cam_r
     plt.ylabel("Resolution, mm")
     plt.legend()
     plt.tight_layout()
-    plt.savefig("projector_focus.png", dpi=200)
+    plt.savefig(valid_path + "projector_focus.png", dpi=200)
 
 
 if __name__ == "__main__":
@@ -135,20 +136,20 @@ if __name__ == "__main__":
     data_path = mitsuba_path + "/scenes"
     ensure_exists(data_path)
 
-    pos = 81
-    # simulate_projector_focus(data_path + "/projector_focus", mitsuba_path, ideal_camera=True, range_cm=(pos, pos+1))
     # simulate_projector_focus(data_path + "/projector_focus", mitsuba_path, ideal_camera=False)
 
-    analyze_projector_focus(data_path + "/projector_focus",
-                            reference="../../scanner/calibration/projector/projector_focus.json")
+    analyze_projector_focus(data_path + "/projector_focus", reference=calib_path + "projector_focus.json")
 
-    rgb, d = load_openexr(data_path + "/projector_focus/dist_%d.exr" % pos, make_gray=False, load_depth=True)
-
-    # plt.figure("Depth", (12, 10))
-    # plt.imshow(d)
-    # plt.colorbar()
-    # plt.tight_layout()
-
+    # pos = 81
+    # simulate_projector_focus(data_path + "/projector_focus", mitsuba_path,
+    #                          ideal_camera=True, diff_limit=None, range_cm=(pos, pos+1))
+    # rgb, d = load_openexr(data_path + "/projector_focus/dist_%d.exr" % pos, make_gray=False, load_depth=True)
+    #
+    # # plt.figure("Depth", (12, 10))
+    # # plt.imshow(d)
+    # # plt.colorbar()
+    # # plt.tight_layout()
+    #
     # plt.figure("Img", (12, 10))
     # plt.imshow(rgb[:, :, 0])
     # plt.colorbar()

@@ -3,26 +3,31 @@ from rendering import *
 from scipy.optimize import curve_fit
 
 
+calib_path = "../../data/calibrations/"
+valid_path = "../../data/validation/camera_focus/"
+
+
 def simulate_camera_focus(data_path, mitsuba_path, range_cm=(65, 96), verbose=True, **kw):
-    config, cam_geom = {}, load_calibration("../../scanner/calibration/camera/camera_geometry.json")
-    # Render small crop (200 pixels high) only for optimal performance
-    cam_geom["image_width, pixels"] = 200
-    cam_geom["image_height, pixels"] = 100
+    config, cam_geom = {}, load_calibration(calib_path + "camera_geometry.json")
+    # Render small crop (100 pixels high) only for optimal performance
+    w, h = 200, 100
+    cam_geom["image_width, pixels"] = w
+    cam_geom["image_height, pixels"] = h
+    cam_geom["new_mtx"][:2, 2] = (w-1)/2, (h-1)/2
 
     configure_camera_geometry(config, cam_geom)
-    configure_camera_focus(config, "../../scanner/calibration/camera/camera_focus.json", **kw)
+    configure_camera_focus(config, calib_path + "camera_focus.json", **kw)
 
     if verbose:
         print("Config:", config)
         print("Range:", range_cm)
 
-    header, body = load_template("camera_focus.xml")
     ensure_exists(data_path + "/")
 
     for dist_cm in range(*range_cm):
         # Geometry cube is 1 meter in size
         config["dist"] = 0.5 + dist_cm / 100.
-        generate_scene(header, body, config, data_path + "/dist_%d.xml" % dist_cm)
+        write_scene_file(config, data_path + "/dist_%d.xml" % dist_cm, valid_path + "camera_focus.xml")
 
     source(mitsuba_path + "/setpath.sh")
     render_scenes(data_path + "/dist_*.xml", verbose=verbose)
@@ -79,7 +84,7 @@ def analyze_camera_focus(data_path, reference=None):
     plt.title("Camera resolution (%.1f %% contrast)" % contrast)
     plt.legend()
     plt.tight_layout()
-    plt.savefig("camera_focus.png", dpi=200)
+    plt.savefig(valid_path + "camera_focus.png", dpi=200)
 
 
 if __name__ == "__main__":
@@ -89,6 +94,5 @@ if __name__ == "__main__":
 
     simulate_camera_focus(data_path + "/camera_focus", mitsuba_path)
 
-    analyze_camera_focus(data_path + "/camera_focus",
-                         reference="../../scanner/calibration/camera/camera_focus.json")
+    analyze_camera_focus(data_path + "/camera_focus", reference=calib_path + "camera_focus.json")
     plt.show()

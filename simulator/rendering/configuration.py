@@ -69,7 +69,7 @@ def pad_dimension(size, center):
         if center_f > 0.5:
             center_i += 1
 
-        new_size = 1 + max(center_i, size - center_i - 1)
+        new_size = 1 + 2 * max(center_i, size - center_i - 1)
         offset = new_size - size if center_i < size - center_i - 1 else 0
 
     return new_size, offset
@@ -183,7 +183,7 @@ def configure_camera_and_projector(**kw):
     return config
 
 
-def configure_object_geometry(config, stage_geom, rotation=None, **kw):
+def configure_object_geometry(config, object_geom, stage_geom=None, rotation=None, **kw):
     pass
 
 

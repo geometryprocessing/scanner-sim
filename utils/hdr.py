@@ -27,32 +27,32 @@ def load_images(path, numpify=True):
         return exposures, images
 
 
-def save_openexr(file, image):
-    G = image.astype(np.float16).tostring()
-
-    header = OpenEXR.Header(image.shape[1], image.shape[0])
-    header['Compression'] = Imath.Compression(Imath.Compression.PXR24_COMPRESSION)
-    header['channels'] = {'R': Imath.Channel(Imath.PixelType(OpenEXR.HALF)),
-                          'G': Imath.Channel(Imath.PixelType(OpenEXR.HALF)),
-                          'B': Imath.Channel(Imath.PixelType(OpenEXR.HALF))}
-    # header['channels'] = {'G': Imath.Channel(Imath.PixelType(OpenEXR.HALF))}
-
-    exr = OpenEXR.OutputFile(file, header)
-    exr.writePixels({'R': G, 'G': G, 'B': G})
-    # exr.writePixels({'G': G})
-    exr.close()
-
-
-def load_openexr(filename):
-    with open(filename, "rb") as f:
-        in_file = OpenEXR.InputFile(f)
-        try:
-            dw = in_file.header()['dataWindow']
-            (r, g, b) = in_file.channels("RGB", pixel_type=Imath.PixelType(Imath.PixelType.FLOAT))
-
-            return np.reshape(np.frombuffer(g, dtype=np.float32), (dw.max.y - dw.min.y + 1, dw.max.x - dw.min.x + 1))
-        finally:
-            in_file.close()
+# def save_openexr(file, image):
+#     G = image.astype(np.float16).tostring()
+#
+#     header = OpenEXR.Header(image.shape[1], image.shape[0])
+#     header['Compression'] = Imath.Compression(Imath.Compression.PXR24_COMPRESSION)
+#     header['channels'] = {'R': Imath.Channel(Imath.PixelType(OpenEXR.HALF)),
+#                           'G': Imath.Channel(Imath.PixelType(OpenEXR.HALF)),
+#                           'B': Imath.Channel(Imath.PixelType(OpenEXR.HALF))}
+#     # header['channels'] = {'G': Imath.Channel(Imath.PixelType(OpenEXR.HALF))}
+#
+#     exr = OpenEXR.OutputFile(file, header)
+#     exr.writePixels({'R': G, 'G': G, 'B': G})
+#     # exr.writePixels({'G': G})
+#     exr.close()
+#
+#
+# def load_openexr(filename):
+#     with open(filename, "rb") as f:
+#         in_file = OpenEXR.InputFile(f)
+#         try:
+#             dw = in_file.header()['dataWindow']
+#             (r, g, b) = in_file.channels("RGB", pixel_type=Imath.PixelType(Imath.PixelType.FLOAT))
+#
+#             return np.reshape(np.frombuffer(g, dtype=np.float32), (dw.max.y - dw.min.y + 1, dw.max.x - dw.min.x + 1))
+#         finally:
+#             in_file.close()
 
 
 def explore_dark_frames(path):

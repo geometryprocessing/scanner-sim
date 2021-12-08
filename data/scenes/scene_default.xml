@@ -118,7 +118,7 @@
         <float name="apertureRadius" value="$pro_aperture_radius"/>
         <float name="focusDistance" value="$pro_focus_distance"/>
         <float name="diffLimit" value="$pro_diff_limit"/>
-        <float name="pixelGap" value="pro_pixel_gap"/>
+        <float name="pixelGap" value="$pro_pixel_gap"/>
         <float name="samplingWeight" value="$pro_sampling_weight"/>        
     </emitter>
    
