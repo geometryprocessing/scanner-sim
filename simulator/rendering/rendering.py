@@ -1,31 +1,27 @@
+import xml.etree.ElementTree
+import os
+import glob
+import subprocess
 
 
-def load_template(filename):
-    with open(filename, "r") as f:
-        lines = f.readlines()
+def write_scene_config(config, scene_path, scene_filename, template_file):
+    template = xml.etree.ElementTree.parse(template_file)
+    valid = True
+    for e in template.findall("default"):
+        n = e.get("name")
+        if n in config:
+            e.set("value", str(config[n]))
+        
+        if e.get("value") == "N/A":
+            print("Configuration value missing for parameter: %s."%n)
+            valid = False
+    
+    if not valid:
+        print("Missing parameters, invalid config is not written to file.")
+        return
 
-    header, body = [], []
-    for i, line in enumerate(lines):
-        if not line.startswith("<scene"):
-            header.append(line)
-        else:
-            header.append(line)
-            body = lines[i+1:]
-            break
-
-    return header, body
-
-
-def generate_scene(header, body, config, filename):
-    with open(filename, "w") as f:
-        f.writelines(header)
-
-        for key, value in config.items():
-            f.write("\t<default name=\"%s\" value=\"%s\"/>\n" % (key, str(value)))
-
-        f.write("\n")
-        f.writelines(body)
-
+    template.write(os.path.join(scene_path, scene_filename))
+    
 
 def source(script, update=True):
     pipe = subprocess.Popen("source %s; env" % script, stdout=subprocess.PIPE,

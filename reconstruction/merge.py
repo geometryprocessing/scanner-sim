@@ -54,7 +54,7 @@ def merge_single_30_deg(data_path, filename_template, stage_calib, max_dist=100,
         merged_normals.append(n_rot)
 
         if plot:
-            plt.scatter(ax, p_rot[::skip, :], s=5, label=str(30*(i + 1)) + " deg")
+            scatter(ax, p_rot[::skip, :], s=5, label=str(30*(i + 1)) + " deg")
 
     merged = np.concatenate(merged, axis=0)
     m_normals = np.concatenate(merged_normals, axis=0)
