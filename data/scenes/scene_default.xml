@@ -44,7 +44,8 @@
     <default name="obj_file" value="object.obj"/>
     <default name="obj_max_smooth_angle" value="30.0"/>
     <default name="obj_flip_normals" value="false"/>    
-    <default name="obj_transform" value="1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0"/>
+    <default name="obj_transform" value="1.0 0.0 0.0 -0.1 0.0 1.0 0.0 -0.1 0.0 0.0 1.0 0.8 0.0 0.0 0.0 1.0"/>
+    <default name="obj_scale" value="1.0"/>  
         
     <!-- Camera settings -->
     <sensor type="thinlens">
@@ -132,6 +133,7 @@
         <boolean name="flipNormals" value="$obj_flip_normals"/>
 
         <transform name="toWorld">
+            <scale value="$obj_scale"/>
             <matrix value="$obj_transform"/>
         </transform>
     </shape>

@@ -78,16 +78,16 @@ def pad_dimension(size, center):
     return new_size, offset
 
 
-def configure_camera_geometry(config, cam_geom, half_res=False, quarter_res=False, **kw):
+def configure_camera_geometry(config, cam_geom, cam_half_res=False, cam_quarter_res=False, **kw):
     if type(cam_geom) is str:
         cam_geom = load_calibration(cam_geom)
     assert type(cam_geom) is dict
 
     w, h = cam_geom["image_width, pixels"], cam_geom["image_height, pixels"]
-    if quarter_res:
+    if cam_quarter_res:
         w, h = w//4, h//4
         cam_geom["new_mtx"] /= 4
-    elif half_res:
+    elif cam_half_res:
         w, h = w//2, h//2
         cam_geom["new_mtx"] /= 2
 
@@ -185,9 +185,26 @@ def configure_camera_and_projector(**kw):
     configure_projector(config, **kw)
     return config
 
-
-def configure_object_geometry(config, object_geom, stage_geom=None, rotation=None, **kw):
+def configure_turntable_rotation(config, stage_geom=None, rotation=None, **kw):
     pass
+
+def configure_object_geometry(config, obj_geom, **kw):
+    if type(obj_geom) is str:
+        obj_geom = load_calibration(obj_geom)
+    assert type(obj_geom) is dict
+    
+    config["obj_file"] = obj_geom["obj_file"]
+    config["obj_type"] = obj_geom["obj_type"]
+    
+    # Object transformation to scanner operation volume (above turntable)
+    transform = np.zeros((4,4))
+    transform[:3, 3] = obj_geom["obj_translation"]
+    transform[:3, :3] = obj_geom["obj_rotation"].T
+    transform[3, 3] = 1.0
+    config["obj_transform"] = transform2string(transform)
+    
+    # Object scale to meters
+    config["obj_scale"] = obj_geom["obj_scale"]
 
 
 def configure_object_material(config, object_mat, **kw):
@@ -197,13 +214,15 @@ def configure_object_material(config, object_mat, **kw):
     config["obj_material"] = obj_material
 
 
-def configure_object(config, stage_geom="stage/stage_geometry.json", obj_mat="object/rough_plastic_material.xml", calib_path=None, **kw):
+def configure_object(config, obj_geom, stage_geom="stage/stage_geometry.json", obj_mat="object/rough_plastic_material.xml", calib_path=None, **kw):
     if calib_path is not None:
         stage_geom = os.path.join(calib_path, stage_geom) if type(stage_geom) is str else stage_geom
         obj_mat = os.path.join(calib_path, obj_mat) if type(obj_mat) is str else obj_mat
 
-    configure_object_geometry(config, stage_geom, **kw)
+    configure_object_geometry(config, obj_geom, **kw)
     configure_object_material(config, obj_mat, **kw)
+    
+    configure_turntable_rotation(config, stage_geom, **kw)
 
 
 def configure_all(**kw):
