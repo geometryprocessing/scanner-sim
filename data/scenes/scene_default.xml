@@ -43,9 +43,6 @@
     <default name="obj_type" value="obj"/>
     <default name="obj_file" value="object.obj"/>
     <default name="obj_max_smooth_angle" value="30.0"/>
-    <default name="obj_mat_ior" value="1.0634878252015734"/>
-    <default name="obj_mat_alpha" value="0.22150848706292028"/>    
-    <default name="obj_mat_diffuse" value="0.9112623909906508"/>    
     <default name="obj_flip_normals" value="false"/>    
     <default name="obj_transform" value="1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0"/>
         
@@ -133,22 +130,6 @@
         <string name="filename" value='$obj_file'/>
         <float name="maxSmoothAngle" value="$obj_max_smooth_angle"/>
         <boolean name="flipNormals" value="$obj_flip_normals"/>
-
-        <!-- TODO allow enabling material for vertex-colored objects-->
-<!--        <bsdf type="diffuse">-->
-<!--            <spectrum name="reflectance" value="0.0 1.0 1.0"/>-->
-<!--            <texture type='vertexcolors' name="reflectance"/>-->
-<!--        </bsdf>-->
-
-        <!-- TODO enable switching off material for textured obj rendering -->
-        <bsdf type="roughplastic">
-            <string name="distribution" value="beckmann"/>
-            <float name="intIOR" value="$obj_mat_ior"/>
-            <float name="alpha" value="$obj_mat_alpha"/>
-            <spectrum name="diffuseReflectance" value="$obj_mat_diffuse"/>
-            <!--<float name="extIOR" value="1.01"/> -->
-            <!--<spectrum name="specularReflectance" value="0.1"/> -->
-        </bsdf>
 
         <transform name="toWorld">
             <matrix value="$obj_transform"/>

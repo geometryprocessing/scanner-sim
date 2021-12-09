@@ -2,11 +2,14 @@ from utils import *
 import re
 import cv2
 from PIL import Image
+import lxml.etree as ET
+
 
 SCALE_FACTOR = 1 / 1000.0  # configuration is in [mm], mitsuba uses [m]
 
 
 def transform2string(transform):
+    # TODO: add tests for validity of transform
     transform = np.array2string(transform.flatten(), prefix="", suffix="", max_line_width=1000)
     transform = transform.replace("[ ", "").replace(" ]", "")
     transform = re.sub(' +', ' ', transform)
@@ -75,13 +78,13 @@ def pad_dimension(size, center):
     return new_size, offset
 
 
-def configure_camera_geometry(config, cam_geom, half_res=False, quater_res=False, **kw):
+def configure_camera_geometry(config, cam_geom, half_res=False, quarter_res=False, **kw):
     if type(cam_geom) is str:
         cam_geom = load_calibration(cam_geom)
     assert type(cam_geom) is dict
 
     w, h = cam_geom["image_width, pixels"], cam_geom["image_height, pixels"]
-    if quater_res:
+    if quarter_res:
         w, h = w//4, h//4
         cam_geom["new_mtx"] /= 4
     elif half_res:
@@ -156,7 +159,7 @@ def configure_projector_focus(config, proj_focus, diff_limit=None, **kw):
     config["pro_diff_limit"] = diff_limit
 
 
-def configure_camera(cam_geom="camera_geometry.json", cam_focus="camera_focus.json", calib_path=None, **kw):
+def configure_camera(cam_geom="camera/camera_geometry.json", cam_focus="camera/camera_focus.json", calib_path=None, **kw):
     if calib_path is not None:
         cam_geom = os.path.join(calib_path, cam_geom) if type(cam_geom) is str else cam_geom
         cam_focus = os.path.join(calib_path, cam_focus) if type(cam_focus) is str else cam_focus
@@ -168,7 +171,7 @@ def configure_camera(cam_geom="camera_geometry.json", cam_focus="camera_focus.js
     return config
 
 
-def configure_projector(config, pro_geom="projector_geometry.json", pro_focus="projector_focus.json", calib_path=None, **kw):
+def configure_projector(config, pro_geom="projector/projector_geometry.json", pro_focus="projector/projector_focus.json", calib_path=None, **kw):
     if calib_path is not None:
         pro_geom = os.path.join(calib_path, pro_geom) if type(pro_geom) is str else pro_geom
         pro_focus = os.path.join(calib_path, pro_focus) if type(pro_focus) is str else pro_focus
@@ -188,10 +191,13 @@ def configure_object_geometry(config, object_geom, stage_geom=None, rotation=Non
 
 
 def configure_object_material(config, object_mat, **kw):
-    pass
+    if type(object_mat) is str:
+        obj_material = ET.parse(object_mat).getroot()
+
+    config["obj_material"] = obj_material
 
 
-def configure_object(config, stage_geom="stage_geometry.json", obj_mat="object_material.json", calib_path=None, **kw):
+def configure_object(config, stage_geom="stage/stage_geometry.json", obj_mat="object/rough_plastic_material.xml", calib_path=None, **kw):
     if calib_path is not None:
         stage_geom = os.path.join(calib_path, stage_geom) if type(stage_geom) is str else stage_geom
         obj_mat = os.path.join(calib_path, obj_mat) if type(obj_mat) is str else obj_mat
@@ -207,9 +213,10 @@ def configure_all(**kw):
     return config
 
 
-def prepare_patterns(config, pattern_path, pro_calib, vignetting_img_file,
+def prepare_patterns(config, pattern_path, pro_calib_path, vignetting_img_file,
                      predistort=True, numbered=True, scale4x=True,
                      vignetting=True, response=True, colored=False, flip_up_down=False, overwrite=False):
+    pro_calib = load_calibration(pro_calib_path)
     calib_path = os.path.join(pattern_path, "calibrated")
     os.makedirs(calib_path, exist_ok=True)
     

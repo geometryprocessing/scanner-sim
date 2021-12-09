@@ -1,0 +1,6 @@
+
+<bsdf type="diffuse">
+    <spectrum name="reflectance" value="0.0 1.0 1.0"/>
+    <texture type='vertexcolors' name="reflectance"/>
+</bsdf>
+

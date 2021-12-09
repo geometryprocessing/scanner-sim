@@ -1,25 +1,26 @@
-import xml.etree.ElementTree
 import os
 import glob
 import subprocess
+import lxml.etree as ET
 
 
-def write_scene_file(config, scene_filename, template_filename):
-    template = xml.etree.ElementTree.parse(template_filename)
+def write_scene_file(config, scene_filename, template_filename, warn_missing_config=False):
+    template = ET.parse(template_filename)
     valid = True
     for e in template.findall("default"):
         n = e.get("name")
         if n in config:
             e.set("value", str(config[n]))
-        
-        if e.get("value") == "N/A":
-            print("Configuration value missing for parameter: %s."%n)
-            valid = False
-    
-    if not valid:
-        print("Missing parameters, invalid config is not written to file.")
-        return
-
+        else:
+            if warn_missing_config:
+                print("Configuration value missing: %s. Using default: %s"%(n, e.get("value")))
+    #print(len(template.findall("default")))
+    # Object material settings need to be filled in directly
+    om = template.xpath("shape")
+    assert len(om) == 1
+    #print(om, dir(om), config["obj_material"])
+    om[0].insert(3, config["obj_material"])
+    #ET.dump(template)
     template.write(scene_filename)
     
 
