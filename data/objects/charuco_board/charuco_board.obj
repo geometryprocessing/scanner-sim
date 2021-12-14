@@ -1,0 +1,30 @@
+# 400 x 300 mm Charuco calibration board with Fine pattern (https://calib.io/collections/products/products/charuco-targets?variant=9400454905903)
+mtllib charuco_board.mtl
+v  -0.0125 -0.0150  0.0
+v   0.3875 -0.0150  0.0
+v   0.3875  0.2850  0.0
+v  -0.0125  0.2850  0.0
+v  -0.0125 -0.0150 -0.006
+v   0.3875 -0.0150 -0.006
+v   0.3875  0.2850 -0.006
+v  -0.0125  0.2850 -0.006
+vn  0.0  0.0  1.0
+vn  0.0  0.0 -1.0
+vn  1.0  0.0  0.0
+vn -1.0  0.0  0.0
+vn  0.0  1.0  0.0
+vn  0.0 -1.0  0.0
+vt  0.0  0.0
+vt  1.0  0.0
+vt  1.0  1.0
+vt  0.0  1.0
+usemtl board
+# The first number is the point, the second number is the texture point, and the third number is the normal
+f 1/1/1 2/2/1 3/3/1 4/4/1
+usemtl blank
+f 5//2 8//2 7//2 6//2
+usemtl side
+f 2//3 6//3 7//3 3//3
+f 1//4 4//4 8//4 5//4
+f 4//5 3//5 7//5 8//5
+f 1//6 5//6 6//6 2//6

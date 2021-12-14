@@ -3,6 +3,11 @@ import cv2
 import imageio
 import scipy
 import numpy as np
+from cv2 import aruco
+
+import matplotlib
+matplotlib.use('TkAgg')
+
 import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage.morphology as morph
@@ -14,13 +19,44 @@ from detect import *
 from projector import *
 
 
+calib_path = "../../data/calibrations/"
+valid_path = "../../data/validation/accuracy_test/"
+
+
+# units = mm
+def gen_charuco_texture(n=25, m=18, size=(400, 300), checker_size=15, pixels_per_unit=10, contrast=15):
+    w, h = size[0] * pixels_per_unit, size[1] * pixels_per_unit
+    cp = checker_size * pixels_per_unit
+
+    pad_x = (w - n * cp) // 2
+    pad_y = (h - m * cp) // 2
+
+    img = np.zeros((h, w), dtype=np.uint8)
+    img[...] = 255
+
+    aruco_dict = aruco.Dictionary_get(aruco.DICT_5X5_250)
+    board = aruco.CharucoBoard_create(n, m, cp, cp * 12 // 15, aruco_dict)
+
+    b_w, b_h, ms = n * cp, m * cp, cp * 3 // (2 * 15)
+    img[pad_y:pad_y+b_h, pad_x:pad_x+b_w] = aruco.drawPlanarBoard(board, (b_w, b_h), marginSize=ms, borderBits=1)
+    
+    for i in range(m):
+        for j in range(n):
+            if (i + j) % 2 == 1:
+                img[pad_y + i * cp:pad_y + (i+1) * cp, pad_x + j * cp:pad_x + (j+1) * cp] = 0
+
+    img[img == 0] = round(255 / contrast)
+
+    return img
+
+
 def img_to_ray(p_img, mtx):
     p_img = (p_img - mtx[:2, 2]) / mtx[[0, 1], [0, 1]]
     return np.concatenate([p_img, np.ones((p_img.shape[0], 1))], axis=1)
 
 
 def triangulate(cam_rays, proj_xy, proj_calib):
-    u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float), proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
+    u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float).reshape((-1, 1, 2)), proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
     proj_rays = np.concatenate([u_proj_xy, np.ones((u_proj_xy.shape[0], 1))], axis=1)
     proj_rays = np.matmul(proj_calib["basis"].T, proj_rays.T).T
     proj_origin = proj_calib["origin"]
@@ -54,7 +90,7 @@ def test_accuracy(data_path, camera_calib, proj_calib, captured=None, rendered=N
         cam_offsets = np.array([(6464 - 1)/2, (4852 - 1)/2]) - cam_new_mtx[:2, 2]
     print("Camera offsets:", cam_offsets)
 
-    u_cam_xy = cv2.undistortPoints(checker_img[0].astype(np.float), cam_new_mtx, None).reshape((-1, 2))
+    u_cam_xy = cv2.undistortPoints(checker_img[0].astype(np.float).reshape((-1, 1, 2)), cam_new_mtx, None).reshape((-1, 2))
     cam_rays = np.concatenate([u_cam_xy, np.ones((u_cam_xy.shape[0], 1))], axis=1)
 
     # proj_offsets = np.array([0., 0.])
@@ -189,23 +225,34 @@ def test_accuracy(data_path, camera_calib, proj_calib, captured=None, rendered=N
 
 
 if __name__ == "__main__":
-    camera_calib = load_calibration("calibration/camera/camera_geometry.json")
-    proj_calib = load_calibration("calibration/projector/projector_geometry_test.json")
+    # img = gen_charuco_texture()
+    # cv2.imwrite(calib_path + "../objects/charuco_board/charuco_board.png", img)
+    # plt.imshow(img)
+    # plt.show()
+    # exit(0)
 
-    data_path = "E:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
 
+    camera_calib = load_calibration(calib_path + "camera_geometry.json")
+    proj_calib = load_calibration(calib_path + "projector_geometry.json")
+    # proj_calib = load_calibration(calib_path + "projector_geometry_test.json")
+
+    # data_path = "E:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
+    data_path = "/media/yurii/EXTRA/scanner-sim-data/calibration/accuracy_test/charuco_plane/combined/"
+
+    captured, rendered = None, None
     # captured = imageio.imread("accuracy/checker_undistorted_gamma.png")[:, :, 0]
-    captured = imageio.imread("accuracy/checker_undistorted_tone.png")[:, :, 0]
+    # captured = imageio.imread("accuracy/checker_undistorted_tone.png")[:, :, 0]
     # rendered = imageio.imread("accuracy/textured_render.png")
-    rendered = imageio.imread("accuracy/clear_render_offset.png")
+    # rendered = imageio.imread("accuracy/clear_render_offset.png")
     # rendered = np.repeat(np.repeat(imageio.imread("accuracy/rendered_half_res.png"), 2, axis=0), 2, axis=1)
 
     T, R = test_accuracy(data_path, camera_calib, proj_calib, captured=captured, rendered=rendered,
-                         save=True, plot=True, save_figures=True)
+                         save=False, plot=True, save_figures=False)
 
     # Plane normals
     n_c = R[2, :]
-    with open(data_path + "../gray/reconstructed/plane_location.json", "r") as f:
+    # with open(data_path + "../gray/reconstructed/plane_location.json", "r") as f:
+    with open(valid_path + "plane_location.json", "r") as f:
         n_r = np.array(json.load(f)["R"])[2, :]
     # n_c = np.array([0.54043317, -0.02033796, -0.8411411])  # From charuco markers
     # n_r = np.array([0.53988591,  0.01586706, -0.8415886])  # From point cloud PCA

@@ -4,6 +4,7 @@ import json
 import joblib
 import cv2
 from cv2 import aruco
+# print(cv2.__version__)
 from utils import *
 import numpy as np
 
@@ -55,7 +56,7 @@ def detect_checker(gray, n=11, m=8, size=20, pre_scale=1, draw_on=None, draw_sca
 # Board origin: bottom-left. First axis: X to the right. Second axis: Y up
 def detect_charuco(gray, n=25, m=18, size=15, pre_scale=1, draw_on=None, draw_scale=1):
     aruco_dict = aruco.Dictionary_get(aruco.DICT_5X5_250)
-    board = aruco.CharucoBoard_create(n, m, size, size * 7 / 9, aruco_dict)
+    board = aruco.CharucoBoard_create(n, m, size, size * 12 / 15, aruco_dict)
 
     if pre_scale > 1.5:
         gray2 = cv2.resize(gray, (gray.shape[1] // pre_scale, gray.shape[0] // pre_scale))
@@ -181,10 +182,15 @@ def test(data_path):
 if __name__ == "__main__":
     # data_path = "D:/Scanner/Calibration/camera_intrinsics/data/"
 
+    data_path = "/media/yurii/EXTRA/scanner-sim-data/calibration/accuracy_test/charuco_plane/combined/"
+    filename = data_path + "blank_0.png"
+    detect_single(filename, detect_charuco, draw=True, save=False, plot=True, pre_scale=2, draw_scale=2)
+
+
     # test(data_path)
 
     # detect_all(data_path + "/checker/*.bmp", detect_checker, draw=True, save=True, pre_scale=5, draw_scale=1)
     # detect_all(data_path + "/charuco/*.bmp", detect_charuco, draw=True, save=True, pre_scale=2, draw_scale=1)
 
-    data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
-    detect_all(data_path + "/charuco/*.bmp", detect_charuco, draw=True, save=True, pre_scale=2, draw_scale=1)
+    # data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
+    # detect_all(data_path + "/charuco/*.bmp", detect_charuco, draw=True, save=True, pre_scale=2, draw_scale=1)

@@ -1,0 +1,29 @@
+newmtl board
+   Ka 1.00  1.00  1.00
+   Kd 1.00  1.00  1.00
+   Ks 0.00  0.00  0.00
+   # Opaque
+   d 1.0
+   illum 2
+   # The ambient texture map
+   map_Ka charuco_board.png
+   
+   # The diffuse texture map
+   map_Kd charuco_board.png
+
+newmtl blank
+   Ka 1.00  1.00  1.00
+   Kd 1.00  1.00  1.00
+   Ks 0.00  0.00  0.00
+   # Opaque
+   d 1.0
+   illum 2
+
+newmtl side
+   Ka 0.10  0.10  0.10
+   Kd 0.10  0.10  0.10
+   Ks 0.00  0.00  0.00
+   # Opaque
+   d 1.0
+   illum 2
+
