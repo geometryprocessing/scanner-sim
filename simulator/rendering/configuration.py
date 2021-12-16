@@ -11,7 +11,7 @@ SCALE_FACTOR = 1 / 1000.0  # configuration is in [mm], mitsuba uses [m]
 def transform2string(transform):
     # TODO: add tests for validity of transform
     transform = np.array2string(transform.flatten(), prefix="", suffix="", max_line_width=1000)
-    transform = transform.replace("[ ", "").replace(" ]", "")
+    transform = transform.replace("[ ", "").replace("]", "")
     transform = re.sub(' +', ' ', transform)
     return transform
 
@@ -78,7 +78,7 @@ def pad_dimension(size, center):
     return new_size, offset
 
 
-def configure_camera_geometry(config, cam_geom, cam_half_res=False, cam_quarter_res=False, **kw):
+def configure_camera_geometry(config, cam_geom, cam_half_res=False, cam_quarter_res=False, cam_samples=128, **kw):
     if type(cam_geom) is str:
         cam_geom = load_calibration(cam_geom)
     assert type(cam_geom) is dict
@@ -100,6 +100,7 @@ def configure_camera_geometry(config, cam_geom, cam_half_res=False, cam_quarter_
 
     config["cam_fov_y"] = 2 * np.arctan((new_h / 2.) / cam_geom["new_mtx"][1, 1]) * 180. / np.pi
     config["cam_pixel_aspect"] = cam_geom["new_mtx"][0, 0] / cam_geom["new_mtx"][1, 1]
+    config["cam_samples"] = cam_samples
 
 
 def configure_camera_focus(config, cam_focus, tolerances_factor=1.07, wavelength_nm=550, **kw):
@@ -159,7 +160,7 @@ def configure_projector_focus(config, proj_focus, diff_limit=None, **kw):
     config["pro_diff_limit"] = diff_limit
 
 
-def configure_camera(cam_geom="camera/camera_geometry.json", cam_focus="camera/camera_focus.json", calib_path=None, **kw):
+def configure_camera(cam_geom="camera_geometry.json", cam_focus="camera_focus.json", calib_path=None, **kw):
     if calib_path is not None:
         cam_geom = os.path.join(calib_path, cam_geom) if type(cam_geom) is str else cam_geom
         cam_focus = os.path.join(calib_path, cam_focus) if type(cam_focus) is str else cam_focus
@@ -171,7 +172,7 @@ def configure_camera(cam_geom="camera/camera_geometry.json", cam_focus="camera/c
     return config
 
 
-def configure_projector(config, pro_geom="projector/projector_geometry.json", pro_focus="projector/projector_focus.json", calib_path=None, **kw):
+def configure_projector(config, pro_geom="projector_geometry.json", pro_focus="projector_focus.json", calib_path=None, **kw):
     if calib_path is not None:
         pro_geom = os.path.join(calib_path, pro_geom) if type(pro_geom) is str else pro_geom
         pro_focus = os.path.join(calib_path, pro_focus) if type(pro_focus) is str else pro_focus
@@ -185,8 +186,10 @@ def configure_camera_and_projector(**kw):
     configure_projector(config, **kw)
     return config
 
+
 def configure_turntable_rotation(config, stage_geom=None, rotation=None, **kw):
     pass
+
 
 def configure_object_geometry(config, obj_geom, **kw):
     if type(obj_geom) is str:
@@ -214,7 +217,7 @@ def configure_object_material(config, object_mat, **kw):
     config["obj_material"] = obj_material
 
 
-def configure_object(config, obj_geom, stage_geom="stage/stage_geometry.json", obj_mat="object/rough_plastic_material.xml", calib_path=None, **kw):
+def configure_object(config, obj_geom, stage_geom="stage_geometry.json", obj_mat="object/rough_plastic_material.xml", calib_path=None, **kw):
     if calib_path is not None:
         stage_geom = os.path.join(calib_path, stage_geom) if type(stage_geom) is str else stage_geom
         obj_mat = os.path.join(calib_path, obj_mat) if type(obj_mat) is str else obj_mat
@@ -230,6 +233,43 @@ def configure_all(**kw):
     configure_projector(config, **kw)
     configure_object(config, **kw)
     return config
+
+
+def process_patterns(patterns, calib_path, x4=True, verbose=False):
+    if type(patterns) is str:
+        patterns = glob.glob(patterns)
+    assert type(patterns) is list
+
+    proj_calib = load_calibration(calib_path + "/projector_geometry.json")
+    mtx, dist, new_mtx = proj_calib["mtx"], proj_calib["dist"], proj_calib["new_mtx"]
+
+    pix = np.arange(256)
+    response = np.array(load_calibration(calib_path + "/projector_response.json")["gray"])
+    lut = response[0] * pix * pix + response[1] * pix + response[0]
+    lut = np.round(255 * lut / lut[-1]).astype(np.uint8)
+    # print(lut)
+    # plt.plot(pix, lut)
+    # plt.show()
+
+    vignetting = load_ldr(calib_path + "/projector_vignetting.png", make_gray=True)
+    vignetting = vignetting / np.max(vignetting)
+
+    if x4:
+        mtx[:2, :] *= 4
+        new_mtx[:2, :] *= 4
+        vignetting = np.repeat(np.repeat(vignetting, 4, axis=0), 4, axis=1)
+
+    for pattern in patterns:
+        if verbose:
+            print("Processing pattern:", pattern)
+
+        img = load_ldr(pattern)
+        if x4:
+            img = np.repeat(np.repeat(img, 4, axis=0), 4, axis=1)
+
+        img = cv2.undistort(img, mtx, dist, newCameraMatrix=new_mtx)
+
+        save_ldr(pattern, (lut[img] * vignetting[:, :, None]).astype(np.uint8), ensure_rgb=True)
 
 
 def prepare_patterns(config, pattern_path, pro_calib_path, vignetting_img_file,

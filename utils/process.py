@@ -151,7 +151,7 @@ def process_stage(data_path):
     map_all(data_path + "blank_*.exr", method=linear_map, return_images=False, save=True, plot=False)
     detect_all(data_path + "blank_*[!map].png", detect_charuco, out_dir="charuco", draw=True, save=True, pre_scale=2, draw_scale=1)
 
-    process_all(data_path + "checker_*.exr", data_path + "blank_*.exr", data_path + "white_*.exr", out_dir="checker",
+    process_all(data_path + "checker_*[0-9].exr", data_path + "blank_*.exr", data_path + "white_*.exr", out_dir="checker",
                     auto_map=linear_map, return_images=False, are_gray=True, save=True, plot=False)
     detect_all(data_path + "/checker/*.png", detect_checker, n=9, m=8, size=100, out_dir="detected_half",
                 draw=True, save=True, pre_scale=5, draw_scale=1)

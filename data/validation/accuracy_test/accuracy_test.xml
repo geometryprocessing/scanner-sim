@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<scene version='0.6.0'>
+
+    <!-- Define default values. Scene length units are meters. -->
+    <!-- Camera defaults -->
+    <default name="cam_samples" value="128"/>
+    <default name="cam_fov_y" value="18.728258538852586"/>
+    <default name="cam_focus_distance" value="0.8103669534556511"/>
+    <default name="cam_pixel_aspect" value="0.9992771751028543"/>
+    <default name="cam_aperture_radius" value="0.002"/>
+    <default name="cam_diff_limit" value="0.01028416270425193"/>
+    <default name="cam_pixel_format" value="rgba,luminance"/>
+    <default name="cam_channel_names" value="color, distance"/>
+    <default name="cam_image_width" value="6464"/>
+    <default name="cam_image_height" value="4852"/>
+    <default name="cam_crop_width" value="$cam_image_width"/>
+    <default name="cam_crop_height" value="$cam_image_height"/>
+    <default name="cam_crop_offset_x" value="0"/>
+    <default name="cam_crop_offset_y" value="0"/>
+    
+    <!-- Projector defaults -->
+    <default name="pro_pattern_file" value="pattern.png"/>
+    <default name="pro_wrap_mode" value="black"/>
+    <default name="pro_gamma" value="1.0"/>
+    <default name="pro_transform" value="0.878272 0.011952 -0.478011 0.226090 -0.016316 0.999854 -0.004977 0.074063 0.477882 0.012170 0.878340 0.414295 0.000000 0.000000 0.000000 1.000000"/>
+    <default name="pro_intensity" value="10.0"/>
+    <default name="pro_offset_x" value="958.3337814131664"/>
+    <default name="pro_offset_y" value="1095.1464166282676"/>
+    <default name="pro_scale_x" value="2805.329833984375"/>
+    <default name="pro_scale_y" value="2805.11572265625"/>
+    <default name="pro_image_width" value="1920"/>
+    <default name="pro_image_height" value="1080"/>
+    <default name="pro_aperture_radius" value="0.0035951384447263915"/>
+    <default name="pro_focus_distance" value="0.4902099376513703"/>
+    <default name="pro_diff_limit" value="0.0057211497483984144"/>
+    <default name="pro_pixel_gap" value="0"/>
+    <default name="pro_sampling_weight" value="5.0"/>
+    
+    <default name="amb_radiance" value="0.0"/>
+    <default name="amb_sampling_weight" value="1.0"/>
+
+    <!-- Object defaults -->
+    <default name="obj_type" value="obj"/>
+    <default name="obj_file" value="object.obj"/>
+    <default name="obj_max_smooth_angle" value="30.0"/>
+    <default name="obj_flip_normals" value="false"/>    
+    <default name="obj_transform" value="1.0 0.0 0.0 -0.1 0.0 1.0 0.0 -0.1 0.0 0.0 1.0 0.8 0.0 0.0 0.0 1.0"/>
+    <default name="obj_scale" value="1.0"/>
+
+    <default name="board_texture_name" value="charuco_board.png"/>
+
+
+    <!-- Camera settings -->
+    <sensor type="thinlens">
+        <transform name="toWorld">
+            <lookat origin="0, 0, 0" target="0, 0, 1" up="0, -1, 0"/>
+        </transform>
+        <float name="fov" value="$cam_fov_y"/>
+        <string name="fovAxis" value="y"/>
+        <float name="pixelAspect" value="$cam_pixel_aspect"/>
+        <float name="focusDistance" value="$cam_focus_distance"/>
+        <float name="apertureRadius" value="$cam_aperture_radius"/>
+        <float name="diffLimit" value="$cam_diff_limit"/>
+        <float name="nearClip" value="0.001"/>
+        <float name="farClip" value="100000"/>
+
+        <sampler type="halton">
+            <integer name="sampleCount" value="$cam_samples"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <string name="pixelFormat" value="$cam_pixel_format"/>
+            <string name="fileFormat" value="openexr"/>
+            <string name="channelNames" value="$cam_channel_names"/>
+            <string name="componentFormat" value="float32"/>
+            <integer name="width" value="$cam_image_width"/>
+            <integer name="height" value="$cam_image_height"/>
+            <integer name="cropOffsetX" value="$cam_crop_offset_x"/>
+            <integer name="cropOffsetY" value="$cam_crop_offset_y"/>
+            <integer name="cropWidth" value="$cam_crop_width"/>
+            <integer name="cropHeight" value="$cam_crop_height"/>
+            <boolean name="banner" value="false"/>
+            <rfilter type="box"/>
+        </film>
+    </sensor>
+    <!-- TODO Integrator settings need to be synced with hdrfilm channels/pixelformat -->
+    <integrator type="multichannel">
+        <integrator type="path">
+            <integer name="maxDepth" value="128"/>
+            <boolean name="hideEmitters" value="true"/>
+        </integrator>
+        <integrator type="field">
+            <string name="field" value="distance"/>
+        </integrator>
+    </integrator>
+    
+    
+    <!-- Projector and illumination settings -->
+    <texture type="bitmap" id="projector_pattern">
+        <string name="filename" value="$pro_pattern_file"/>
+        <string name="wrapMode" value="$pro_wrap_mode"/>
+        <string name="filterType" value="nearest"/>
+        <boolean name="cache" value="false"/>
+        <float name="gamma" value="$pro_gamma"/>
+    </texture>
+
+    <emitter type="spot">
+        <ref name="texture" id="projector_pattern"/>
+        <transform name="toWorld">
+            <matrix value="$pro_transform"/>
+        </transform>
+        <spectrum name="intensity" value="$pro_intensity"/>
+        <float name="offX" value="$pro_offset_x"/>
+        <float name="offY" value="$pro_offset_y"/>
+        <float name="scaleX" value="$pro_scale_x"/>
+        <float name="scaleY" value="$pro_scale_y"/>
+        <integer name="width" value="$pro_image_width"/>
+        <integer name="height" value="$pro_image_height"/>
+        <float name="apertureRadius" value="$pro_aperture_radius"/>
+        <float name="focusDistance" value="$pro_focus_distance"/>
+        <float name="diffLimit" value="$pro_diff_limit"/>
+        <float name="pixelGap" value="$pro_pixel_gap"/>
+        <float name="samplingWeight" value="$pro_sampling_weight"/>        
+    </emitter>
+   
+    <emitter type="constant">
+        <spectrum name="radiance" value="$amb_radiance"/>
+        <float name="samplingWeight" value="$amb_sampling_weight"/>
+    </emitter>
+
+
+    <!-- Object settings -->
+    <shape type="$obj_type">
+        <string name="filename" value='$obj_file'/>
+        <float name="maxSmoothAngle" value="$obj_max_smooth_angle"/>
+        <boolean name="flipNormals" value="$obj_flip_normals"/>
+
+        <transform name="toWorld">
+            <scale value="$obj_scale"/>
+            <matrix value="$obj_transform"/>
+        </transform>
+
+        <!-- Override OBJ material for the front surface to fix texture import issue (gamma=1.9) -->
+        <bsdf name="board" type="diffuse">
+            <texture name="reflectance" type="bitmap">
+                <string name="filename" value="$board_texture_name"/>
+                <float name="gamma" value="1.0"/>
+            </texture>
+        </bsdf>
+    </shape>
+
+</scene>

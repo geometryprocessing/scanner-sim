@@ -18,9 +18,10 @@ def write_scene_file(config, scene_filename, template_filename, warn_missing_con
     # Object material settings need to be filled in directly
     om = template.xpath("shape")
     assert len(om) == 1
-    #print(om, dir(om), config["obj_material"])
+    # print(om, dir(om), config["obj_material"])
     om[0].insert(3, config["obj_material"])
-    #ET.dump(template)
+    ET.indent(om[0], space="    ", level=1)
+    # ET.dump(template)
     template.write(scene_filename)
     
 

@@ -109,7 +109,7 @@ def lift_to_3d(p_img, mtx, T, R, offset=0.0):
     return p_world
 
 
-def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=False, charuco_only=False, extra_output=False, **kw):
+def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=False, undistorted=False, charuco_only=False, extra_output=False, **kw):
     cam_mtx, cam_dist, cam_new_mtx = camera_calib["mtx"], camera_calib["dist"], camera_calib["new_mtx"]
     charuco = load_corners(data_path + "/charuco/corners.json")
 
@@ -135,7 +135,9 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
             if pair not in full and pair not in half:
                 continue
 
-        c_img = cv2.undistortPoints(charuco[name]["img"].astype(np.float).reshape((-1, 1, 2)), cam_mtx, cam_dist, None, cam_new_mtx).reshape((-1, 2))
+        c_img = charuco[name]["img"].astype(np.float).reshape((-1, 2))
+        if not undistorted:
+            c_img = cv2.undistortPoints(c_img.reshape((-1, 1, 2)), cam_mtx, cam_dist, None, cam_new_mtx).reshape((-1, 2))
         c_obj = charuco[name]["obj"]
         c_idx = charuco[name]["idx"]
 
@@ -157,7 +159,9 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
 
         if not charuco_only:
             src = full if pair in full else half
-            p_img = cv2.undistortPoints(src[pair]["img"].astype(np.float).reshape((-1, 1, 2)), cam_mtx, cam_dist, None, cam_new_mtx).reshape((-1, 2))
+            p_img = src[pair]["img"].astype(np.float).reshape((-1, 2))
+            if not undistorted:
+                p_img = cv2.undistortPoints(p_img.reshape((-1, 1, 2)), cam_mtx, cam_dist, None, cam_new_mtx).reshape((-1, 2))
             p_prj = src[pair]["obj"][:, :2] + (full_offsets[i] if pair in full else half_offsets[i])
 
             p_3d = lift_to_3d(p_img, cam_new_mtx, T, R, offset=0)

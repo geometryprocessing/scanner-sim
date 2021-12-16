@@ -4,6 +4,7 @@ import cv2
 import glob
 import json
 import Imath
+import shutil
 import OpenEXR
 import subprocess
 import numpy as np
@@ -233,6 +234,16 @@ def load_ldr(filename, make_gray=False):
 def load_calibration(filename):
     with open(filename, "r") as f:
         return numpinize(json.load(f))
+
+
+def copy_to(path, files=[]):
+    if type(files) is str:
+        files = glob.glob(files)
+    assert type(files) is list
+
+    ensure_exists(path)
+    for file in files:
+        shutil.copy2(file, path)
 
 
 def save_ply(filename, points, normals=None, colors=None):

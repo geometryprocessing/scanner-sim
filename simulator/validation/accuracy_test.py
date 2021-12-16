@@ -1,23 +1,10 @@
-import json
-import cv2
-import imageio
-import scipy
-import numpy as np
+from configuration import *
+from rendering import *
+from display import *
 from cv2 import aruco
 
 import matplotlib
 matplotlib.use('TkAgg')
-
-import matplotlib.pyplot as plt
-from scipy.ndimage.filters import gaussian_filter
-import scipy.ndimage.morphology as morph
-from scipy.optimize import least_squares
-from scipy.optimize import curve_fit
-from utils import *
-from calibrate import *
-from detect import *
-from projector import *
-
 
 calib_path = "../../data/calibrations/"
 valid_path = "../../data/validation/accuracy_test/"
@@ -50,9 +37,77 @@ def gen_charuco_texture(n=25, m=18, size=(400, 300), checker_size=15, pixels_per
     return img
 
 
-def img_to_ray(p_img, mtx):
-    p_img = (p_img - mtx[:2, 2]) / mtx[[0, 1], [0, 1]]
-    return np.concatenate([p_img, np.ones((p_img.shape[0], 1))], axis=1)
+def process_accuracy_test(data_path, camera_calib, undistorted=False, reuse_corners=False):
+    if not reuse_corners:
+        process_stage(data_path)
+
+    charuco, checker, plane_errors = reconstruct_planes(data_path, camera_calib, undistorted=undistorted)
+    charuco_3d, charuco_id, charuco_frame = charuco
+
+    print("\nReconstructed:", len(charuco_3d), "plane(s)")
+    print("Mean plane error:", np.mean(plane_errors[0]))
+    assert len(charuco_3d) == 1, "Found more than one board!"
+
+    T, R = charuco_frame[0]
+    print("\nBoard location:")
+    print("T:", T, "\nR:\n", R, "\n")
+
+    with open(data_path + "/board_geometry.json", "w") as f:
+        json.dump({"obj_file": "charuco_board.obj",
+                   "obj_type": "obj",
+                   "obj_translation": T / 1000.,
+                   "obj_rotation": R,
+                   "obj_scale": 1.0}, f, indent=4, cls=NumpyEncoder)
+
+
+def simulate_accuracy_test(data_path, mitsuba_path, board_geometry, reuse_patterns=False, verbose=True, **kw):
+    config = configure_camera(calib_path=calib_path, **kw)
+    configure_projector(config, calib_path=calib_path, **kw)
+
+    data_path += "/"
+    ensure_exists(data_path)
+
+    if not reuse_patterns:
+        pattern = np.zeros((1080, 1920, 3), dtype=np.uint8)
+        imageio.imwrite(data_path + "blank_0.png", pattern)
+
+        pattern[...] = 255
+        imageio.imwrite(data_path + "white_0.png", pattern)
+
+        pattern = gen_checker((H, W), (90, 60), 100, (9, 18))
+        imageio.imwrite(data_path + "checker_0.png", pattern)
+
+        process_patterns(data_path + "*_0.png", calib_path, verbose=True)
+    else:
+        # blank_0.png might get overwritten by process_stage()
+        if verbose:
+            print("Restoring pattern:", data_path + "blank_0.png")
+        pattern = np.zeros((1080 * 4, 1920 * 4, 3), dtype=np.uint8)
+        imageio.imwrite(data_path + "blank_0.png", pattern)
+        # process_patterns(data_path + "blank_0.png", calib_path, verbose=True)
+
+    copy_to(data_path, calib_path + "../objects/charuco_board/charuco_board.*")
+    configure_object(config, board_geometry, calib_path=calib_path, obj_mat="materials/textured_obj.xml")
+
+    for pattern in ["blank_0.png", "white_0.png", "checker_0.png"]:
+        config["pro_pattern_file"] = pattern
+        config["amb_radiance"] = 0.5
+        write_scene_file(config, data_path + "%s.xml" % pattern[:-4], valid_path + "accuracy_test.xml")
+
+        if pattern == "checker_0.png":
+            config["board_texture_name"] = "white_0.png"
+            write_scene_file(config, data_path + "checker_clean.xml", valid_path + "accuracy_test.xml")
+
+
+    source(mitsuba_path + "/setpath.sh")
+    render_scenes(data_path + "/*.xml", verbose=verbose)
+    # render_scenes(data_path + "/*_0.xml", verbose=verbose)
+    # render_scenes(data_path + "/checker_0.xml", verbose=verbose)
+
+
+# def img_to_ray(p_img, mtx):
+#     p_img = (p_img - mtx[:2, 2]) / mtx[[0, 1], [0, 1]]
+#     return np.concatenate([p_img, np.ones((p_img.shape[0], 1))], axis=1)
 
 
 def triangulate(cam_rays, proj_xy, proj_calib):
@@ -230,6 +285,35 @@ if __name__ == "__main__":
     # plt.imshow(img)
     # plt.show()
     # exit(0)
+
+    camera_calib = load_calibration(calib_path + "camera_geometry.json")
+
+    captured_path = "/media/yurii/EXTRA/scanner-sim-data/calibration/accuracy_test/charuco_plane/combined/"
+    process_accuracy_test(captured_path, camera_calib, reuse_corners=True)
+    board_geometry = load_calibration(captured_path + "board_geometry.json")
+    # board_geometry = load_calibration(valid_path + "board_geometry.json")
+
+    mitsuba_path = "/home/yurii/software/mitsuba/"
+    rendered_path = mitsuba_path + "scenes/accuracy_test/"
+    ensure_exists(rendered_path)
+
+    # simulate_accuracy_test(rendered_path, mitsuba_path, board_geometry, reuse_patterns=True, cam_samples=128)
+    process_accuracy_test(rendered_path, camera_calib, undistorted=True, reuse_corners=False)
+
+    rgb, d = load_openexr(rendered_path + "checker_clean.exr", make_gray=False, load_depth=True)
+
+    # plt.figure("Depth", (12, 10))
+    # plt.imshow(d)
+    # plt.colorbar()
+    # plt.tight_layout()
+
+    plt.figure("Img", (12, 10))
+    plt.imshow(rgb[:, :, 0])
+    plt.colorbar()
+    plt.tight_layout()
+
+    plt.show()
+    exit(0)
 
 
     camera_calib = load_calibration(calib_path + "camera_geometry.json")
