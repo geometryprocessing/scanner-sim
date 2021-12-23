@@ -99,7 +99,7 @@ def configure_camera_geometry(config, cam_geom, cam_half_res=False, cam_quarter_
     config["cam_crop_offset_x"], config["cam_crop_offset_y"] = off_w, off_h
 
     config["cam_fov_y"] = 2 * np.arctan((new_h / 2.) / cam_geom["new_mtx"][1, 1]) * 180. / np.pi
-    config["cam_pixel_aspect"] = cam_geom["new_mtx"][0, 0] / cam_geom["new_mtx"][1, 1]
+    config["cam_pixel_aspect"] = cam_geom["new_mtx"][1, 1] / cam_geom["new_mtx"][0, 0]
     config["cam_samples"] = cam_samples
 
 
@@ -127,7 +127,7 @@ def configure_projector_geometry(config, proj_geom, brightness=10.0, pixel_gap=0
     config["pro_image_width"], config["pro_image_height"] = w, h
     mtx = proj_geom["new_mtx"]
     config["pro_scale_x"], config["pro_scale_y"] = mtx[0, 0], mtx[1, 1]
-    config["pro_offset_x"], config["pro_offset_y"] = mtx[0, 2], mtx[1, 2]
+    config["pro_offset_x"], config["pro_offset_y"] = mtx[0, 2] - 0.5, mtx[1, 2] - 0.5
 
     # Projector brightness
     config["pro_intensity"] = brightness

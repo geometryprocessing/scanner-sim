@@ -144,6 +144,8 @@
         <bsdf name="board" type="diffuse">
             <texture name="reflectance" type="bitmap">
                 <string name="filename" value="$board_texture_name"/>
+                <string name="filterType" value="nearest"/>
+                <boolean name="cache" value="false"/>
                 <float name="gamma" value="1.0"/>
             </texture>
         </bsdf>

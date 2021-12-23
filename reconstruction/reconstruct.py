@@ -20,6 +20,7 @@ from skimage import filters
 from scipy.spatial.transform import Rotation as R
 
 
+# Unused. Replaced with cv2.undistortPoints(..., P=None)
 def img_to_ray(p_img, mtx):
     p_img = (p_img - mtx[:2, 2]) / mtx[[0, 1], [0, 1]]
     return np.concatenate([p_img, np.ones((p_img.shape[0], 1))], axis=1)
@@ -27,11 +28,12 @@ def img_to_ray(p_img, mtx):
 
 def triangulate(cam_rays, proj_xy, proj_calib, undistort=True):
     if undistort:
-        u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float), proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
+        u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float).reshape((-1, 1, 2)),
+                                        proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
     else:
-        #print("No undistort")
-        u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float), proj_calib["new_mtx"], None).reshape((-1, 2))
-    #print(u_proj_xy[:10, :])
+        u_proj_xy = cv2.undistortPoints(proj_xy.astype(np.float).reshape((-1, 1, 2)),
+                                        proj_calib["new_mtx"], None).reshape((-1, 2))
+
     proj_rays = np.concatenate([u_proj_xy, np.ones((u_proj_xy.shape[0], 1))], axis=1)
     proj_rays = np.matmul(proj_calib["basis"].T, proj_rays.T).T
     proj_origin = proj_calib["origin"]

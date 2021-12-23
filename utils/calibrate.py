@@ -135,11 +135,11 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
             if pair not in full and pair not in half:
                 continue
 
-        c_img = charuco[name]["img"].astype(np.float).reshape((-1, 2))
-        if not undistorted:
-            c_img = cv2.undistortPoints(c_img.reshape((-1, 1, 2)), cam_mtx, cam_dist, None, cam_new_mtx).reshape((-1, 2))
         c_obj = charuco[name]["obj"]
         c_idx = charuco[name]["idx"]
+        c_img = charuco[name]["img"].astype(np.float).reshape((-1, 2))
+        if not undistorted:
+            c_img = cv2.undistortPoints(c_img.reshape((-1, 1, 2)), cam_mtx, cam_dist, P=cam_new_mtx).reshape((-1, 2))
 
         if len(c_idx) < min_points:
             continue
@@ -161,7 +161,7 @@ def reconstruct_planes(data_path, camera_calib, min_points=80, thr=35, center=Fa
             src = full if pair in full else half
             p_img = src[pair]["img"].astype(np.float).reshape((-1, 2))
             if not undistorted:
-                p_img = cv2.undistortPoints(p_img.reshape((-1, 1, 2)), cam_mtx, cam_dist, None, cam_new_mtx).reshape((-1, 2))
+                p_img = cv2.undistortPoints(p_img.reshape((-1, 1, 2)), cam_mtx, cam_dist, P=cam_new_mtx).reshape((-1, 2))
             p_prj = src[pair]["obj"][:, :2] + (full_offsets[i] if pair in full else half_offsets[i])
 
             p_3d = lift_to_3d(p_img, cam_new_mtx, T, R, offset=0)
