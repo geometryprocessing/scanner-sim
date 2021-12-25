@@ -227,8 +227,9 @@ def simulate_accuracy_test(data_path, mitsuba_path, board_geometry, reuse_patter
     data_path += "/"
     ensure_exists(data_path)
 
+    H, W = 1080, 1920
     if not reuse_patterns:
-        pattern = np.zeros((1080, 1920, 3), dtype=np.uint8)
+        pattern = np.zeros((H, W, 3), dtype=np.uint8)
         imageio.imwrite(data_path + "blank_0.png", pattern)
 
         pattern[...] = 255
@@ -242,7 +243,7 @@ def simulate_accuracy_test(data_path, mitsuba_path, board_geometry, reuse_patter
         # blank_0.png might get overwritten by process_stage()
         if verbose:
             print("Restoring pattern:", data_path + "blank_0.png")
-        pattern = np.zeros((1080 * 4, 1920 * 4, 3), dtype=np.uint8)
+        pattern = np.zeros((H * 4, W * 4, 3), dtype=np.uint8)
         imageio.imwrite(data_path + "blank_0.png", pattern)
         # process_patterns(data_path + "blank_0.png", calib_path, verbose=True)
 
