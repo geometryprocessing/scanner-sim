@@ -5,7 +5,8 @@ from calibrate import *
 from detect import *
 
 
-def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, no_tangent=False, save=False, plot=False, save_figures=True, **kw):
+def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, no_tangent=False,
+                                        centerPrincipalPoint=None, save=False, plot=False, save_figures=True, **kw):
     charuco, checker, plane_errors = reconstruct_planes(data_path, camera_calib, **kw)
     checker_3d, checker_2d, checker_local = checker
     avg_plane_errors, all_plane_errors = plane_errors
@@ -35,7 +36,8 @@ def calibrate_geometry(data_path, camera_calib, max_planes=70, intrinsic=None, n
         print("\nCalibration matrix:\n", mtx)
         print("\nDistortions:", dist)
 
-        new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
+        new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h),
+                                                                centerPrincipalPoint=centerPrincipalPoint)
         print("\nOptimal calibration matrix:\n", new_mtx)
         print("\nRegion of interest:", roi)
 
@@ -131,10 +133,10 @@ def save_projector_calibration(intrinsic, extrinsic, filename, mean_error=0.0):
                    "basis": extrinsic[1],
                    "mean_projection_error, pixels": mean_error,
                    "projector": "Texas Instrument DPL4710LC",
+                   # "focus_distance, cm": 50,
+                   # "aperture, mm": 7.5,
                    "image_width, pixels": 1920,
-                   "image_height, pixels": 1080,
-                   "focus_distance, cm": 50,
-                   "aperture, mm": 7.5}, f, indent=4, cls=NumpyEncoder)
+                   "image_height, pixels": 1080}, f, indent=4, cls=NumpyEncoder)
 
 
 def calibrate_vignetting(data_path, camera_vignetting, light_on_filename, light_off_filename, dark_frame_filename, checker_filename, plot=False):

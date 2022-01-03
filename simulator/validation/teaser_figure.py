@@ -194,7 +194,7 @@ if __name__ == "__main__":
     ensure_exists(rendered_path)
 
     # pawn_geometry = load_calibration(valid_path + "pawn_geometry.json")
-    # simulate_teaser_figure(rendered_path, mitsuba_path, pawn_geometry, cam_samples=256)
+    # simulate_teaser_figure(rendered_path, mitsuba_path, pawn_geometry, cam_samples=(10240 + 2048))
     # copy_to(valid_path + "rendered.exr", rendered_path + "pawn.exr")
 
     analyze_teaser_figure(valid_path, crop=True, hist=True, save=True)

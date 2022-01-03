@@ -118,7 +118,7 @@ def configure_camera_focus(config, cam_focus, tolerances_factor=1.07, wavelength
     config["cam_diff_limit"] *= tolerances_factor * (180. / np.pi)
 
 
-def configure_projector_geometry(config, proj_geom, brightness=10.0, pixel_gap=0.0, **kw):
+def configure_projector_geometry(config, proj_geom, brightness=10.0, pixel_gap=0.08, **kw):
     if type(proj_geom) is str:
         proj_geom = load_calibration(proj_geom)
     assert type(proj_geom) is dict

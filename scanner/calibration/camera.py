@@ -3,7 +3,7 @@ from utils import *
 from calibrate import *
 
 
-def calibrate_intrinsic(data_path, max_images=70, min_points=80, save=False, plot=False, **kw):
+def calibrate_intrinsic(data_path, max_images=70, min_points=80, centerPrincipalPoint=None, save=False, plot=False, **kw):
     corners = load_corners(data_path + "detected/corners.json")
     names = [k for k, v in corners.items()]
     imgs = [v["img"] for k, v in corners.items()]
@@ -22,7 +22,8 @@ def calibrate_intrinsic(data_path, max_images=70, min_points=80, save=False, plo
         stride = len(imgs) // max_images + 1
         names, imgs, objs = names[::stride], imgs[::stride], objs[::stride]
 
-    calibration, errors = calibrate(objs, imgs, gray.shape, out_dir=data_path, plot=plot, save_figures=save, **kw)
+    calibration, errors = calibrate(objs, imgs, gray.shape, centerPrincipalPoint=centerPrincipalPoint,
+                                                            out_dir=data_path, plot=plot, save_figures=save, **kw)
     mtx, dist, new_mtx, roi = calibration
 
     if plot or save:

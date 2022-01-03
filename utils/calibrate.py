@@ -42,7 +42,8 @@ def projection_errors(obj_points, img_points, calibration):
     return np.array(avg_errors), all_errors
 
 
-def calibrate(obj_points, img_points, dim, error_thr=1.0, mtx_guess=None, no_tangent=True, out_dir="", plot=False, save_figures=True, **kw):
+def calibrate(obj_points, img_points, dim, error_thr=1.0, mtx_guess=None, no_tangent=True,
+                                centerPrincipalPoint=None, out_dir="", plot=False, save_figures=True, **kw):
     h, w, n = dim[0], dim[1], len(img_points)
     print("Initial:", n)
 
@@ -68,7 +69,7 @@ def calibrate(obj_points, img_points, dim, error_thr=1.0, mtx_guess=None, no_tan
     print("\nmtx:\n", mtx)
     print("\ndist:", dist)
 
-    new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
+    new_mtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h), centerPrincipalPoint=centerPrincipalPoint)
     print("\nnew_mtx:\n", new_mtx)
     print("\nroi:", roi)
 
