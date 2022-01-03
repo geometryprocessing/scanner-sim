@@ -25,6 +25,12 @@ def write_scene_file(config, scene_filename, template_filename, warn_missing_con
     template.write(scene_filename)
     
 
+def write_scene_files(config, patterns, rotations, results_path, scene_path):
+    for cnt, pattern in enumerate(patterns):
+        config["pro_pattern_file"] = pattern
+        write_scene_file(config, results_path%cnt, scene_path)
+    
+
 def source(script, update=True):
     pipe = subprocess.Popen("source %s; env" % script, stdout=subprocess.PIPE,
                             shell=True, executable="/bin/bash")

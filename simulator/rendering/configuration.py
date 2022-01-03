@@ -3,6 +3,7 @@ import re
 import cv2
 from PIL import Image
 import lxml.etree as ET
+from scipy.spatial.transform import Rotation as R
 
 
 SCALE_FACTOR = 1 / 1000.0  # configuration is in [mm], mitsuba uses [m]
@@ -187,8 +188,29 @@ def configure_camera_and_projector(**kw):
     return config
 
 
-def configure_turntable_rotation(config, stage_geom=None, rotation=None, **kw):
-    pass
+def prepare_turntable_rotations(config, stage_geom=None, rotation_angle=None, **kw):
+    if type(stage_geom) is str:
+        stage_geom = load_calibration(stage_geom)
+    assert type(stage_geom) is dict
+    
+    turntable_rotations = []
+    
+    # Calculate rotation center
+    s_dir = stage_geom["dir"]/np.linalg.norm(stage_geom["dir"])
+    vec = np.zeros(3) - stage_geom["p"]
+    theta = np.dot(vec, s_dir)
+    trans_origin = stage_geom["p"] + s_dir * theta
+    translation = np.eye(4)
+    translation[:3, 3] = trans_origin
+    print(translation)
+       
+    for r in np.arange(0, 360, rotation_angle):
+        rot = np.eye(4)
+        #rot[:3, :3] = R.from_rotvec(r * np.pi / 180.0 * s_dir).as_matrix()
+        
+        turntable_rotations.append(-translation.dot(translation))
+    
+    return turntable_rotations
 
 
 def configure_object_geometry(config, obj_geom, **kw):
@@ -217,16 +239,13 @@ def configure_object_material(config, object_mat, **kw):
     config["obj_material"] = obj_material
 
 
-def configure_object(config, obj_geom, stage_geom="stage_geometry.json", obj_mat="object/rough_plastic_material.xml", calib_path=None, **kw):
+def configure_object(config, obj_geom, obj_mat="material/rough_plastic.xml", calib_path=None, **kw):
     if calib_path is not None:
-        stage_geom = os.path.join(calib_path, stage_geom) if type(stage_geom) is str else stage_geom
         obj_mat = os.path.join(calib_path, obj_mat) if type(obj_mat) is str else obj_mat
 
     configure_object_geometry(config, obj_geom, **kw)
     configure_object_material(config, obj_mat, **kw)
     
-    configure_turntable_rotation(config, stage_geom, **kw)
-
 
 def configure_all(**kw):
     config = configure_camera(**kw)
