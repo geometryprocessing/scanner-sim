@@ -189,24 +189,24 @@ def prepare_turntable_rotations(config, stage_geom=None, rotation_angle=None, **
     
     turntable_rotations = []
     
-    # Calculate rotation center
+    # Calculate rotation center as closest distance to origin (move object orthogonal to rotation axis)
     s_dir = stage_geom["dir"]/np.linalg.norm(stage_geom["dir"])
     vec = np.zeros(3) - stage_geom["p"]
     theta = np.dot(vec, s_dir)
     trans_origin = stage_geom["p"] + s_dir * theta
     translation = np.eye(4)
+    trans_origin *= SCALE_FACTOR
     translation[:3, 3] = trans_origin
     
-    #print(translation, np.linalg.inv(translation))# stage_geom["p"])
-    #print(s_dir)
-       
+    # Calculate rotation matrices (this assumes the object is placed on the "turntable"). 
+    # The rotation is calculated by translating the rotation center to the origin, rotating and translating back.
+    # In the scene template, the object is first transformed to the scan position and then rotated
+    # around the rotation axis from the stage calibration.
     for r in np.arange(0, 360, rotation_angle):
         rot = np.eye(4)
         rot[:3, :3] = R.from_rotvec(r * np.pi / 180.0 * s_dir).as_matrix()
-        r1 = translation @ rot
-        r2 = np.linalg.inv(translation) @ r1
-        turntable_rotations.append(r2)
-        print("ROT", r2)
+        r1 = translation @ rot @ np.linalg.inv(translation)
+        turntable_rotations.append(r1)
     
     return turntable_rotations
 

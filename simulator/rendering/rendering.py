@@ -14,28 +14,23 @@ def write_scene_file(config, scene_filename, template_filename, warn_missing_con
         else:
             if warn_missing_config:
                 print("Configuration value missing: %s. Using default: %s"%(n, e.get("value")))
-    #print(len(template.findall("default")))
+
     # Object material settings need to be filled in directly (if present)
     if "obj_material" in config:
         om = template.xpath("shape")
         assert len(om) == 1
-        # print(om, dir(om), config["obj_material"])
         om[0].insert(3, config["obj_material"])
         ET.indent(om[0], space="    ", level=1)
-    # ET.dump(template)
     template.write(scene_filename)
     
 
 def write_scene_files(config, patterns, rotations, results_path, scene_path):
-    org_transform = string2transform(config["obj_transform"])
+    # Write out files for each rotation
     for rot_i, rotation in enumerate(rotations):
-        #obj_transform = rotation @ org_transform
-        #print(obj_transform)
-        print("O", org_transform)
-        print("R", rotation)
         config["rot_transform"] = transform2string(rotation)
         r_path = os.path.join(results_path, "rotation_%03i"%rot_i)
         os.makedirs(r_path, exist_ok=True)
+        # Write out files for each pattern
         for cnt, pattern in enumerate(patterns):
             config["pro_pattern_file"] = pattern
             p_path = os.path.join(r_path, "pattern_%03i.xml"%cnt)
@@ -64,9 +59,9 @@ def render_scenes(filenames_template, output_folder=None, verbose=True):
     else:
         output = []
 
-    for i, scene in enumerate(scenes):
+    for i, scene in enumerate(sorted(scenes)):
         print("\nScene %d of %d:" % (i+1, len(scenes)), scene)
-
+        print(*output)
         proc = subprocess.Popen(["mitsuba", *output, scene], stdout=subprocess.PIPE, universal_newlines=True)
 
         for line in proc.stdout:
