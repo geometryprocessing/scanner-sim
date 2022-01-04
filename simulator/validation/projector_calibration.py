@@ -1,9 +1,6 @@
 from display import *
 from utils import *
 
-import matplotlib
-matplotlib.use('TkAgg')
-
 
 if __name__ == "__main__":
     H, W = 1080, 1920

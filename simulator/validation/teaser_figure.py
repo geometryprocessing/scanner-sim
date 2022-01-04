@@ -3,8 +3,6 @@ from rendering import *
 from display import *
 # from process import *
 
-import matplotlib
-matplotlib.use('TkAgg')
 font = {'family': 'serif', 'weight': 'normal', 'size': 32}
 matplotlib.rc('font', **font)
 

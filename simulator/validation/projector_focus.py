@@ -9,13 +9,13 @@ valid_path = "../../data/validation/projector_focus/"
 
 def simulate_projector_focus(data_path, mitsuba_path, range_cm=(61, 94), scale=0.05, ideal_camera=False, verbose=True, **kw):
     config, cam_geom = {}, load_calibration(calib_path + "camera_geometry.json")
-    # Render small crop (100 pixels high) only for optimal performance
-    w, h = 100, 100
+    # Render small crop (120 pixels high) only for optimal performance
+    w, h = 120, 120
     cam_geom["image_width, pixels"] = w
     cam_geom["image_height, pixels"] = h
     cam_geom["new_mtx"][:2, 2] = (w-1)/2, (h-1)/2
 
-    configure_camera_geometry(config, cam_geom)
+    configure_camera_geometry(config, cam_geom, **kw)
     configure_camera_focus(config, calib_path + "camera_focus.json", **kw)
 
     configure_projector_geometry(config, calib_path + "projector_geometry.json", **kw)
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     data_path = mitsuba_path + "/scenes"
     ensure_exists(data_path)
 
-    # simulate_projector_focus(data_path + "/projector_focus", mitsuba_path, ideal_camera=False)
+    simulate_projector_focus(data_path + "/projector_focus", mitsuba_path, ideal_camera=False, cam_samples=1024)
 
     analyze_projector_focus(data_path + "/projector_focus", reference=calib_path + "projector_focus.json")
 

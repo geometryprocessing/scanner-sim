@@ -3,9 +3,6 @@ from rendering import *
 from display import *
 from cv2 import aruco
 
-import matplotlib
-matplotlib.use('TkAgg')
-
 calib_path = "../../data/calibrations/"
 valid_path = "../../data/validation/accuracy_test/"
 

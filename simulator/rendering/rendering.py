@@ -15,12 +15,13 @@ def write_scene_file(config, scene_filename, template_filename, warn_missing_con
             if warn_missing_config:
                 print("Configuration value missing: %s. Using default: %s"%(n, e.get("value")))
     #print(len(template.findall("default")))
-    # Object material settings need to be filled in directly
-    om = template.xpath("shape")
-    assert len(om) == 1
-    # print(om, dir(om), config["obj_material"])
-    om[0].insert(3, config["obj_material"])
-    ET.indent(om[0], space="    ", level=1)
+    # Object material settings need to be filled in directly (if present)
+    if "obj_material" in config:
+        om = template.xpath("shape")
+        assert len(om) == 1
+        # print(om, dir(om), config["obj_material"])
+        om[0].insert(3, config["obj_material"])
+        ET.indent(om[0], space="    ", level=1)
     # ET.dump(template)
     template.write(scene_filename)
     
