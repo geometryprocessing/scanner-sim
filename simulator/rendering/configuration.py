@@ -135,7 +135,7 @@ def configure_projector_geometry(config, proj_geom, brightness=10.0, pixel_gap=0
     config["pro_pixel_gap"] = pixel_gap
     
     # Projector extrinsics
-    transform = np.zeros((4,4))
+    transform = np.zeros((4, 4))
     transform[:3, 3] = proj_geom["origin"] * SCALE_FACTOR
     transform[:3, :3] = proj_geom["basis"].T
     transform[3, 3] = 1.0

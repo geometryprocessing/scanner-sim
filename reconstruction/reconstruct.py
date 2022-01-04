@@ -44,13 +44,15 @@ def triangulate(cam_rays, proj_xy, proj_calib, undistort=True):
 
     return cam_rays * L[:, None]
 
+
 def calculate_normals_from_p3d(points, mask):
     dx = (np.roll(points, -1, axis=1) - np.roll(points, 1, axis=1)) / 1
     dy = (np.roll(points, -1, axis=0) - np.roll(points, 1, axis=0)) / 1
     normals = - np.cross(dx, dy)
     #normals = normals / np.linalg.norm(normals, axis=1)[:, None]
     return normals
-    
+
+
 def calculate_normals_from_dm(dm):
     zy, zx = np.gradient(dm)
     normals = np.dstack((zx, zy, -np.ones_like(dm)))
@@ -58,13 +60,13 @@ def calculate_normals_from_dm(dm):
     normals = normals / np.linalg.norm(normals, axis=2)[:, :, None]
     return normals
 
+
 def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed", max_group=25, gen_depth_map=True,
                        save=True, plot=False, save_figures=True, verbose=False, extract_normals=True, extract_colors=True, sim=False, **kw):
-    
     if sim:
         white_path = data_path + "/img_000.exr"
     else: 
-        white_path = data_path + "/img_color.exr"
+        white_path = None
     
     if save:
         save_path = data_path + out_dir + "/"
@@ -95,7 +97,9 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
 
     print("Triangulating...")
 
-    all_points = triangulate(cam_rays, proj_xy + np.array([0.5, 0.5])[None, :], proj_calib)
+    # Add (0.5, 0.5) to proj_xy to make rays pass through the centers of decoded projector pixels.
+    # Add another (0.5, 0.5) because of Mitsuba convention in projector calibration.
+    all_points = triangulate(cam_rays, proj_xy + np.array([0.5 + 0.5, 0.5 + 0.5])[None, :], proj_calib)
     if groups:
         group_points = triangulate(group_cam_rays, group_proj_xy, proj_calib)
         idx = np.nonzero(group_counts < max_group)[0]
@@ -105,8 +109,7 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
         
     # Extract colors        
     all_colors = group_colors = None
-    if extract_colors:
-        
+    if extract_colors and white_path is not None:
         white, _ = load_openexr(white_path, make_gray=False, load_depth=False)
         #print(np.min(white), np.max(white))
         ma = np.max(white)
@@ -119,7 +122,6 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
         group_idxs = group_cam_xy.astype("int32")
         #print(group_idxs.shape)
         group_colors = white[group_idxs[:, 1], group_idxs[:, 0]]
-
 
     # Generate depth maps
     if gen_depth_map:
@@ -155,7 +157,6 @@ def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed"
         group_norm = np.linalg.norm(group_normals, axis=1)
         group_nonzero = group_norm > 0
         group_normals[group_nonzero] /= group_norm[group_nonzero, None]
-
 
     if save:
         save_ply(save_path + "all_points.ply", all_points, all_normals, all_colors)
@@ -201,8 +202,8 @@ def reconstruct_many(path_template, cam_calib, proj_calib, suffix="gray/", **kw)
 
 
 if __name__ == "__main__":
-    cam_calib = load_calibration("../calibration/camera/camera_geometry.json")
-    proj_calib = load_calibration("../calibration/projector/projector_geometry.json")
+    cam_calib = load_calibration("../data/calibrations/camera_geometry.json")
+    proj_calib = load_calibration("../data/calibrations/projector_geometry.json")
     # proj_calib = load_calibration("../calibration/projector/projector_geometry_test.json")
 
     # Debug / Development
@@ -221,7 +222,10 @@ if __name__ == "__main__":
     # data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/"
     # data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/"
     data_path = "/media/yurii/EXTRA/scanner-sim-data/material_calib_2_deg/position_84/"
-    reconstruct_single(data_path + "gray/", cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+    # reconstruct_single(data_path + "gray/", cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
+
+    data_path_template = "/media/yurii/EXTRA/scanner-sim-data/pawn_30_deg_no_ambient/position_*"
+    reconstruct_many(data_path_template, cam_calib, proj_calib, max_group=25, plot=True, verbose=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_%s/position_*"
     # for object in ["matte", "gloss"]:
