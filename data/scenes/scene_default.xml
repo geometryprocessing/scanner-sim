@@ -46,6 +46,7 @@
     <default name="obj_flip_normals" value="false"/>    
     <default name="obj_transform" value="1.0 0.0 0.0 -0.1 0.0 1.0 0.0 -0.1 0.0 0.0 1.0 0.8 0.0 0.0 0.0 1.0"/>
     <default name="obj_scale" value="1.0"/>
+    <default name="rot_transform" value="1.0 0.0 0.0 -0.1 0.0 1.0 0.0 -0.1 0.0 0.0 1.0 0.8 0.0 0.0 0.0 1.0"/>
 
 
     <!-- Camera settings -->
@@ -136,6 +137,7 @@
         <transform name="toWorld">
             <scale value="$obj_scale"/>
             <matrix value="$obj_transform"/>
+            <matrix value="$rot_transform"/>
         </transform>
     </shape>
 

@@ -3,6 +3,7 @@ import os
 import cv2
 import glob
 import json
+import re
 import Imath
 import shutil
 import OpenEXR
@@ -33,6 +34,18 @@ class NumpyEncoder(json.JSONEncoder):
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
         return json.JSONEncoder.default(self, obj)
+    
+def transform2string(transform):
+    # TODO: add tests for validity of transform
+    transform = np.array2string(transform.flatten(), prefix="", suffix="", max_line_width=1000)
+    transform = transform.replace("[", "").replace("]", "")
+    transform = re.sub(' +', ' ', transform)
+    return transform
+
+def string2transform(t_string):
+    transform = np.fromstring(t_string, sep=' ')
+    transform = transform.reshape(4, 4)
+    return transform
 
 
 def numpinize(data):

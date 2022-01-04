@@ -1,5 +1,4 @@
 from utils import *
-import re
 import cv2
 from PIL import Image
 import lxml.etree as ET
@@ -7,14 +6,6 @@ from scipy.spatial.transform import Rotation as R
 
 
 SCALE_FACTOR = 1 / 1000.0  # configuration is in [mm], mitsuba uses [m]
-
-
-def transform2string(transform):
-    # TODO: add tests for validity of transform
-    transform = np.array2string(transform.flatten(), prefix="", suffix="", max_line_width=1000)
-    transform = transform.replace("[ ", "").replace("]", "")
-    transform = re.sub(' +', ' ', transform)
-    return transform
 
 
 # OpenCV pixel coordinates convention:
@@ -202,13 +193,17 @@ def prepare_turntable_rotations(config, stage_geom=None, rotation_angle=None, **
     trans_origin = stage_geom["p"] + s_dir * theta
     translation = np.eye(4)
     translation[:3, 3] = trans_origin
-    print(translation)
+    
+    #print(translation, np.linalg.inv(translation))# stage_geom["p"])
+    #print(s_dir)
        
     for r in np.arange(0, 360, rotation_angle):
         rot = np.eye(4)
-        #rot[:3, :3] = R.from_rotvec(r * np.pi / 180.0 * s_dir).as_matrix()
-        
-        turntable_rotations.append(-translation.dot(translation))
+        rot[:3, :3] = R.from_rotvec(r * np.pi / 180.0 * s_dir).as_matrix()
+        r1 = translation @ rot
+        r2 = np.linalg.inv(translation) @ r1
+        turntable_rotations.append(r2)
+        print("ROT", r2)
     
     return turntable_rotations
 

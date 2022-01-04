@@ -2,7 +2,7 @@ import os
 import glob
 import subprocess
 import lxml.etree as ET
-
+from utils import string2transform, transform2string
 
 def write_scene_file(config, scene_filename, template_filename, warn_missing_config=False):
     template = ET.parse(template_filename)
@@ -26,9 +26,19 @@ def write_scene_file(config, scene_filename, template_filename, warn_missing_con
     
 
 def write_scene_files(config, patterns, rotations, results_path, scene_path):
-    for cnt, pattern in enumerate(patterns):
-        config["pro_pattern_file"] = pattern
-        write_scene_file(config, results_path%cnt, scene_path)
+    org_transform = string2transform(config["obj_transform"])
+    for rot_i, rotation in enumerate(rotations):
+        #obj_transform = rotation @ org_transform
+        #print(obj_transform)
+        print("O", org_transform)
+        print("R", rotation)
+        config["rot_transform"] = transform2string(rotation)
+        r_path = os.path.join(results_path, "rotation_%03i"%rot_i)
+        os.makedirs(r_path, exist_ok=True)
+        for cnt, pattern in enumerate(patterns):
+            config["pro_pattern_file"] = pattern
+            p_path = os.path.join(r_path, "pattern_%03i.xml"%cnt)
+            write_scene_file(config, p_path, scene_path)
     
 
 def source(script, update=True):
@@ -47,12 +57,13 @@ def source(script, update=True):
 
 def render_scenes(filenames_template, output_folder=None, verbose=True):
     scenes = glob.glob(filenames_template)
+    print(scenes)
     if output_folder is not None:
         output = ["-o", output_folder]
     else:
         output = []
 
-    for i, scene in enumerate(sorted(scenes)):
+    for i, scene in enumerate(scenes):
         print("\nScene %d of %d:" % (i+1, len(scenes)), scene)
 
         proc = subprocess.Popen(["mitsuba", *output, scene], stdout=subprocess.PIPE, universal_newlines=True)
