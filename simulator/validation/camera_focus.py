@@ -15,7 +15,7 @@ def simulate_camera_focus(data_path, mitsuba_path, range_cm=(65, 96), verbose=Tr
     cam_geom["image_height, pixels"] = h
     cam_geom["new_mtx"][:2, 2] = (w-1)/2, (h-1)/2
 
-    configure_camera_geometry(config, cam_geom)
+    configure_camera_geometry(config, cam_geom, **kw)
     configure_camera_focus(config, calib_path + "camera_focus.json", **kw)
 
     if verbose:

@@ -1,10 +1,7 @@
 from configuration import *
 from rendering import *
 from display import *
-# from process import *
 
-import matplotlib
-matplotlib.use('TkAgg')
 font = {'family': 'serif', 'weight': 'normal', 'size': 32}
 matplotlib.rc('font', **font)
 
@@ -34,12 +31,10 @@ def simulate_teaser_figure(data_path, mitsuba_path, pawn_geometry, verbose=True,
     render_scenes(data_path + "/*.xml", verbose=verbose)
 
 
-def analyze_teaser_figure(data_path, lim=1.03, thr=0.05, crop=False, hist=False, save=False):
+def analyze_teaser_figure(data_path, lim=1.03, thr=0.05, roi=True, crop=False, hist=False, save=False):
     data_path += "/"
-    # render = load_openexr(data_path + "rendering_cropped.exr")
     render = load_openexr(data_path + "rendered.exr")
-    clean = load_openexr(data_path + "scan_clean.exr")
-    # clean = load_openexr(data_path + "captured.exr")
+    clean = load_openexr(data_path + "captured.exr")
     print("Loaded")
 
     mask = render > 1.e-6
@@ -47,10 +42,16 @@ def analyze_teaser_figure(data_path, lim=1.03, thr=0.05, crop=False, hist=False,
 
     l, r, t, b = 2000, 4250, 900, 3700
     cl, cr, ct, cb = 2750, 3250, 2725, 3050
-
     nt, nl, ns = 1425, 3200, 50
-    render_thr = np.average(render[nt:(nt+ns), nl:(nl+ns)])
-    clean_thr = np.average(clean[nt:(nt+ns), nl:(nl+ns)])
+
+    if roi:
+        render_thr = np.average(render[nt:(nt+ns), nl:(nl+ns)])
+        clean_thr = np.average(clean[nt:(nt+ns), nl:(nl+ns)])
+    else:
+        _, render_thr = linear_map(render)
+        _, clean_thr = linear_map(clean)
+        render_thr, clean_thr = render_thr/1.2, clean_thr/1.2
+
     print("Thresholds:", render_thr, clean_thr)
 
     render_lm = np.minimum(255 * render / (0.8 * render_thr), 255).astype(np.uint8)
@@ -77,7 +78,7 @@ def analyze_teaser_figure(data_path, lim=1.03, thr=0.05, crop=False, hist=False,
 
     plot_img(render, "Render")
     plot_img(clean, "Clean")
-    # plot_img(mask, "Mask")
+    plot_img(mask, "Mask")
 
     if save:
         ensure_exists(data_path + "plots/")
@@ -161,43 +162,34 @@ def analyze_teaser_figure(data_path, lim=1.03, thr=0.05, crop=False, hist=False,
             cv2.imwrite(filename, img)
 
 
-def prepare_images():
-    rendering, _ = load_openexr("rendering_final.exr")
-    print("rendering", rendering.shape, rendering.dtype)
-
-    rendering = rendering[:, :6464]  # Shift by 2 was already accomplished by adjusting projected pattern
-    rendering = np.roll(rendering, -4, axis=0)
-
-    save_openexr("rendering_cropped.exr", rendering)
-
-    scan = load_openexr("scan_checker.exr")
-    print("scan", scan.shape, scan.dtype)
-
-    parasitic = load_openexr("scan_parasitic.exr")
-    print("parasitic", parasitic.shape, parasitic.dtype)
-
-    vignetting = cv2.cvtColor(cv2.imread("camera_vignetting.png"), cv2.COLOR_BGR2GRAY)
-    print("vignetting", vignetting.shape, vignetting.dtype)
+def prepare_captured_teaser_figure(data_path):
+    scan = load_openexr(data_path + "/position_0/color/checker.exr")
+    parasitic = load_openexr(data_path + "/position_0/gray/img_01.exr")
+    vignetting = cv2.cvtColor(cv2.imread(calib_path + "camera_vignetting.png"), cv2.COLOR_BGR2GRAY)
+    cam_calib = load_calibration(calib_path + "camera_geometry.json")
+    print("captured", scan.shape, scan.dtype)
 
     clean = np.maximum(0, scan - parasitic)
     clean /= vignetting / np.max(vignetting)
-    save_openexr("scan_clean.exr", clean)
+    undistorted = cv2.undistort(clean, cam_calib["mtx"], cam_calib["dist"], newCameraMatrix=cam_calib["new_mtx"])
+
+    save_openexr(valid_path + "captured.exr", undistorted)
 
 
 if __name__ == "__main__":
-    # prepare_images()
-    #
-    # compare(crop=True, hist=True, save=True)
+    # Point to the unzipped location of pawn_30_deg_no_ambient.zip
+    # from Physical Scans (https://archive.nyu.edu/handle/2451/63306)
+    # prepare_captured_teaser_figure("/media/yurii/EXTRA/scanner-sim-data/pawn_30_deg_no_ambient")
 
     mitsuba_path = "/home/yurii/software/mitsuba/"
     rendered_path = mitsuba_path + "scenes/teaser_figure/"
     ensure_exists(rendered_path)
 
     # pawn_geometry = load_calibration(valid_path + "pawn_geometry.json")
-    # simulate_teaser_figure(rendered_path, mitsuba_path, pawn_geometry, cam_samples=256)
+    # simulate_teaser_figure(rendered_path, mitsuba_path, pawn_geometry, cam_samples=(256))
     # copy_to(valid_path + "rendered.exr", rendered_path + "pawn.exr")
 
-    analyze_teaser_figure(valid_path, crop=True, hist=True, save=True)
+    analyze_teaser_figure(valid_path, crop=True, roi=False, hist=True, save=False)
 
     # rgb, d = load_openexr(rendered_path + "pawn.exr", make_gray=False, load_depth=True)
     #

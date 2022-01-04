@@ -110,7 +110,7 @@ def configure_camera_focus(config, cam_focus, tolerances_factor=1.07, wavelength
     config["cam_diff_limit"] *= tolerances_factor * (180. / np.pi)
 
 
-def configure_projector_geometry(config, proj_geom, brightness=10.0, pixel_gap=0.0, **kw):
+def configure_projector_geometry(config, proj_geom, brightness=10.0, pixel_gap=0.08, **kw):
     if type(proj_geom) is str:
         proj_geom = load_calibration(proj_geom)
     assert type(proj_geom) is dict
@@ -127,14 +127,14 @@ def configure_projector_geometry(config, proj_geom, brightness=10.0, pixel_gap=0
     config["pro_pixel_gap"] = pixel_gap
     
     # Projector extrinsics
-    transform = np.zeros((4,4))
+    transform = np.zeros((4, 4))
     transform[:3, 3] = proj_geom["origin"] * SCALE_FACTOR
     transform[:3, :3] = proj_geom["basis"].T
     transform[3, 3] = 1.0
     config["pro_transform"] = transform2string(transform)
 
 
-def configure_projector_focus(config, proj_focus, diff_limit=None, **kw):
+def configure_projector_focus(config, proj_focus, extra_dof=0.025, diff_limit=None, **kw):
     if type(proj_focus) is str:
         proj_focus = load_calibration(proj_focus)
     assert type(proj_focus) is dict
@@ -149,6 +149,9 @@ def configure_projector_focus(config, proj_focus, diff_limit=None, **kw):
         # Camera focus must be already configured prior to automatic diff_limit estimation for the projector
         diff_limit = config["cam_diff_limit"] * config["cam_aperture_radius"] / config["pro_aperture_radius"]
 
+    # ExtraDOF in the projector model improves Depth of Field observed with RGB projector
+    # when using Monochrome camera (due to the chromatic aberrations that split focal plane into three)
+    config["pro_extra_dof"] = extra_dof
     config["pro_diff_limit"] = diff_limit
 
 

@@ -32,6 +32,7 @@
     <default name="pro_image_height" value="1080"/>
     <default name="pro_aperture_radius" value="0.0035951384447263915"/>
     <default name="pro_focus_distance" value="0.4902099376513703"/>
+    <default name="pro_extra_dof" value="0"/>
     <default name="pro_diff_limit" value="0.0057211497483984144"/>
     <default name="pro_pixel_gap" value="0"/>
     <default name="pro_sampling_weight" value="5.0"/>
@@ -118,6 +119,7 @@
         <integer name="height" value="$pro_image_height"/>
         <float name="apertureRadius" value="$pro_aperture_radius"/>
         <float name="focusDistance" value="$pro_focus_distance"/>
+        <float name="extraDOF" value="$pro_extra_dof"/>
         <float name="diffLimit" value="$pro_diff_limit"/>
         <float name="pixelGap" value="$pro_pixel_gap"/>
         <float name="samplingWeight" value="$pro_sampling_weight"/>        

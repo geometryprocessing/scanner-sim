@@ -59,26 +59,35 @@ def get_all_bit_masks(template, inverted_template, ids=None, undistort=None, **k
     return np.array(joblib.Parallel(verbose=15, n_jobs=-1, batch_size=1, pre_dispatch="all")(jobs))
 
 
-def decode_gray(data_path, out_dir="decoded", mask_sigma=3, mask_iter=6, crop=None, offset=-150,
+def decode_single(data_path, symmetric=True, out_dir="decoded", mask_sigma=3, mask_iter=6, crop=None, offset=-150,
                   undistort=None, file_pattern="img_%02d.exr", load_depth=False, group=False, save=True, plot=False, threshold=0, save_figures=True, verbose=False, **kw):
 
-    all_names = [file_pattern % i for i in range(46)]
-    v_names, v_inv_names = reversed(all_names[2:24:2]), reversed(all_names[3:24:2])
-    h_names, h_inv_names = reversed(all_names[24::2]), reversed(all_names[25::2])
+    if symmetric:
+        all_names = [file_pattern % i for i in range(46)]
+        v_names, v_inv_names = reversed(all_names[2:24:2]), reversed(all_names[3:24:2])
+        h_names, h_inv_names = reversed(all_names[24::2]), reversed(all_names[25::2])
 
-    h_masks = get_all_bit_masks([data_path + n for n in h_names], [data_path + n for n in h_inv_names], undistort=undistort, **kw)
-    v_masks = get_all_bit_masks([data_path + n for n in v_names], [data_path + n for n in v_inv_names], undistort=undistort, **kw)
-    bit_masks = h_masks, v_masks
-
+        h_masks = get_all_bit_masks([data_path + n for n in h_names], [data_path + n for n in h_inv_names], undistort=undistort, **kw)
+        v_masks = get_all_bit_masks([data_path + n for n in v_names], [data_path + n for n in v_inv_names], undistort=undistort, **kw)
+        bit_masks = h_masks, v_masks
+    else:
+        bit_masks = [get_all_bit_masks(data_path + dir + "_%d.exr", data_path + dir + "_%d_inv.exr",
+                                       ids=range(11), undistort=undistort, **kw)
+                     for dir in ["horizontal", "vertical"]]
     if verbose:
         print("Bit masks:", bit_masks[0].shape, bit_masks[0].size / 1024**2, "MB")
 
-    if load_depth:
-        white, depth_gt = load_openexr(data_path + "/" + file_pattern%0, make_gray=True, load_depth=load_depth) #TODO switch to proper path handling
+    if symmetric:
+        if load_depth:
+            white, depth_gt = load_openexr(data_path + "/" + file_pattern%0, make_gray=True, load_depth=load_depth) #TODO switch to proper path handling
+        else:
+            white = load_openexr(data_path + "/" + file_pattern%0, make_gray=True, load_depth=load_depth) #TODO switch to proper path handling
+            depth_gt = None
+        blank = load_openexr(data_path + "/" + file_pattern%1, make_gray=True)
     else:
-        white = load_openexr(data_path + "/" + file_pattern%0, make_gray=True, load_depth=load_depth) #TODO switch to proper path handling
+        white = load_openexr(data_path + "/white.exr", make_gray=True)
+        blank = load_openexr(data_path + "/blank.exr", make_gray=True)
         depth_gt = None
-    blank = load_openexr(data_path + "/" + file_pattern%1, make_gray=True)
 
     clean = white - blank
     if crop:
@@ -222,7 +231,7 @@ def decode_many(path_template, suffix="gray/", **kw):
 
 
 if __name__ == "__main__":
-    camera_calib = load_calibration("../calibration/camera/camera_geometry.json")
+    camera_calib = load_calibration("../data/calibrations/camera_geometry.json")
 
     # Debug / Development
     # data_path = "D:/scanner_sim/captures/plane/default_scan/"
@@ -243,7 +252,10 @@ if __name__ == "__main__":
     # data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/gray/"
     # data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/gray/"
     data_path = "/media/yurii/EXTRA/scanner-sim-data/material_calib_2_deg/position_84/gray/"
-    decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
+    # decode_single(data_path, undistort=camera_calib, symmetric=True, group=True, plot=True, verbose=True)
+
+    data_path_template = "/media/yurii/EXTRA/scanner-sim-data/pawn_30_deg_no_ambient/position_*"
+    decode_many(data_path_template, undistort=camera_calib, symmetric=True, crop=1500, group=True, plot=True, verbose=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/position_*"
     # for object in ["pawn", "rook", "shapes"]:

@@ -64,7 +64,7 @@ def merge_single_30_deg(data_path, filename_template, stage_calib, max_dist=100,
     merged = merged[dist < max_dist, :] + p0
     #print(merged.shape, colors.shape, m_normals.shape, len(merged_normals))
     m_normals = m_normals[dist < max_dist, :]
-    colors = colors[dist < max_dist, :]
+    colors = colors[dist < max_dist, :] if colors.shape[0] > 0 else None
 
     if plot:
         plt.legend()
@@ -96,15 +96,18 @@ def merge_both_30_deg(data_path, object_name, stage_calib, save=True, plot=False
 
 
 if __name__ == "__main__":
-    # stage_calib = load_calibration("../calibration/stage/stage_geometry.json")
-    stage_calib = load_calibration("D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/merged/stage/stage_geometry.json")
+    stage_calib = load_calibration("../data/calibrations/stage_geometry.json")
+    # stage_calib = load_calibration("D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/merged/stage/stage_geometry.json")
 
     # Debug
     # merge_both_30_deg("D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/", "pawn", stage_calib, plot=True)
 
-    data_path_template = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_%s/"
-    for object_name in ["matte", "gloss"]:
-        merge_both_30_deg(data_path_template % object_name, object_name, stage_calib, plot=True)
+    # data_path_template = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_%s/"
+    # for object_name in ["matte", "gloss"]:
+    #     merge_both_30_deg(data_path_template % object_name, object_name, stage_calib, plot=True)
+
+    data_path_template = "/media/yurii/EXTRA/scanner-sim-data/pawn_30_deg_no_ambient/"
+    merge_both_30_deg(data_path_template, "pawn", stage_calib, plot=True)
 
     # data_path_template = "D:/scanner_sim/captures/stage_batch_2/%s_30_deg/"
     # for object_name in ["pawn", "rook", "shapes"]:

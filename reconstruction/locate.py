@@ -206,10 +206,10 @@ def fit_sphere(points, stage_calib, plot=False):
 def locate_pawn(data_path, stage_calib, plot=False):
     print("\n\tLocating Pawn\n")
 
-    ring = load_ply(data_path + "reconstructed/pawn_ring.ply")
+    ring = load_ply(data_path + "reconstructed/pawn_ring.ply")[0]
     c_ring, _ = fit_ring(ring, stage_calib, title="Pawn Ring", plot=plot)
 
-    sphere = load_ply(data_path + "reconstructed/pawn_sphere.ply")
+    sphere = load_ply(data_path + "reconstructed/pawn_sphere.ply")[0]
     sphere = sphere[::100, :]
     c_sphere, _ = fit_sphere(sphere, stage_calib, plot=plot)
 
@@ -222,7 +222,8 @@ def locate_pawn(data_path, stage_calib, plot=False):
     print("R:\n", R)
 
     c = np.zeros(3)
-    c[:2] = (c_ring[:2] + c_sphere[:2]) / 2
+    c[:2] = c_sphere[:2]
+    # c[:2] = (c_ring[:2] + c_sphere[:2]) / 2
     c[2] = c_sphere[2]
     print(c)
     c_loc = c
@@ -248,7 +249,7 @@ def locate_pawn(data_path, stage_calib, plot=False):
 def locate_rook(data_path, stage_calib, stage_base, plot=False):
     print("\n\tLocating Rook\n")
 
-    ring = load_ply(data_path + "reconstructed/rook_ring.ply")
+    ring = load_ply(data_path + "reconstructed/rook_ring.ply")[0]
     c_ring, ax = fit_ring(ring, stage_calib, title="Rook Ring", plot=plot)
 
     p0, dir = stage_calib["p"], stage_calib["dir"]
@@ -395,13 +396,14 @@ def rotate(T, R, stage_calib, angle=0, ax=None):
 
 
 if __name__ == "__main__":
-    stage_calib = load_calibration("../calibration/stage/stage_geometry.json")
+    stage_calib = load_calibration("../data/calibrations/stage_geometry.json")
     # stage_calib = load_calibration("D:/scanner_sim/captures/stage_batch_3/stage_calib_2_deg_before/merged/stage/stage_geometry.json")
 
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/pawn_30_deg/"
-    data_path = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_matte/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_matte/"
     # data_path = "D:/scanner_sim/captures/stage_batch_3/pawn_30_deg_gloss/"
-    # _, stage_base = locate_pawn(data_path, stage_calib, plot=True)
+    data_path = "/media/yurii/EXTRA/scanner-sim-data/pawn_30_deg_no_ambient/"
+    _, stage_base = locate_pawn(data_path, stage_calib, plot=True)
 
     # data_path = "D:/scanner_sim/captures/stage_batch_2/no_ambient/rook_30_deg/"
     # locate_rook(data_path, stage_calib, stage_base, plot=True)
@@ -415,8 +417,8 @@ if __name__ == "__main__":
     # data_path = "D:/scanner_sim/calibration/accuracy_test/clear_plane/gray/"
     # data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/gray/"
     data_path = "/media/yurii/EXTRA/scanner-sim-data/material_calib_2_deg/position_84/gray/"
-    T, R, ax = locate_plane(data_path, plot=True)
+    # T, R, ax = locate_plane(data_path, plot=True)
 
-    rotate(T, R, stage_calib, angle=-40, ax=ax)
+    # rotate(T, R, stage_calib, angle=-40, ax=ax)
 
     plt.show()

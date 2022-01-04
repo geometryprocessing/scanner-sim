@@ -18,7 +18,7 @@ import open3d as o3d
 import imageio
 
 import matplotlib
-
+matplotlib.use('TkAgg')
 # font = {'family': 'serif', 'weight': 'normal', 'size': 32}
 font = {'weight': 'normal', 'size': 14}
 matplotlib.rc('font', **font)
