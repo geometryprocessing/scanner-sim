@@ -57,7 +57,7 @@ def simulate_projector_focus(data_path, mitsuba_path, range_cm=(61, 94), scale=0
 
 # dist_offset_mm = offset parameter from projector_focus.xml and
 # cam_res_rad = atan(1 / new_mtx[0,0]) from camera_geometry.json
-def analyze_projector_focus(data_path, reference=None, dist_offset_mm=320, cam_res_rad=6.8e-5):
+def analyze_projector_focus(data_path, reference=None, dist_offset_mm=320, cam_res_rad=6.8e-5, print_version=True):
     if reference is not None:
         ref = load_calibration(reference)
         ref_data = ref["dof (dist, res), mm"]
@@ -115,20 +115,23 @@ def analyze_projector_focus(data_path, reference=None, dist_offset_mm=320, cam_r
         plt.imshow(fits[i])
     plt.tight_layout()
 
-    plt.figure("Projector Resolution", (12, 9))
+    plt.figure("Projector Resolution", (6, 4.5) if print_version else (12, 9))
     if reference is not None:
-        plt.plot(ref_data[0, :], ref_data[1, :], ".b", label="Measurements")
-    plt.plot(dist_mm, sigmas_mm, ".g", label="Fitted Sigma")
-    plt.plot(dist_mm, res_mm, "-r", label="Simulated")
-    plt.xlim([280, 615])
+        plt.plot(ref_data[0, :] / 10, ref_data[1, :], ".b", label="Measured")
+    if not print_version:
+        plt.plot(dist_mm / 10, sigmas_mm, ".g", label="Fitted Sigma")
+    plt.plot(dist_mm / 10, res_mm, "-r", label="Simulated")
+    plt.xlim([28, 61.5])
     if reference is not None:
-        plt.ylim([0, ref["aperture, mm"] / 2])
-    plt.title("Projector resolution (pixel diameter)")
-    plt.xlabel("Distance, mm")
+        # plt.ylim([0, ref["aperture, mm"] / 2])
+        plt.ylim([0, 2.75])
+    if not print_version:
+        plt.title("Projector resolution (pixel diameter)")
+    plt.xlabel("Distance, cm")
     plt.ylabel("Resolution, mm")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(valid_path + "projector_focus.png", dpi=200)
+    plt.savefig(valid_path + "projector_focus.png", dpi=300 if print_version else 200)
 
 
 if __name__ == "__main__":
@@ -136,7 +139,7 @@ if __name__ == "__main__":
     data_path = mitsuba_path + "/scenes"
     ensure_exists(data_path)
 
-    simulate_projector_focus(data_path + "/projector_focus", mitsuba_path, ideal_camera=False, cam_samples=1024)
+    # simulate_projector_focus(data_path + "/projector_focus", mitsuba_path, ideal_camera=False, cam_samples=1024)
 
     analyze_projector_focus(data_path + "/projector_focus", reference=calib_path + "projector_focus.json")
 

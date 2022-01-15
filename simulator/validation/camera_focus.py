@@ -33,7 +33,7 @@ def simulate_camera_focus(data_path, mitsuba_path, range_cm=(65, 96), verbose=Tr
     render_scenes(data_path + "/dist_*.xml", verbose=verbose)
 
 
-def analyze_camera_focus(data_path, reference=None):
+def analyze_camera_focus(data_path, reference=None, print_version=True):
     if reference is not None:
         ref = load_calibration(reference)["dof (dist, res), pixels"]
     else:
@@ -74,17 +74,19 @@ def analyze_camera_focus(data_path, reference=None):
     plt.legend()
     plt.tight_layout()
 
-    plt.figure("Camera Resolution", (12, 9))
+    plt.figure("Camera Resolution", (6, 4.5) if print_version else (12, 9))
     if ref is not None:
-        plt.plot(ref[0, :], ref[1, :], ".b", label="Measured")
-    plt.plot(dist, res, "-r", label="Simulated")
-    plt.xlim([650, 950])
-    plt.xlabel("Distance, mm")
+        plt.plot(ref[0, :] / 10, ref[1, :], ".b", label="Measured")
+    plt.plot(dist / 10, res, "-r", label="Simulated")
+    plt.xlim([64.5, 95.5])
+    # plt.ylim([0, 6])
+    plt.xlabel("Distance, cm")
     plt.ylabel("Resolution, pixels")
-    plt.title("Camera resolution (%.1f %% contrast)" % contrast)
+    if not print_version:
+        plt.title("Camera resolution (%.1f %% contrast)" % contrast)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(valid_path + "camera_focus.png", dpi=200)
+    plt.savefig(valid_path + "camera_focus.png", dpi=300 if print_version else 200)
 
 
 if __name__ == "__main__":
@@ -92,7 +94,7 @@ if __name__ == "__main__":
     data_path = mitsuba_path + "/scenes"
     ensure_exists(data_path)
 
-    simulate_camera_focus(data_path + "/camera_focus", mitsuba_path)
+    # simulate_camera_focus(data_path + "/camera_focus", mitsuba_path)
 
     analyze_camera_focus(data_path + "/camera_focus", reference=calib_path + "camera_focus.json")
     plt.show()

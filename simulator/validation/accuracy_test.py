@@ -108,7 +108,7 @@ def simulate_accuracy_test(data_path, mitsuba_path, board_geometry, reuse_patter
 
 
 def analyze_accuracy_test(captured_path, rendered_path, camera_calib, board_geom, better_checker_ref=False,
-                          proj_calib=None, real_img_ref=True, plot=True, savefigs=False):
+                          proj_calib=None, real_img_ref=True, plot=True, savefigs=False, print_version=True):
     charuco_cap = load_corners(captured_path + "/charuco/corners.json")["blank_0.png"]
     checker_cap = load_corners(captured_path + "/checker/detected_full/corners.json")["checker_0.png"]
 
@@ -206,8 +206,10 @@ def analyze_accuracy_test(captured_path, rendered_path, camera_calib, board_geom
             plt.savefig(valid_path + "/accuracy_test_corners.png", dpi=150)
 
 
-        plt.figure("Errors", (16, 8))
-        plt.subplot(121, title="Charuco corner displacements (camera pixels)")
+        plt.figure("Errors", (10, 5) if print_version else (16, 8))
+        plt.subplot(121, title="Charuco corner displacements (camera pixels)" if not print_version else None)
+
+        ms = 7 if print_version else 9
 
         first = True
         for i, id in enumerate(charuco_cap["idx"]):
@@ -219,19 +221,19 @@ def analyze_accuracy_test(captured_path, rendered_path, camera_calib, board_geom
             # if ref[0] > 3232:
             #     continue
 
-            plt.plot([0, cap[0] - ref[0]], [0, cap[1] - ref[1]], "r:.", markersize=9,
+            plt.plot([0, cap[0] - ref[0]], [0, cap[1] - ref[1]], "r:.", markersize=ms,
                                                                  label="Captured" if first else None)
-            plt.plot([0, ren[0] - ref[0]], [0, ren[1] - ref[1]], "b:.", markersize=9,
+            plt.plot([0, ren[0] - ref[0]], [0, ren[1] - ref[1]], "b:.", markersize=ms,
                                                                  label="Rendered" if first else None)
             first = False
 
         sc = 3
         plt.xlim([-sc, sc])
         plt.ylim([-sc, sc])
-        plt.legend()
+        plt.legend(loc='upper left')
         plt.grid()
         plt.gca().invert_yaxis()
-        plt.subplot(122, title="Checker corner displacements (camera pixels)")
+        plt.subplot(122, title="Checker corner displacements (camera pixels)" if not print_version else None)
 
         first = True
         for i, id in enumerate(checker_cap["idx"]):
@@ -239,9 +241,9 @@ def analyze_accuracy_test(captured_path, rendered_path, camera_calib, board_geom
             # if ref[0] > 3232:
             #     continue
 
-            plt.plot([0, cap[0] - ref[0]], [0, cap[1] - ref[1]], "r:.", markersize=9,
+            plt.plot([0, cap[0] - ref[0]], [0, cap[1] - ref[1]], "r:.", markersize=ms,
                                                                  label="Captured" if first else None)
-            plt.plot([0, ren[0] - ref[0]], [0, ren[1] - ref[1]], "b:.", markersize=9,
+            plt.plot([0, ren[0] - ref[0]], [0, ren[1] - ref[1]], "b:.", markersize=ms,
                                                                  label="Rendered" if first else None)
             # plt.plot([0, ren[0] - cap[0]], [0, ren[1] - cap[1]], "g:.", markersize=9,
             #                                                      label="Relative" if first else None)
@@ -249,7 +251,7 @@ def analyze_accuracy_test(captured_path, rendered_path, camera_calib, board_geom
 
         plt.xlim([-sc, sc])
         plt.ylim([-sc, sc])
-        plt.legend()
+        plt.legend(loc='upper right')
         plt.grid()
         plt.gca().invert_yaxis()
         plt.tight_layout()
