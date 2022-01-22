@@ -6,8 +6,9 @@ layout: default
 # News
 
 > **(2021, August 27th)** Initial release including scanning simulation framework, physical dataset, synthetic dataset and benchmarks.<br>
+> **(2022, January 15th)** Finalized papers and added new accuracy evaluations (projector and camera defocus). Software improvements.<br>
 
-
+> **(2022, January) We are currently refactoring and extending our software pipeline and dataset. If you want to get notified about new releases, please subscribe to [this github issue](https://github.com/geometryprocessing/scanner-sim/issues/1)**
 
 * * *
 <br>
@@ -31,7 +32,10 @@ Koch, Sebastian and Piadyk, Yurii and Worchel, Marcus and Alexa, Marc and Silva,
 
 ### Acknowledgements
 
-The work was supported in part through the NYU IT High Performance Computing resources, services, and staff expertise. This work was partially supported by the NSF CAREER award 1652515, the NSF Grants IIS-1320635, DMS-1436591, DMS-1821334, OAC-1835712, OIA-1937043, CHS-1908767, CHS-1901091, a gift from Adobe Research, a gift from nTopology, and a gift from Advanced Micro Devices, Inc.
+This work was supported in part through the NYU IT High Performance Computing resources, services, and staff expertise. This work was partially supported by the NSF CAREER award 1652515, the NSF Grants IIS-1320635, DMS-1436591,
+DMS-1821334, OAC-1835712, OIA-1937043, CHS-1908767, CHS-1901091, CNS-1229185, CCF-
+1533564, CNS-1544753, CNS-1730396, and CNS-1828576, a gift from Adobe Research, a gift from
+nTopology, and a gift from Advanced Micro Devices, Inc.
 
 
 
@@ -47,17 +51,22 @@ The work was supported in part through the NYU IT High Performance Computing res
 <!--<img src="assets/images/supp.png" alt="Supplementary Material" style="border:1px solid #bbbbbb; border-radius: 6px; margin-left: auto; margin-right: auto;"/>-->
 <!--</div>-->
 
-Please cite our paper if you use the LSD dataset or our scanning simulation to generate data.
+Please cite our paper if you use the dataset or our scanning simulation to generate data.
 
 ```
-@InProceedings{Koch_Piadyk_2021,
-tbd.
+@inproceedings{
+koch_piadyk_2021,
+title={Hardware Design and Accurate Simulation of Structured-Light Scanning for Benchmarking of 3D Reconstruction Algorithms},
+author={Sebastian Koch and Yurii Piadyk and Markus Worchel and Marc Alexa and Cl{\'a}udio Silva and Denis Zorin and Daniele Panozzo},
+booktitle={Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 2)},
+year={2021},
+url={https://openreview.net/forum?id=bNL5VlTfe3p}
 }
 ```
 
 ### License
 
-The code is available partly under the [MIT license](https://opensource.org/licenses/MIT){:target="_blank"} and partly under the [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html){:target="_blank"}.
+The code is available partly under the [BSD 3-Clause Clear license](https://spdx.org/licenses/BSD-3-Clause-Clear.html){:target="_blank"} and partly under the [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html){:target="_blank"}.
 
 Our datasets are available under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/){:target="_blank"} except for the 7 textured/colored 3D models, which are licensed by their respective creators under various Creative Commons licenses (see supplementary material).
 
@@ -75,7 +84,7 @@ By downloading the dataset or software framework you agree to the following term
 # Dataset
 
 
-Our dataset consists of the following parts. The files are hosted on NYU digital archive. If you notice download problems, try to limit the amount of concurrent downloads.
+Our dataset consists of the following parts. The files are hosted on our [NYU digital archive site](https://archive.nyu.edu/handle/2451/62251). If you notice download problems, try to limit the amount of concurrent downloads.
 
 
 
@@ -170,6 +179,8 @@ A common downstream task in structured light scanning is assembling a full model
 # Software
 
 The software framework is build in Python and C++. We make use of many open source libraries, which can be easily installed with pip or conda. 
+
+**We are currently refactoring and extending our software pipeline and dataset. If you want to get notified about new releases, please subscribe to [this github issue](https://github.com/geometryprocessing/scanner-sim/issues/1)**
 
 ### Calibration
 
