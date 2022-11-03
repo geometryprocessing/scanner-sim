@@ -62,19 +62,19 @@ def calculate_normals_from_dm(dm):
 
 
 def reconstruct_single(data_path, cam_calib, proj_calib, out_dir="reconstructed", max_group=25, gen_depth_map=True,
-                       save=True, plot=False, save_figures=True, verbose=False, extract_normals=True, extract_colors=True, sim=False, **kw):
+                       save=True, plot=False, save_figures=True, verbose=False, extract_normals=True, extract_colors=True, sim=False, file_pattern="img_%02d.exr", **kw):
     if sim:
-        white_path = data_path + "/img_000.exr"
+        white_path = data_path + "/" + file_pattern%0
     else: 
         white_path = None
     
     if save:
         save_path = data_path + out_dir + "/"
         ensure_exists(save_path)
-        data_path += "decoded/"
     else:
         save_path = None
 
+    data_path += "decoded/"
     all, groups = load_decoded(data_path)
     cam_xy, proj_xy, mask = all
     if groups:
