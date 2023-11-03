@@ -1,0 +1,3 @@
+[submodule "mitsuba"]
+	path = mitsuba
+	url = https://github.com/skoch9/mitsuba.git

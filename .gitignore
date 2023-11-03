@@ -13,3 +13,5 @@ teaser_figure/full*
 teaser_figure/crop*
 teaser_figure/img_000_*
 *mitsuba*.log
+venv
+*.egg-info
