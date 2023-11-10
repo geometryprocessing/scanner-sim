@@ -1,4 +1,4 @@
-from display import *
+from scanner.capture.display import *
 from utils import *
 
 

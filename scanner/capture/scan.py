@@ -7,9 +7,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 # from termcolor import colored
 # plt.switch_backend('agg')
-from display import *
-from capture import *
-from stage import *
+from scanner.capture.display import *
+from scanner.capture import *
+from scanner.capture.stage import *
 
 
 def gen_calibration_script(filename, step=5, stops=10, delay=2.0, color=False, dots=False, right=None, left=None, name=None):

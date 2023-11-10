@@ -1,6 +1,6 @@
-from configuration import *
-from rendering import *
-from display import *
+from simulator.rendering.configuration import *
+from simulator.rendering import *
+from scanner.capture.display import *
 from cv2 import aruco
 
 calib_path = "../../data/calibrations/"

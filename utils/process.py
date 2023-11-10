@@ -1,4 +1,4 @@
-from detect import *
+from utils.detect import *
 from shutil import copyfile
 import matplotlib.pyplot as plt
 

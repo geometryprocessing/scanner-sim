@@ -1,5 +1,5 @@
-from configuration import *
-from rendering import *
+from simulator.rendering.configuration import *
+from simulator.rendering import *
 from scipy.optimize import curve_fit
 
 
@@ -135,7 +135,7 @@ def analyze_projector_focus(data_path, reference=None, dist_offset_mm=320, cam_r
 
 
 if __name__ == "__main__":
-    mitsuba_path = "/home/yurii/software/mitsuba"
+    mitsuba_path = "/media/vice-oqton/Vice_SSD/01. Projects/01. THEIA/Tools/scanner-sim/mitsuba"
     data_path = mitsuba_path + "/scenes"
     ensure_exists(data_path)
 

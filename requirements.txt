@@ -16,8 +16,8 @@ scikit_learn
 scikit-image
 scikit-build
 open3d
-opencv-python
-opencv_contrib_python
+# opencv-python==4.5.1.48
+# opencv_contrib_python==4.5.1.48
 OpenEXR
 pandas
 Pillow
