@@ -1,0 +1,3 @@
+[submodule "mitsuba"]
+	path = mitsuba
+	url = https://github.com/gromovnik1337/mitsuba.git
