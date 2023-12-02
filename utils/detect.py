@@ -182,7 +182,7 @@ def test(data_path):
 if __name__ == "__main__":
     # data_path = "D:/Scanner/Calibration/camera_intrinsics/data/"
 
-    data_path = "/media/yurii/EXTRA/scanner-sim-data/calibration/accuracy_test/charuco_plane/combined/"
+    data_path = "/home/vida/data/scanner-sim/accuracy_test/charuco_plane/combined/"
     filename = data_path + "blank_0.png"
     detect_single(filename, detect_charuco, draw=True, save=False, plot=True, pre_scale=2, draw_scale=2)
 

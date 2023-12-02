@@ -1,7 +1,7 @@
 import json
 import Imath
 import OpenEXR
-import imageio
+# import imageio
 import scipy
 import numpy as np
 import matplotlib.pyplot as plt
@@ -75,8 +75,8 @@ def explore_dark_frames(path):
         plt.tight_layout()
         plt.savefig(path + str(exp[0]) + " sec.png", dpi=150)
 
-    files = [path + str(exp[0]) + " sec.png" for exp in exposures]
-    imageio.mimsave(path + "dark_frame_noise.gif", [imageio.imread(f) for f in files], duration=1)
+    # files = [path + str(exp[0]) + " sec.png" for exp in exposures]
+    # imageio.mimsave(path + "dark_frame_noise.gif", [imageio.imread(f) for f in files], duration=1)
 
     plt.figure("distributions", (16, 9))
     for i, exp in enumerate(exposures):
@@ -157,8 +157,8 @@ def generate_dark_frames(dark_path):
 
         plot_dark_frame(img, exp, path=full_path, scale=s)
 
-    imageio.mimsave(dark_path + "dark_frames.gif", [imageio.imread(f) for f in frames], duration=1)
-    imageio.mimsave(dark_path + "dark_frame_distributions.gif", [imageio.imread(d) for d in distributions], duration=1)
+    # imageio.mimsave(dark_path + "dark_frames.gif", [imageio.imread(f) for f in frames], duration=1)
+    # imageio.mimsave(dark_path + "dark_frame_distributions.gif", [imageio.imread(d) for d in distributions], duration=1)
 
 
 def load_dark_frames(path):

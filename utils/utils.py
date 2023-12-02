@@ -13,9 +13,9 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.decomposition import PCA
 from scipy.optimize import least_squares
-import meshio
+# import meshio
 import open3d as o3d
-import imageio
+# import imageio
 
 import matplotlib
 matplotlib.use('TkAgg')

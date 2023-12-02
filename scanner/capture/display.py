@@ -2,7 +2,7 @@ import os.path
 import time
 import queue
 import threading
-import imageio
+# import imageio
 import cv2
 import glob
 import json
@@ -330,9 +330,9 @@ if __name__ == "__main__":
                     new_pattern = gen_color((H, W), color=(0, 255, 0))
                     new_pattern[H-260:, :, :] = 0
                 if cmd[:4] == 'load':
-                    new_pattern = imageio.imread(cmd[5:])
+                    new_pattern = cv2.imread(cmd[5:])[:, :, ::-1]
                 if cmd[:4] == 'save':
-                    imageio.imwrite(cmd[5:]+".png", projector.get_pattern())
+                    cv2.imwrite(cmd[5:]+".png", projector.get_pattern()[:, :, ::-1])
                 if cmd == 'exit':
                     break
 

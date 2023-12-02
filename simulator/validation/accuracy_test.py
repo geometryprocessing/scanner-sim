@@ -72,13 +72,13 @@ def simulate_accuracy_test(data_path, mitsuba_path, board_geometry, reuse_patter
     H, W = 1080, 1920
     if not reuse_patterns:
         pattern = np.zeros((H, W, 3), dtype=np.uint8)
-        imageio.imwrite(data_path + "blank_0.png", pattern)
+        cv2.imwrite(data_path + "blank_0.png", pattern[:, :, ::-1])
 
         pattern[...] = 255
-        imageio.imwrite(data_path + "white_0.png", pattern)
+        cv2.imwrite(data_path + "white_0.png", pattern[:, :, ::-1])
 
         pattern = gen_checker((H, W), (90, 60), 100, (9, 18))
-        imageio.imwrite(data_path + "checker_0.png", pattern)
+        cv2.imwrite(data_path + "checker_0.png", pattern[:, :, ::-1])
 
         process_patterns(data_path + "*_0.png", calib_path, verbose=True)
     else:
@@ -86,11 +86,11 @@ def simulate_accuracy_test(data_path, mitsuba_path, board_geometry, reuse_patter
         if verbose:
             print("Restoring pattern:", data_path + "blank_0.png")
         pattern = np.zeros((H * 4, W * 4, 3), dtype=np.uint8)
-        imageio.imwrite(data_path + "blank_0.png", pattern)
+        cv2.imwrite(data_path + "blank_0.png", pattern[:, :, ::-1])
         # process_patterns(data_path + "blank_0.png", calib_path, verbose=True)
 
     copy_to(data_path, calib_path + "../objects/charuco_board/charuco_board.*")
-    configure_object(config, board_geometry, calib_path=calib_path, obj_mat="materials/textured_obj.xml")
+    configure_object(config, board_geometry, calib_path=calib_path, obj_mat="material/textured_obj.xml")
 
     for pattern in ["blank_0.png", "white_0.png", "checker_0.png"]:
         config["pro_pattern_file"] = pattern
@@ -136,7 +136,7 @@ def analyze_accuracy_test(captured_path, rendered_path, camera_calib, board_geom
 
     if better_checker_ref and proj_calib is not None:
         checker_cap["img"] = checker_ref
-        proj_rays = cv2.undistortPoints((checker_cap["obj"][:, :2].astype(np.float) +
+        proj_rays = cv2.undistortPoints((checker_cap["obj"][:, :2].astype(np.float32) +
                                          np.array([160 + 0.5, 190 + 0.5])[None, :]).reshape((-1, 1, 2)),
                                          proj_calib["mtx"], proj_calib["dist"]).reshape((-1, 2))
         proj_rays = np.concatenate([proj_rays, np.ones((proj_rays.shape[0], 1))], axis=1)
@@ -270,18 +270,18 @@ if __name__ == "__main__":
     cam_calib = load_calibration(calib_path + "camera_geometry.json")
     proj_calib = load_calibration(calib_path + "projector_geometry.json")
 
-    captured_path = "/media/yurii/EXTRA/scanner-sim-data/calibration/accuracy_test/charuco_plane/combined/"
-    process_accuracy_test(captured_path, cam_calib, reuse_corners=True)
+    captured_path = "/home/vida/data/scanner-sim/accuracy_test/charuco_plane/combined/"
+    process_accuracy_test(captured_path, cam_calib, reuse_corners=False)
 
     copy_to(valid_path, captured_path + "board_geometry.json")
     board_geometry = load_calibration(valid_path + "board_geometry.json")
 
-    mitsuba_path = "/home/yurii/software/mitsuba/"
+    mitsuba_path = "/home/vida/software/mitsuba/"
     rendered_path = mitsuba_path + "scenes/accuracy_test/"
     ensure_exists(rendered_path)
 
-    # simulate_accuracy_test(rendered_path, mitsuba_path, board_geometry, reuse_patterns=False, cam_samples=768)
-    process_accuracy_test(rendered_path, cam_calib, reuse_corners=True, undistorted=True)
+    simulate_accuracy_test(rendered_path, mitsuba_path, board_geometry, reuse_patterns=False, cam_samples=128)
+    process_accuracy_test(rendered_path, cam_calib, reuse_corners=False, undistorted=True)
 
     analyze_accuracy_test(captured_path, rendered_path, cam_calib, board_geometry, better_checker_ref=True,
                           proj_calib=proj_calib, real_img_ref=True, savefigs=True)

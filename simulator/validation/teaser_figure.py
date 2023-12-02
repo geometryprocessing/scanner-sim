@@ -17,11 +17,11 @@ def simulate_teaser_figure(data_path, mitsuba_path, pawn_geometry, verbose=True,
     pattern[:30, :, :] = 0
     pattern[H - 30:, :, :] = 0
 
-    imageio.imwrite(data_path + "checker.png", pattern)
+    cv2.imwrite(data_path + "checker.png", pattern[:, :, ::-1])
     process_patterns(data_path + "checker.png", calib_path, verbose=True)
 
     copy_to(data_path, valid_path + "pawn.obj")
-    configure_object(config, pawn_geometry, calib_path=calib_path, obj_mat="materials/rough_plastic.xml")
+    configure_object(config, pawn_geometry, calib_path=calib_path, obj_mat="material/rough_plastic.xml")
 
     config["pro_pattern_file"] = "checker.png"
     config["amb_radiance"] = 0.0
@@ -181,13 +181,13 @@ if __name__ == "__main__":
     # from Physical Scans (https://archive.nyu.edu/handle/2451/63306)
     # prepare_captured_teaser_figure("/media/yurii/EXTRA/scanner-sim-data/pawn_30_deg_no_ambient")
 
-    mitsuba_path = "/home/yurii/software/mitsuba/"
+    mitsuba_path = "/home/vida/software/mitsuba/"
     rendered_path = mitsuba_path + "scenes/teaser_figure/"
     ensure_exists(rendered_path)
 
-    # pawn_geometry = load_calibration(valid_path + "pawn_geometry.json")
-    # simulate_teaser_figure(rendered_path, mitsuba_path, pawn_geometry, cam_samples=(256))
-    # copy_to(valid_path + "rendered.exr", rendered_path + "pawn.exr")
+    pawn_geometry = load_calibration(valid_path + "pawn_geometry.json")
+    simulate_teaser_figure(rendered_path, mitsuba_path, pawn_geometry, cam_samples=(256))
+    copy_to(valid_path + "rendered.exr", rendered_path + "pawn.exr")
 
     analyze_teaser_figure(valid_path, crop=True, roi=False, hist=True, save=False)
 

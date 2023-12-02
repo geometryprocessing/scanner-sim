@@ -212,7 +212,7 @@ if __name__ == "__main__":
 
     # data_path = "D:/scanner_sim/calibration/accuracy_test/projector_calib/"
     # data_path = "D:/scanner_sim/calibration/accuracy_test/charuco_plane/combined/"
-    data_path = "/media/yurii/EXTRA/scanner-sim-data/calibration/accuracy_test/charuco_plane/combined/"
+    data_path = "/home/vida/data/scanner-sim/accuracy_test/charuco_plane/combined/"
     process_stage(data_path)
 
     plt.show()
