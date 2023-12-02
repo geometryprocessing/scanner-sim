@@ -1,71 +1,71 @@
 prefix dodo/
-prefix dodo/position_0/
+prefix dodo/position_0.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_30/
+move 30.00
+delay 2.000
+prefix dodo/position_30.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_60/
+move 30.00
+delay 2.000
+prefix dodo/position_60.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_90/
+move 30.00
+delay 2.000
+prefix dodo/position_90.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_120/
+move 30.00
+delay 2.000
+prefix dodo/position_120.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_150/
+move 30.00
+delay 2.000
+prefix dodo/position_150.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_180/
+move 30.00
+delay 2.000
+prefix dodo/position_180.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_210/
+move 30.00
+delay 2.000
+prefix dodo/position_210.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_240/
+move 30.00
+delay 2.000
+prefix dodo/position_240.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_270/
+move 30.00
+delay 2.000
+prefix dodo/position_270.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_300/
+move 30.00
+delay 2.000
+prefix dodo/position_300.00/
 subscript color
 subscript gray
 status
-move 30
-delay 2.000000
-prefix dodo/position_330/
+move 30.00
+delay 2.000
+prefix dodo/position_330.00/
 subscript color
 subscript gray
 subscript mps_32

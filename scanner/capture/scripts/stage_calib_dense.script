@@ -1,379 +1,379 @@
 prefix stage_calib_dense/
-prefix stage_calib_dense/position_0/
+prefix stage_calib_dense/position_0.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_2/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_2.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_4/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_4.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_6/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_6.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_8/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_8.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_10/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_10.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_12/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_12.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_14/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_14.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_16/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_16.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_18/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_18.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_20/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_20.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_22/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_22.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_24/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_24.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_26/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_26.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_28/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_28.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_30/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_30.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_32/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_32.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_34/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_34.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_36/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_36.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_38/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_38.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_40/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_40.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_42/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_42.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_44/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_44.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_46/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_46.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_48/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_48.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_50/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_50.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_52/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_52.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_54/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_54.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_56/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_56.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_58/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_58.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_60/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_60.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_62/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_62.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_64/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_64.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_66/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_66.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_68/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_68.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_70/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_70.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_72/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_72.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_74/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_74.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_76/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_76.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_78/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_78.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_80/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_80.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_82/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_82.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_84/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_84.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_86/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_86.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_88/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_88.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_90/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_90.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_92/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_92.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_94/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_94.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_96/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_96.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_98/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_98.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_100/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_100.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_102/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_102.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_104/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_104.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_106/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_106.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_108/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_108.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_110/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_110.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_112/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_112.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_114/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_114.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_116/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_116.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_118/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_118.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_120/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_120.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_122/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_122.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_124/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_124.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_126/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_126.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_128/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_128.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_130/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_130.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_132/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_132.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_134/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_134.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_136/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_136.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_138/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_138.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_140/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_140.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_142/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_142.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_144/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_144.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_146/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_146.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_148/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_148.00/
 subscript checker_center
 status
-move 2
-delay 2.000000
-prefix stage_calib_dense/position_150/
+move 2.00
+delay 2.000
+prefix stage_calib_dense/position_150.00/
 subscript checker_center
 status

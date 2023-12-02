@@ -1,8 +1,11 @@
+import os.path
 import time
 import queue
 import threading
 import imageio
 import cv2
+import glob
+import json
 import glfw
 import numpy as np
 import matplotlib.pyplot as plt
@@ -220,7 +223,48 @@ def parallel_input():
     return input_queue, input_thread
 
 
+def adjust_patterns(path, calib_file, plot=False):
+    calib = json.load(open(calib_file))
+    polies = [np.array(calib[c]) for c in ["blue", "green", "red"]]
+
+    for file in glob.glob(path + "_ref/*.png"):
+        print(file)
+        img = cv2.imread(file)
+        # print(img)
+
+        if plot:
+            plt.figure("LUTs", (12, 7))
+
+        for i in range(3):
+            pix = np.arange(256)
+            poly = polies[i]
+            a, b, c = poly[0], poly[1], -pix
+            lut = poly[0] * pix * pix + poly[1] * pix + poly[2]
+            lut = np.round(255 * lut / lut[-1]).astype(np.uint8)
+            inv_lut = (-b + np.sqrt(b*b - 4*a*c)) / (2 * a)
+            inv_lut = np.round(255 * inv_lut / inv_lut[-1]).astype(np.uint8)
+
+            img[:, :, i] = inv_lut[img[:, :, i]]
+
+            if plot:
+                print(i, inv_lut)
+                plt.plot(pix, lut, label=str(i))
+                plt.plot(pix, inv_lut, ".-", label="inv_"+str(i))
+
+        if plot:
+            plt.legend()
+            plt.tight_layout()
+
+            plt.show()
+            break
+
+        cv2.imwrite(path + "/" + os.path.basename(file), img)
+
+
 if __name__ == "__main__":
+    # adjust_patterns("./patterns/gradient", "../calibration/projector/response/projector_polies.json")
+    # exit(0)
+
     try:
         projector = Projector()
         input_queue, thr = parallel_input()
@@ -278,10 +322,17 @@ if __name__ == "__main__":
                 if cmd == 'checker b':
                     new_pattern = gen_checker((H, W), (90, 60), 100, (9, 18))
                     new_pattern *= np.array([0, 0, 1], dtype=np.uint8)
+                if cmd == 'checker t':
+                    new_pattern = gen_checker((H, W), (60, 60), 100, (7, 18))
+                    new_pattern *= np.array([0, 1, 0], dtype=np.uint8)
+                    new_pattern[H-260:, :, :] = 0
+                if cmd == 'g t':
+                    new_pattern = gen_color((H, W), color=(0, 255, 0))
+                    new_pattern[H-260:, :, :] = 0
                 if cmd[:4] == 'load':
                     new_pattern = imageio.imread(cmd[5:])
                 if cmd[:4] == 'save':
-                    imageio.imwrite(cmd[5:], projector.get_pattern())
+                    imageio.imwrite(cmd[5:]+".png", projector.get_pattern())
                 if cmd == 'exit':
                     break
 

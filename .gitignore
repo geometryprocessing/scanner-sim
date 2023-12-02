@@ -1,4 +1,5 @@
 .idea
+.picasa*
 old_scanner
 __pycache__
 .ipynb_checkpoints
@@ -8,6 +9,7 @@ data/models/abc_00
 data/models/abc_rand
 data/objects/abc_filter1
 data/objects/abc_filter2
+scanner/capture/patterns/gradient*
 checker_undistorted_gamma.png
 teaser_figure/full*
 teaser_figure/crop*

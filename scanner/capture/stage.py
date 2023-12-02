@@ -86,7 +86,7 @@ class LinearStage:
             raise RuntimeError("Linear stage not homed")
 
         self.ready = False
-        self.send("move %d" % (dist_mm * self.steps_per_mm))
+        self.send("move %d" % int(round(dist_mm * self.steps_per_mm)))
 
         while not self.ready:
             time.sleep(0.001)
@@ -165,17 +165,17 @@ class RotatingStage:
 
 
 if __name__ == "__main__":
-    # stage = LinearStage(port="COM3", debug=True)
-    # stage.home()
-    #
-    # stage.move(5)
+    stage = LinearStage(port="COM3", debug=True)
+    stage.home()
+
+    stage.move(5)
     # stage.move(-5)
-    #
-    # stage.close()
-
-    stage = RotatingStage(port="COM3", debug=True)
-
-    stage.move(30)
-    stage.move(-30)
 
     stage.close()
+
+    # stage = RotatingStage(port="COM3", debug=True)
+    #
+    # stage.move(30)
+    # stage.move(-30)
+    #
+    # stage.close()

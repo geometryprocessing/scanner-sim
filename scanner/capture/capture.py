@@ -134,6 +134,9 @@ class Camera:
             # should help with missing image data but doesn't (just increases delay)
             self.device.tl_stream_nodemap['StreamPacketResendEnable'].value = True
             self.device.tl_stream_nodemap['StreamMaxNumResendRequestsPerImage'].value = 100
+            self.device.tl_stream_nodemap['StreamAutoNegotiatePacketSize'].value = False
+            self.device.nodemap['GevSCPSPacketSize'].value = 9000
+            print("Packet Size:", nm['GevSCPSPacketSize'].value)
         else:
             raise RuntimeError("No open device!")
 
@@ -150,6 +153,7 @@ class Camera:
 
             self.device.start_stream()
             print("\nStarted stream in %.3f sec" % self.now())
+            print("Packet Size:", self.device.nodemap['GevSCPSPacketSize'].value)
         else:
             raise RuntimeError("No open device!")
 

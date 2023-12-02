@@ -1,39 +1,39 @@
 prefix default_multiscan/
-prefix default_multiscan/position_0/
+prefix default_multiscan/position_0.00/
 subscript default_scan
 status
-move 45
-delay 2.000000
-prefix default_multiscan/position_45/
+move 45.00
+delay 2.000
+prefix default_multiscan/position_45.00/
 subscript default_scan
 status
-move 45
-delay 2.000000
-prefix default_multiscan/position_90/
+move 45.00
+delay 2.000
+prefix default_multiscan/position_90.00/
 subscript default_scan
 status
-move 45
-delay 2.000000
-prefix default_multiscan/position_135/
+move 45.00
+delay 2.000
+prefix default_multiscan/position_135.00/
 subscript default_scan
 status
-move 45
-delay 2.000000
-prefix default_multiscan/position_180/
+move 45.00
+delay 2.000
+prefix default_multiscan/position_180.00/
 subscript default_scan
 status
-move 45
-delay 2.000000
-prefix default_multiscan/position_225/
+move 45.00
+delay 2.000
+prefix default_multiscan/position_225.00/
 subscript default_scan
 status
-move 45
-delay 2.000000
-prefix default_multiscan/position_270/
+move 45.00
+delay 2.000
+prefix default_multiscan/position_270.00/
 subscript default_scan
 status
-move 45
-delay 2.000000
-prefix default_multiscan/position_315/
+move 45.00
+delay 2.000
+prefix default_multiscan/position_315.00/
 subscript default_scan
 status

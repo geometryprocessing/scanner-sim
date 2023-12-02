@@ -3,6 +3,8 @@ import glob
 import time
 import json
 import queue
+
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 # from termcolor import colored
@@ -114,25 +116,34 @@ def gen_patterns_script(name, patterns_folder="unknown"):
     # print("Found patterns:", filenames)
 
     with open("scripts/%s.script" % name, "w") as f:
-        f.write("suffix %s\n" % name)
+        # f.write("suffix %s\n" % name)
         for file in filenames:
             file = file.replace("\\", "/")
             f.write("load %s\n" % file)
-            f.write("hdr %s\n" % os.path.basename(file)[:-4])
-        f.write("suffix /\n")
+            # f.write("hdr %s\n" % os.path.basename(file)[:-4])
+            basename = os.path.basename(file)[:-4]
+            if basename == "black":
+                f.write("ldr 2.0 %s\n" % basename)
+                # f.write("exposures 2\n")
+                # f.write("hdr %s\n" % basename)
+                # f.write("exposures 0.1\n")
+            else:
+                f.write("ldr 0.15 %s\n" % basename)
+                # f.write("hdr %s\n" % basename)
+        # f.write("suffix /\n")
         f.write("status\n")
 
 
-def gen_multiscan_script(name, step=10, stops=10, delay=2.0, subscript=None):
+def gen_multiscan_script(name, step=10.0, stops=10, delay=2.0, subscript=None):
     with open("scripts/%s.script" % name, "w") as f:
         f.write("prefix %s/\n" % name)
 
         for i in range(stops):
             if i > 0:
-                f.write("move %d\n" % step)
-                f.write("delay %f\n" % delay)
+                f.write("move %.2f\n" % step)
+                f.write("delay %.3f\n" % delay)
 
-            prefix = "%s/position_%d/" % (name, i*step)
+            prefix = "%s/position_%.2f/" % (name, i*step)
             f.write("prefix %s\n" % prefix)
 
             if subscript:
@@ -173,6 +184,7 @@ if __name__ == "__main__":
 
     gen_response_script("response", step=5)
 
+    gen_patterns_script("gradient", patterns_folder="gradient")
     # gen_patterns_script("color", patterns_folder="color")
     # gen_patterns_script("gray", patterns_folder="gray")
     # gen_patterns_script("mps_16", patterns_folder="mps/16-15")
@@ -194,14 +206,18 @@ if __name__ == "__main__":
     gen_multiscan_script("stage_calib", step=5, stops=23, subscript="checker_center")
     gen_multiscan_script("stage_calib_dense", step=2, stops=76, subscript="checker_center")
     gen_multiscan_script("stage_calib_dense_visible", step=2, stops=56, subscript="checker_center")
+    gen_multiscan_script("stripes", step=5, stops=51, subscript="gradient")
+    gen_multiscan_script("mid_stripes", step=1, stops=251, subscript="gradient")
+    gen_multiscan_script("big_stripes", step=0.5, stops=501, subscript="gradient")
+    gen_multiscan_script("bigger_stripes", step=0.25, stops=1001, subscript="gradient")
     # gen_multiscan_script("material_calib", step=2, stops=76, subscript="material_scan")
     # exit()
 
     stage, camera = None, None
 
-    stage = RotatingStage(port="COM3")
-    # stage = LinearStage(port="COM4")
-    # stage.home(speed_divider=12)  # 1 in/sec translation speed
+    # stage = RotatingStage(port="COM3")
+    stage = LinearStage(port="COM5")
+    stage.home(speed_divider=12)  # 1 in/sec translation speed
 
     camera = Camera()
     camera.open()
@@ -211,17 +227,19 @@ if __name__ == "__main__":
                           "move", "home", "load", "save", "ldr", "hdr", "ldr_count", "hdr_count", "skip", "exposures",
                           "prefix", "suffix", "delay", "script", "subscript", "dump", "status", "exit"]
     hdr_exposures = default_exposures
-    hdr_exposures = [0.0001, 0.00025, 0.0005, 0.001, 0.0025, 0.005, 0.01, 0.0167, 0.025, 0.0333, 0.05, 0.1,
-                     0.25, 0.5, 0.75, 1.0, 1.5, 2.5, 3.5, 5.0, 7.0, 10.0]
+    # hdr_exposures = [0.0001, 0.00025, 0.0005, 0.001, 0.0025, 0.005, 0.01, 0.0167, 0.025, 0.0333, 0.05, 0.1,
+    #                  0.25, 0.5, 0.75, 1.0, 1.5, 2.5, 3.5, 5.0, 7.0, 10.0]
     # hdr_exposures = [0.0167, 0.0333, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
     # hdr_exposures = [0.0167, 0.05, 0.1, 0.25, 0.75, 1.5]
-    # hdr_exposures = [0.0167, 0.0333, 0.05, 0.1, 0.25, 0.75]
-    hdr_exposures = [0.0167, 0.0333, 0.05, 0.1, 0.25, 0.75, 1.5]
-    ldr_exposure = 0.5
+    hdr_exposures = [0.0167, 0.0333, 0.05, 0.1, 0.25, 0.75]
+    # hdr_exposures = [0.0167, 0.0333, 0.05, 0.1, 0.25, 0.75, 1.5]
+    hdr_exposures = [0.1]
+    ldr_exposure = 0.05
 
     ldr, hdr, ldr_name, hdr_name = None, None, None, None
     ldr_count, hdr_count = 0, 0
-    data_path = "D:/scanner_sim/captures/stage_batch_3/"
+    data_path = "D:/fast-scanner-data/"
+    # data_path = "D:/scanner_sim/captures/stage_batch_3/"
     # data_path = "D:/scanner_sim/calibration/accuracy_test/"
     # data_path = "D:/scanner_sim/calibration/projector_response/"
     prefix = "default/"
@@ -272,15 +290,16 @@ if __name__ == "__main__":
                     ldr_name = ldr_name or str(ldr_count)
                     print("Captured LDR \"%s\"" % (prefix + suffix + ldr_name), ldr.result()[1].shape)
                     # print("Captured LDR:", ldr.result()[1].shape)
-                    camera.plot_ldr(save_preview=False)
-                    plt.pause(0.001)
+                    # camera.plot_ldr(save_preview=False)
+                    # plt.pause(0.001)
 
                     if not os.path.exists(data_path + prefix):
                         os.makedirs(data_path + prefix, exist_ok=True)
                     if not os.path.exists(data_path + prefix + suffix):
                         os.makedirs(data_path + prefix + suffix, exist_ok=True)
 
-                    np.save(data_path + prefix + suffix + ldr_name, ldr.result()[1])
+                    # np.save(data_path + prefix + suffix + ldr_name, ldr.result()[1])
+                    cv2.imwrite(data_path + prefix + suffix + ldr_name + ".tiff", ldr.result()[1] * 16)
                     ldr_count += 1
                     ldr = None
 
@@ -329,7 +348,7 @@ if __name__ == "__main__":
 
                 if cmd == 'move' and len(p) > 0:
                     if stage:
-                        dist = safe_int(p[0], 0)
+                        dist = safe_float(p[0], 0.0)
                         if dist:
                             stage.move(dist)
                         else:
@@ -428,7 +447,7 @@ if __name__ == "__main__":
                         hdr_name = None
 
                     camera.time_zero()
-                    hdr = camera.capture_async(hdr_exposures, dark_path="dark_frames/", gamma=default_gamma, plot=False)
+                    hdr = camera.capture_async(hdr_exposures, dark_path="D:/Dropbox/work/scanner-old/capture/dark_frames/", gamma=default_gamma, plot=False)
 
                 if cmd == "ldr_count":
                     if len(p) > 0:
