@@ -1,0 +1,113 @@
+prefix mini_stripes/
+prefix mini_stripes/position_0.00/
+subscript gradient
+process mini_stripes/position_0.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_10.00/
+subscript gradient
+process mini_stripes/position_10.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_20.00/
+subscript gradient
+process mini_stripes/position_20.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_30.00/
+subscript gradient
+process mini_stripes/position_30.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_40.00/
+subscript gradient
+process mini_stripes/position_40.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_50.00/
+subscript gradient
+process mini_stripes/position_50.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_60.00/
+subscript gradient
+process mini_stripes/position_60.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_70.00/
+subscript gradient
+process mini_stripes/position_70.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_80.00/
+subscript gradient
+process mini_stripes/position_80.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_90.00/
+subscript gradient
+process mini_stripes/position_90.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_100.00/
+subscript gradient
+process mini_stripes/position_100.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_110.00/
+subscript gradient
+process mini_stripes/position_110.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_120.00/
+subscript gradient
+process mini_stripes/position_120.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_130.00/
+subscript gradient
+process mini_stripes/position_130.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_140.00/
+subscript gradient
+process mini_stripes/position_140.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_150.00/
+subscript gradient
+process mini_stripes/position_150.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_160.00/
+subscript gradient
+process mini_stripes/position_160.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_170.00/
+subscript gradient
+process mini_stripes/position_170.00/
+status
+move 10.00
+delay 2.000
+prefix mini_stripes/position_180.00/
+subscript gradient
+process mini_stripes/position_180.00/
+status

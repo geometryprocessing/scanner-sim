@@ -262,8 +262,8 @@ def adjust_patterns(path, calib_file, plot=False):
 
 
 if __name__ == "__main__":
-    # adjust_patterns("./patterns/gradient", "../calibration/projector/response/projector_polies.json")
-    # exit(0)
+    adjust_patterns("./patterns/gradient", "../../data/calibrations/projector/response/projector_polies.json")
+    exit(0)
 
     try:
         projector = Projector()
@@ -323,12 +323,14 @@ if __name__ == "__main__":
                     new_pattern = gen_checker((H, W), (90, 60), 100, (9, 18))
                     new_pattern *= np.array([0, 0, 1], dtype=np.uint8)
                 if cmd == 'checker t':
-                    new_pattern = gen_checker((H, W), (60, 60), 100, (7, 18))
+                    # new_pattern = gen_checker((H, W), (60, 160), 100, (7, 16))
+                    new_pattern = gen_checker((H, W), (40, 180), 80, (9, 20))
                     new_pattern *= np.array([0, 1, 0], dtype=np.uint8)
-                    new_pattern[H-260:, :, :] = 0
+                    # new_pattern[H-260:, :, :] = 0
+                    new_pattern[H-280:, :, :] = 0
                 if cmd == 'g t':
                     new_pattern = gen_color((H, W), color=(0, 255, 0))
-                    new_pattern[H-260:, :, :] = 0
+                    new_pattern[H-280:, :, :] = 0
                 if cmd[:4] == 'load':
                     new_pattern = cv2.imread(cmd[5:])[:, :, ::-1]
                 if cmd[:4] == 'save':

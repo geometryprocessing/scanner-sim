@@ -8,10 +8,12 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 # from termcolor import colored
-# plt.switch_backend('agg')
+plt.switch_backend('agg')
 from display import *
 from capture import *
 from stage import *
+from utils import *
+from correct import *
 
 
 def gen_calibration_script(filename, step=5, stops=10, delay=2.0, color=False, dots=False, right=None, left=None, name=None):
@@ -123,12 +125,12 @@ def gen_patterns_script(name, patterns_folder="unknown"):
             # f.write("hdr %s\n" % os.path.basename(file)[:-4])
             basename = os.path.basename(file)[:-4]
             if basename == "black":
-                f.write("ldr 2.0 %s\n" % basename)
+                f.write("ldr 2.5 %s\n" % basename)
                 # f.write("exposures 2\n")
                 # f.write("hdr %s\n" % basename)
                 # f.write("exposures 0.1\n")
             else:
-                f.write("ldr 0.15 %s\n" % basename)
+                f.write("ldr 0.25 %s\n" % basename)
                 # f.write("hdr %s\n" % basename)
         # f.write("suffix /\n")
         f.write("status\n")
@@ -148,6 +150,7 @@ def gen_multiscan_script(name, step=10.0, stops=10, delay=2.0, subscript=None):
 
             if subscript:
                 f.write("subscript %s\n" % subscript)
+                f.write("process %s\n" % prefix)
             else:
                 f.write("subscript color\n")
                 f.write("subscript gray\n")
@@ -172,6 +175,20 @@ def safe_float(x, default):
     except ValueError:
         print((Red + "%s cannot be converted to float. Using default value %f instead" + Reset) % (x, default))
         return default
+
+
+patterns_cache = {}
+
+
+def preload_patterns(path):
+    files = glob.glob(path)
+    for file in files:
+        file = file.replace("\\", "/")
+        file = file.replace("//", "/")
+        if file in patterns_cache.keys():
+            print("Pattern", file, "already loaded!")
+        else:
+            patterns_cache[file] = cv2.imread(file)[:, :, ::-1]
 
 
 if __name__ == "__main__":
@@ -201,15 +218,16 @@ if __name__ == "__main__":
 
     step = 30
     for name in ["complete_multiscan", "pawn", "dodo", "shapes", "rook"]:
-        gen_multiscan_script(name, step=step, stops=360//step)
+        gen_multiscan_script(name, step=step, stops=360//step, delay=2.0)
 
-    gen_multiscan_script("stage_calib", step=5, stops=23, subscript="checker_center")
-    gen_multiscan_script("stage_calib_dense", step=2, stops=76, subscript="checker_center")
-    gen_multiscan_script("stage_calib_dense_visible", step=2, stops=56, subscript="checker_center")
-    gen_multiscan_script("stripes", step=5, stops=51, subscript="gradient")
-    gen_multiscan_script("mid_stripes", step=1, stops=251, subscript="gradient")
-    gen_multiscan_script("big_stripes", step=0.5, stops=501, subscript="gradient")
-    gen_multiscan_script("bigger_stripes", step=0.25, stops=1001, subscript="gradient")
+    gen_multiscan_script("stage_calib", step=5, stops=23, delay=2.0, subscript="checker_center")
+    gen_multiscan_script("stage_calib_dense", step=2, stops=76, delay=2.0, subscript="checker_center")
+    gen_multiscan_script("stage_calib_dense_visible", step=2, delay=2.0, stops=56, subscript="checker_center")
+    gen_multiscan_script("mini_stripes", step=10, stops=19, subscript="gradient")
+    gen_multiscan_script("stripes", step=4, stops=46, subscript="gradient")
+    gen_multiscan_script("mid_stripes", step=1, stops=181, subscript="gradient")
+    gen_multiscan_script("big_stripes", step=0.4, stops=451, subscript="gradient")
+    gen_multiscan_script("bigger_stripes", step=0.2, stops=901, subscript="gradient")
     # gen_multiscan_script("material_calib", step=2, stops=76, subscript="material_scan")
     # exit()
 
@@ -223,7 +241,12 @@ if __name__ == "__main__":
     camera.open()
     camera.init(None, "Mono12")
 
-    supported_commands = ["blank", "stripes", "patterns", "dots", "checker", "color", "gray", "plot",
+    preload_patterns("patterns/gradient/*")
+    print("\n%d cached patterns:" % len(patterns_cache.keys()), patterns_cache.keys())
+    corr = Corrector()
+    dark_path = "D:/Dropbox/work/scanner-old/capture/dark_frames/"
+
+    supported_commands = ["blank", "stripes", "patterns", "dots", "checker", "color", "gray", "plot", "process",
                           "move", "home", "load", "save", "ldr", "hdr", "ldr_count", "hdr_count", "skip", "exposures",
                           "prefix", "suffix", "delay", "script", "subscript", "dump", "status", "exit"]
     hdr_exposures = default_exposures
@@ -299,7 +322,11 @@ if __name__ == "__main__":
                         os.makedirs(data_path + prefix + suffix, exist_ok=True)
 
                     # np.save(data_path + prefix + suffix + ldr_name, ldr.result()[1])
-                    cv2.imwrite(data_path + prefix + suffix + ldr_name + ".tiff", ldr.result()[1] * 16)
+                    filename = data_path + prefix + suffix + ldr_name + ".tiff"
+                    # cv2.imwrite(filename, ldr.result()[1] * 16)
+                    if not str(ldr_exposure) in corr.dark_frames.keys():
+                        corr.dark_frames[str(ldr_exposure)] = np.load(dark_path + "dark_frame_" + str(ldr_exposure) + "_sec.npy")
+                    corr.correct_and_save(ldr.result()[1], ldr_exposure, filename)
                     ldr_count += 1
                     ldr = None
 
@@ -324,12 +351,19 @@ if __name__ == "__main__":
                     plt.pause(0.001)
 
                 if cmd == 'load' and len(p) > 0:
-                    new_pattern = imageio.imread(p[0])
+                    if p[0] in patterns_cache.keys():
+                        new_pattern = patterns_cache[p[0]]
+                    else:
+                        new_pattern = cv2.imread(p[0])[:, :, ::-1]
+                    # new_pattern = np.zeros((H, W, 3))
                     if len(new_pattern.shape) == 2:
                         new_pattern = np.repeat(new_pattern[:, :, None], 3, axis=2)
 
                 if cmd == 'save' and len(p) > 0:
-                    imageio.imwrite(p[0], projector.get_pattern())
+                    cv2.imwrite(p[0], projector.get_pattern()[:, :, ::-1])
+
+                if cmd == 'process' and len(p) > 0:
+                    corr.process(data_path + p[0] + "/", blank_name=p[1] if len(p) > 1 else "black.tiff")
 
                 if cmd == 'patterns' and len(p) > 0:
                     folder = p[0]
@@ -447,7 +481,7 @@ if __name__ == "__main__":
                         hdr_name = None
 
                     camera.time_zero()
-                    hdr = camera.capture_async(hdr_exposures, dark_path="D:/Dropbox/work/scanner-old/capture/dark_frames/", gamma=default_gamma, plot=False)
+                    hdr = camera.capture_async(hdr_exposures, dark_path=dark_path, gamma=default_gamma, plot=False)
 
                 if cmd == "ldr_count":
                     if len(p) > 0:
@@ -558,7 +592,7 @@ if __name__ == "__main__":
 
             projector.update(new_pattern)
 
-            for i in range(40):
+            for i in range(5):
                 if plt.get_fignums():
                     plt.gcf().canvas.start_event_loop(0.001)
                 else:

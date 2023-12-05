@@ -1,254 +1,275 @@
 prefix stripes/
 prefix stripes/position_0.00/
 subscript gradient
+process stripes/position_0.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_5.00/
+prefix stripes/position_4.00/
 subscript gradient
+process stripes/position_4.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_10.00/
+prefix stripes/position_8.00/
 subscript gradient
+process stripes/position_8.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_15.00/
+prefix stripes/position_12.00/
 subscript gradient
+process stripes/position_12.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_16.00/
+subscript gradient
+process stripes/position_16.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_20.00/
 subscript gradient
+process stripes/position_20.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_25.00/
+prefix stripes/position_24.00/
 subscript gradient
+process stripes/position_24.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_30.00/
+prefix stripes/position_28.00/
 subscript gradient
+process stripes/position_28.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_35.00/
+prefix stripes/position_32.00/
 subscript gradient
+process stripes/position_32.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_36.00/
+subscript gradient
+process stripes/position_36.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_40.00/
 subscript gradient
+process stripes/position_40.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_45.00/
+prefix stripes/position_44.00/
 subscript gradient
+process stripes/position_44.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_50.00/
+prefix stripes/position_48.00/
 subscript gradient
+process stripes/position_48.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_55.00/
+prefix stripes/position_52.00/
 subscript gradient
+process stripes/position_52.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_56.00/
+subscript gradient
+process stripes/position_56.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_60.00/
 subscript gradient
+process stripes/position_60.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_65.00/
+prefix stripes/position_64.00/
 subscript gradient
+process stripes/position_64.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_70.00/
+prefix stripes/position_68.00/
 subscript gradient
+process stripes/position_68.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_75.00/
+prefix stripes/position_72.00/
 subscript gradient
+process stripes/position_72.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_76.00/
+subscript gradient
+process stripes/position_76.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_80.00/
 subscript gradient
+process stripes/position_80.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_85.00/
+prefix stripes/position_84.00/
 subscript gradient
+process stripes/position_84.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_90.00/
+prefix stripes/position_88.00/
 subscript gradient
+process stripes/position_88.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_95.00/
+prefix stripes/position_92.00/
 subscript gradient
+process stripes/position_92.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_96.00/
+subscript gradient
+process stripes/position_96.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_100.00/
 subscript gradient
+process stripes/position_100.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_105.00/
+prefix stripes/position_104.00/
 subscript gradient
+process stripes/position_104.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_110.00/
+prefix stripes/position_108.00/
 subscript gradient
+process stripes/position_108.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_115.00/
+prefix stripes/position_112.00/
 subscript gradient
+process stripes/position_112.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_116.00/
+subscript gradient
+process stripes/position_116.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_120.00/
 subscript gradient
+process stripes/position_120.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_125.00/
+prefix stripes/position_124.00/
 subscript gradient
+process stripes/position_124.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_130.00/
+prefix stripes/position_128.00/
 subscript gradient
+process stripes/position_128.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_135.00/
+prefix stripes/position_132.00/
 subscript gradient
+process stripes/position_132.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_136.00/
+subscript gradient
+process stripes/position_136.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_140.00/
 subscript gradient
+process stripes/position_140.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_145.00/
+prefix stripes/position_144.00/
 subscript gradient
+process stripes/position_144.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_150.00/
+prefix stripes/position_148.00/
 subscript gradient
+process stripes/position_148.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_155.00/
+prefix stripes/position_152.00/
 subscript gradient
+process stripes/position_152.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_156.00/
+subscript gradient
+process stripes/position_156.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_160.00/
 subscript gradient
+process stripes/position_160.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_165.00/
+prefix stripes/position_164.00/
 subscript gradient
+process stripes/position_164.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_170.00/
+prefix stripes/position_168.00/
 subscript gradient
+process stripes/position_168.00/
 status
-move 5.00
+move 4.00
 delay 2.000
-prefix stripes/position_175.00/
+prefix stripes/position_172.00/
 subscript gradient
+process stripes/position_172.00/
 status
-move 5.00
+move 4.00
+delay 2.000
+prefix stripes/position_176.00/
+subscript gradient
+process stripes/position_176.00/
+status
+move 4.00
 delay 2.000
 prefix stripes/position_180.00/
 subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_185.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_190.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_195.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_200.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_205.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_210.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_215.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_220.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_225.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_230.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_235.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_240.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_245.00/
-subscript gradient
-status
-move 5.00
-delay 2.000
-prefix stripes/position_250.00/
-subscript gradient
+process stripes/position_180.00/
 status

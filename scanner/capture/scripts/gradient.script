@@ -1,1 +1,31 @@
+load patterns/gradient/black.png
+ldr 2.5 black
+load patterns/gradient/checker.png
+ldr 0.25 checker
+load patterns/gradient/green.png
+ldr 0.25 green
+load patterns/gradient/half_b.png
+ldr 0.25 half_b
+load patterns/gradient/half_g.png
+ldr 0.25 half_g
+load patterns/gradient/half_plus_b.png
+ldr 0.25 half_plus_b
+load patterns/gradient/half_plus_g.png
+ldr 0.25 half_plus_g
+load patterns/gradient/half_plus_r.png
+ldr 0.25 half_plus_r
+load patterns/gradient/half_r.png
+ldr 0.25 half_r
+load patterns/gradient/inv_b.png
+ldr 0.25 inv_b
+load patterns/gradient/inv_g.png
+ldr 0.25 inv_g
+load patterns/gradient/inv_r.png
+ldr 0.25 inv_r
+load patterns/gradient/ref_b.png
+ldr 0.25 ref_b
+load patterns/gradient/ref_g.png
+ldr 0.25 ref_g
+load patterns/gradient/ref_r.png
+ldr 0.25 ref_r
 status

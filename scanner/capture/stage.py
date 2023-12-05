@@ -165,10 +165,10 @@ class RotatingStage:
 
 
 if __name__ == "__main__":
-    stage = LinearStage(port="COM3", debug=True)
+    stage = LinearStage(port="COM5", debug=True)
     stage.home()
 
-    stage.move(5)
+    stage.move(50)
     # stage.move(-5)
 
     stage.close()

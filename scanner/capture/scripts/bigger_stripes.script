@@ -1,5004 +1,5405 @@
 prefix bigger_stripes/
 prefix bigger_stripes/position_0.00/
 subscript gradient
+process bigger_stripes/position_0.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_0.25/
+prefix bigger_stripes/position_0.20/
 subscript gradient
+process bigger_stripes/position_0.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_0.50/
+prefix bigger_stripes/position_0.40/
 subscript gradient
+process bigger_stripes/position_0.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_0.75/
+prefix bigger_stripes/position_0.60/
 subscript gradient
+process bigger_stripes/position_0.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_0.80/
+subscript gradient
+process bigger_stripes/position_0.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_1.00/
 subscript gradient
+process bigger_stripes/position_1.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_1.25/
+prefix bigger_stripes/position_1.20/
 subscript gradient
+process bigger_stripes/position_1.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_1.50/
+prefix bigger_stripes/position_1.40/
 subscript gradient
+process bigger_stripes/position_1.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_1.75/
+prefix bigger_stripes/position_1.60/
 subscript gradient
+process bigger_stripes/position_1.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_1.80/
+subscript gradient
+process bigger_stripes/position_1.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_2.00/
 subscript gradient
+process bigger_stripes/position_2.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_2.25/
+prefix bigger_stripes/position_2.20/
 subscript gradient
+process bigger_stripes/position_2.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_2.50/
+prefix bigger_stripes/position_2.40/
 subscript gradient
+process bigger_stripes/position_2.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_2.75/
+prefix bigger_stripes/position_2.60/
 subscript gradient
+process bigger_stripes/position_2.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_2.80/
+subscript gradient
+process bigger_stripes/position_2.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_3.00/
 subscript gradient
+process bigger_stripes/position_3.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_3.25/
+prefix bigger_stripes/position_3.20/
 subscript gradient
+process bigger_stripes/position_3.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_3.50/
+prefix bigger_stripes/position_3.40/
 subscript gradient
+process bigger_stripes/position_3.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_3.75/
+prefix bigger_stripes/position_3.60/
 subscript gradient
+process bigger_stripes/position_3.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_3.80/
+subscript gradient
+process bigger_stripes/position_3.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_4.00/
 subscript gradient
+process bigger_stripes/position_4.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_4.25/
+prefix bigger_stripes/position_4.20/
 subscript gradient
+process bigger_stripes/position_4.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_4.50/
+prefix bigger_stripes/position_4.40/
 subscript gradient
+process bigger_stripes/position_4.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_4.75/
+prefix bigger_stripes/position_4.60/
 subscript gradient
+process bigger_stripes/position_4.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_4.80/
+subscript gradient
+process bigger_stripes/position_4.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_5.00/
 subscript gradient
+process bigger_stripes/position_5.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_5.25/
+prefix bigger_stripes/position_5.20/
 subscript gradient
+process bigger_stripes/position_5.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_5.50/
+prefix bigger_stripes/position_5.40/
 subscript gradient
+process bigger_stripes/position_5.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_5.75/
+prefix bigger_stripes/position_5.60/
 subscript gradient
+process bigger_stripes/position_5.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_5.80/
+subscript gradient
+process bigger_stripes/position_5.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_6.00/
 subscript gradient
+process bigger_stripes/position_6.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_6.25/
+prefix bigger_stripes/position_6.20/
 subscript gradient
+process bigger_stripes/position_6.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_6.50/
+prefix bigger_stripes/position_6.40/
 subscript gradient
+process bigger_stripes/position_6.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_6.75/
+prefix bigger_stripes/position_6.60/
 subscript gradient
+process bigger_stripes/position_6.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_6.80/
+subscript gradient
+process bigger_stripes/position_6.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_7.00/
 subscript gradient
+process bigger_stripes/position_7.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_7.25/
+prefix bigger_stripes/position_7.20/
 subscript gradient
+process bigger_stripes/position_7.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_7.50/
+prefix bigger_stripes/position_7.40/
 subscript gradient
+process bigger_stripes/position_7.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_7.75/
+prefix bigger_stripes/position_7.60/
 subscript gradient
+process bigger_stripes/position_7.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_7.80/
+subscript gradient
+process bigger_stripes/position_7.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_8.00/
 subscript gradient
+process bigger_stripes/position_8.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_8.25/
+prefix bigger_stripes/position_8.20/
 subscript gradient
+process bigger_stripes/position_8.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_8.50/
+prefix bigger_stripes/position_8.40/
 subscript gradient
+process bigger_stripes/position_8.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_8.75/
+prefix bigger_stripes/position_8.60/
 subscript gradient
+process bigger_stripes/position_8.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_8.80/
+subscript gradient
+process bigger_stripes/position_8.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_9.00/
 subscript gradient
+process bigger_stripes/position_9.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_9.25/
+prefix bigger_stripes/position_9.20/
 subscript gradient
+process bigger_stripes/position_9.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_9.50/
+prefix bigger_stripes/position_9.40/
 subscript gradient
+process bigger_stripes/position_9.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_9.75/
+prefix bigger_stripes/position_9.60/
 subscript gradient
+process bigger_stripes/position_9.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_9.80/
+subscript gradient
+process bigger_stripes/position_9.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_10.00/
 subscript gradient
+process bigger_stripes/position_10.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_10.25/
+prefix bigger_stripes/position_10.20/
 subscript gradient
+process bigger_stripes/position_10.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_10.50/
+prefix bigger_stripes/position_10.40/
 subscript gradient
+process bigger_stripes/position_10.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_10.75/
+prefix bigger_stripes/position_10.60/
 subscript gradient
+process bigger_stripes/position_10.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_10.80/
+subscript gradient
+process bigger_stripes/position_10.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_11.00/
 subscript gradient
+process bigger_stripes/position_11.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_11.25/
+prefix bigger_stripes/position_11.20/
 subscript gradient
+process bigger_stripes/position_11.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_11.50/
+prefix bigger_stripes/position_11.40/
 subscript gradient
+process bigger_stripes/position_11.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_11.75/
+prefix bigger_stripes/position_11.60/
 subscript gradient
+process bigger_stripes/position_11.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_11.80/
+subscript gradient
+process bigger_stripes/position_11.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_12.00/
 subscript gradient
+process bigger_stripes/position_12.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_12.25/
+prefix bigger_stripes/position_12.20/
 subscript gradient
+process bigger_stripes/position_12.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_12.50/
+prefix bigger_stripes/position_12.40/
 subscript gradient
+process bigger_stripes/position_12.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_12.75/
+prefix bigger_stripes/position_12.60/
 subscript gradient
+process bigger_stripes/position_12.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_12.80/
+subscript gradient
+process bigger_stripes/position_12.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_13.00/
 subscript gradient
+process bigger_stripes/position_13.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_13.25/
+prefix bigger_stripes/position_13.20/
 subscript gradient
+process bigger_stripes/position_13.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_13.50/
+prefix bigger_stripes/position_13.40/
 subscript gradient
+process bigger_stripes/position_13.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_13.75/
+prefix bigger_stripes/position_13.60/
 subscript gradient
+process bigger_stripes/position_13.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_13.80/
+subscript gradient
+process bigger_stripes/position_13.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_14.00/
 subscript gradient
+process bigger_stripes/position_14.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_14.25/
+prefix bigger_stripes/position_14.20/
 subscript gradient
+process bigger_stripes/position_14.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_14.50/
+prefix bigger_stripes/position_14.40/
 subscript gradient
+process bigger_stripes/position_14.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_14.75/
+prefix bigger_stripes/position_14.60/
 subscript gradient
+process bigger_stripes/position_14.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_14.80/
+subscript gradient
+process bigger_stripes/position_14.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_15.00/
 subscript gradient
+process bigger_stripes/position_15.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_15.25/
+prefix bigger_stripes/position_15.20/
 subscript gradient
+process bigger_stripes/position_15.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_15.50/
+prefix bigger_stripes/position_15.40/
 subscript gradient
+process bigger_stripes/position_15.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_15.75/
+prefix bigger_stripes/position_15.60/
 subscript gradient
+process bigger_stripes/position_15.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_15.80/
+subscript gradient
+process bigger_stripes/position_15.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_16.00/
 subscript gradient
+process bigger_stripes/position_16.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_16.25/
+prefix bigger_stripes/position_16.20/
 subscript gradient
+process bigger_stripes/position_16.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_16.50/
+prefix bigger_stripes/position_16.40/
 subscript gradient
+process bigger_stripes/position_16.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_16.75/
+prefix bigger_stripes/position_16.60/
 subscript gradient
+process bigger_stripes/position_16.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_16.80/
+subscript gradient
+process bigger_stripes/position_16.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_17.00/
 subscript gradient
+process bigger_stripes/position_17.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_17.25/
+prefix bigger_stripes/position_17.20/
 subscript gradient
+process bigger_stripes/position_17.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_17.50/
+prefix bigger_stripes/position_17.40/
 subscript gradient
+process bigger_stripes/position_17.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_17.75/
+prefix bigger_stripes/position_17.60/
 subscript gradient
+process bigger_stripes/position_17.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_17.80/
+subscript gradient
+process bigger_stripes/position_17.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_18.00/
 subscript gradient
+process bigger_stripes/position_18.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_18.25/
+prefix bigger_stripes/position_18.20/
 subscript gradient
+process bigger_stripes/position_18.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_18.50/
+prefix bigger_stripes/position_18.40/
 subscript gradient
+process bigger_stripes/position_18.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_18.75/
+prefix bigger_stripes/position_18.60/
 subscript gradient
+process bigger_stripes/position_18.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_18.80/
+subscript gradient
+process bigger_stripes/position_18.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_19.00/
 subscript gradient
+process bigger_stripes/position_19.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_19.25/
+prefix bigger_stripes/position_19.20/
 subscript gradient
+process bigger_stripes/position_19.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_19.50/
+prefix bigger_stripes/position_19.40/
 subscript gradient
+process bigger_stripes/position_19.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_19.75/
+prefix bigger_stripes/position_19.60/
 subscript gradient
+process bigger_stripes/position_19.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_19.80/
+subscript gradient
+process bigger_stripes/position_19.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_20.00/
 subscript gradient
+process bigger_stripes/position_20.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_20.25/
+prefix bigger_stripes/position_20.20/
 subscript gradient
+process bigger_stripes/position_20.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_20.50/
+prefix bigger_stripes/position_20.40/
 subscript gradient
+process bigger_stripes/position_20.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_20.75/
+prefix bigger_stripes/position_20.60/
 subscript gradient
+process bigger_stripes/position_20.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_20.80/
+subscript gradient
+process bigger_stripes/position_20.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_21.00/
 subscript gradient
+process bigger_stripes/position_21.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_21.25/
+prefix bigger_stripes/position_21.20/
 subscript gradient
+process bigger_stripes/position_21.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_21.50/
+prefix bigger_stripes/position_21.40/
 subscript gradient
+process bigger_stripes/position_21.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_21.75/
+prefix bigger_stripes/position_21.60/
 subscript gradient
+process bigger_stripes/position_21.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_21.80/
+subscript gradient
+process bigger_stripes/position_21.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_22.00/
 subscript gradient
+process bigger_stripes/position_22.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_22.25/
+prefix bigger_stripes/position_22.20/
 subscript gradient
+process bigger_stripes/position_22.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_22.50/
+prefix bigger_stripes/position_22.40/
 subscript gradient
+process bigger_stripes/position_22.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_22.75/
+prefix bigger_stripes/position_22.60/
 subscript gradient
+process bigger_stripes/position_22.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_22.80/
+subscript gradient
+process bigger_stripes/position_22.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_23.00/
 subscript gradient
+process bigger_stripes/position_23.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_23.25/
+prefix bigger_stripes/position_23.20/
 subscript gradient
+process bigger_stripes/position_23.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_23.50/
+prefix bigger_stripes/position_23.40/
 subscript gradient
+process bigger_stripes/position_23.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_23.75/
+prefix bigger_stripes/position_23.60/
 subscript gradient
+process bigger_stripes/position_23.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_23.80/
+subscript gradient
+process bigger_stripes/position_23.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_24.00/
 subscript gradient
+process bigger_stripes/position_24.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_24.25/
+prefix bigger_stripes/position_24.20/
 subscript gradient
+process bigger_stripes/position_24.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_24.50/
+prefix bigger_stripes/position_24.40/
 subscript gradient
+process bigger_stripes/position_24.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_24.75/
+prefix bigger_stripes/position_24.60/
 subscript gradient
+process bigger_stripes/position_24.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_24.80/
+subscript gradient
+process bigger_stripes/position_24.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_25.00/
 subscript gradient
+process bigger_stripes/position_25.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_25.25/
+prefix bigger_stripes/position_25.20/
 subscript gradient
+process bigger_stripes/position_25.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_25.50/
+prefix bigger_stripes/position_25.40/
 subscript gradient
+process bigger_stripes/position_25.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_25.75/
+prefix bigger_stripes/position_25.60/
 subscript gradient
+process bigger_stripes/position_25.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_25.80/
+subscript gradient
+process bigger_stripes/position_25.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_26.00/
 subscript gradient
+process bigger_stripes/position_26.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_26.25/
+prefix bigger_stripes/position_26.20/
 subscript gradient
+process bigger_stripes/position_26.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_26.50/
+prefix bigger_stripes/position_26.40/
 subscript gradient
+process bigger_stripes/position_26.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_26.75/
+prefix bigger_stripes/position_26.60/
 subscript gradient
+process bigger_stripes/position_26.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_26.80/
+subscript gradient
+process bigger_stripes/position_26.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_27.00/
 subscript gradient
+process bigger_stripes/position_27.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_27.25/
+prefix bigger_stripes/position_27.20/
 subscript gradient
+process bigger_stripes/position_27.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_27.50/
+prefix bigger_stripes/position_27.40/
 subscript gradient
+process bigger_stripes/position_27.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_27.75/
+prefix bigger_stripes/position_27.60/
 subscript gradient
+process bigger_stripes/position_27.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_27.80/
+subscript gradient
+process bigger_stripes/position_27.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_28.00/
 subscript gradient
+process bigger_stripes/position_28.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_28.25/
+prefix bigger_stripes/position_28.20/
 subscript gradient
+process bigger_stripes/position_28.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_28.50/
+prefix bigger_stripes/position_28.40/
 subscript gradient
+process bigger_stripes/position_28.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_28.75/
+prefix bigger_stripes/position_28.60/
 subscript gradient
+process bigger_stripes/position_28.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_28.80/
+subscript gradient
+process bigger_stripes/position_28.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_29.00/
 subscript gradient
+process bigger_stripes/position_29.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_29.25/
+prefix bigger_stripes/position_29.20/
 subscript gradient
+process bigger_stripes/position_29.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_29.50/
+prefix bigger_stripes/position_29.40/
 subscript gradient
+process bigger_stripes/position_29.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_29.75/
+prefix bigger_stripes/position_29.60/
 subscript gradient
+process bigger_stripes/position_29.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_29.80/
+subscript gradient
+process bigger_stripes/position_29.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_30.00/
 subscript gradient
+process bigger_stripes/position_30.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_30.25/
+prefix bigger_stripes/position_30.20/
 subscript gradient
+process bigger_stripes/position_30.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_30.50/
+prefix bigger_stripes/position_30.40/
 subscript gradient
+process bigger_stripes/position_30.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_30.75/
+prefix bigger_stripes/position_30.60/
 subscript gradient
+process bigger_stripes/position_30.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_30.80/
+subscript gradient
+process bigger_stripes/position_30.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_31.00/
 subscript gradient
+process bigger_stripes/position_31.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_31.25/
+prefix bigger_stripes/position_31.20/
 subscript gradient
+process bigger_stripes/position_31.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_31.50/
+prefix bigger_stripes/position_31.40/
 subscript gradient
+process bigger_stripes/position_31.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_31.75/
+prefix bigger_stripes/position_31.60/
 subscript gradient
+process bigger_stripes/position_31.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_31.80/
+subscript gradient
+process bigger_stripes/position_31.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_32.00/
 subscript gradient
+process bigger_stripes/position_32.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_32.25/
+prefix bigger_stripes/position_32.20/
 subscript gradient
+process bigger_stripes/position_32.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_32.50/
+prefix bigger_stripes/position_32.40/
 subscript gradient
+process bigger_stripes/position_32.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_32.75/
+prefix bigger_stripes/position_32.60/
 subscript gradient
+process bigger_stripes/position_32.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_32.80/
+subscript gradient
+process bigger_stripes/position_32.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_33.00/
 subscript gradient
+process bigger_stripes/position_33.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_33.25/
+prefix bigger_stripes/position_33.20/
 subscript gradient
+process bigger_stripes/position_33.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_33.50/
+prefix bigger_stripes/position_33.40/
 subscript gradient
+process bigger_stripes/position_33.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_33.75/
+prefix bigger_stripes/position_33.60/
 subscript gradient
+process bigger_stripes/position_33.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_33.80/
+subscript gradient
+process bigger_stripes/position_33.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_34.00/
 subscript gradient
+process bigger_stripes/position_34.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_34.25/
+prefix bigger_stripes/position_34.20/
 subscript gradient
+process bigger_stripes/position_34.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_34.50/
+prefix bigger_stripes/position_34.40/
 subscript gradient
+process bigger_stripes/position_34.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_34.75/
+prefix bigger_stripes/position_34.60/
 subscript gradient
+process bigger_stripes/position_34.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_34.80/
+subscript gradient
+process bigger_stripes/position_34.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_35.00/
 subscript gradient
+process bigger_stripes/position_35.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_35.25/
+prefix bigger_stripes/position_35.20/
 subscript gradient
+process bigger_stripes/position_35.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_35.50/
+prefix bigger_stripes/position_35.40/
 subscript gradient
+process bigger_stripes/position_35.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_35.75/
+prefix bigger_stripes/position_35.60/
 subscript gradient
+process bigger_stripes/position_35.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_35.80/
+subscript gradient
+process bigger_stripes/position_35.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_36.00/
 subscript gradient
+process bigger_stripes/position_36.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_36.25/
+prefix bigger_stripes/position_36.20/
 subscript gradient
+process bigger_stripes/position_36.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_36.50/
+prefix bigger_stripes/position_36.40/
 subscript gradient
+process bigger_stripes/position_36.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_36.75/
+prefix bigger_stripes/position_36.60/
 subscript gradient
+process bigger_stripes/position_36.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_36.80/
+subscript gradient
+process bigger_stripes/position_36.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_37.00/
 subscript gradient
+process bigger_stripes/position_37.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_37.25/
+prefix bigger_stripes/position_37.20/
 subscript gradient
+process bigger_stripes/position_37.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_37.50/
+prefix bigger_stripes/position_37.40/
 subscript gradient
+process bigger_stripes/position_37.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_37.75/
+prefix bigger_stripes/position_37.60/
 subscript gradient
+process bigger_stripes/position_37.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_37.80/
+subscript gradient
+process bigger_stripes/position_37.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_38.00/
 subscript gradient
+process bigger_stripes/position_38.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_38.25/
+prefix bigger_stripes/position_38.20/
 subscript gradient
+process bigger_stripes/position_38.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_38.50/
+prefix bigger_stripes/position_38.40/
 subscript gradient
+process bigger_stripes/position_38.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_38.75/
+prefix bigger_stripes/position_38.60/
 subscript gradient
+process bigger_stripes/position_38.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_38.80/
+subscript gradient
+process bigger_stripes/position_38.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_39.00/
 subscript gradient
+process bigger_stripes/position_39.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_39.25/
+prefix bigger_stripes/position_39.20/
 subscript gradient
+process bigger_stripes/position_39.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_39.50/
+prefix bigger_stripes/position_39.40/
 subscript gradient
+process bigger_stripes/position_39.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_39.75/
+prefix bigger_stripes/position_39.60/
 subscript gradient
+process bigger_stripes/position_39.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_39.80/
+subscript gradient
+process bigger_stripes/position_39.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_40.00/
 subscript gradient
+process bigger_stripes/position_40.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_40.25/
+prefix bigger_stripes/position_40.20/
 subscript gradient
+process bigger_stripes/position_40.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_40.50/
+prefix bigger_stripes/position_40.40/
 subscript gradient
+process bigger_stripes/position_40.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_40.75/
+prefix bigger_stripes/position_40.60/
 subscript gradient
+process bigger_stripes/position_40.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_40.80/
+subscript gradient
+process bigger_stripes/position_40.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_41.00/
 subscript gradient
+process bigger_stripes/position_41.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_41.25/
+prefix bigger_stripes/position_41.20/
 subscript gradient
+process bigger_stripes/position_41.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_41.50/
+prefix bigger_stripes/position_41.40/
 subscript gradient
+process bigger_stripes/position_41.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_41.75/
+prefix bigger_stripes/position_41.60/
 subscript gradient
+process bigger_stripes/position_41.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_41.80/
+subscript gradient
+process bigger_stripes/position_41.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_42.00/
 subscript gradient
+process bigger_stripes/position_42.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_42.25/
+prefix bigger_stripes/position_42.20/
 subscript gradient
+process bigger_stripes/position_42.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_42.50/
+prefix bigger_stripes/position_42.40/
 subscript gradient
+process bigger_stripes/position_42.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_42.75/
+prefix bigger_stripes/position_42.60/
 subscript gradient
+process bigger_stripes/position_42.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_42.80/
+subscript gradient
+process bigger_stripes/position_42.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_43.00/
 subscript gradient
+process bigger_stripes/position_43.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_43.25/
+prefix bigger_stripes/position_43.20/
 subscript gradient
+process bigger_stripes/position_43.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_43.50/
+prefix bigger_stripes/position_43.40/
 subscript gradient
+process bigger_stripes/position_43.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_43.75/
+prefix bigger_stripes/position_43.60/
 subscript gradient
+process bigger_stripes/position_43.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_43.80/
+subscript gradient
+process bigger_stripes/position_43.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_44.00/
 subscript gradient
+process bigger_stripes/position_44.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_44.25/
+prefix bigger_stripes/position_44.20/
 subscript gradient
+process bigger_stripes/position_44.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_44.50/
+prefix bigger_stripes/position_44.40/
 subscript gradient
+process bigger_stripes/position_44.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_44.75/
+prefix bigger_stripes/position_44.60/
 subscript gradient
+process bigger_stripes/position_44.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_44.80/
+subscript gradient
+process bigger_stripes/position_44.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_45.00/
 subscript gradient
+process bigger_stripes/position_45.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_45.25/
+prefix bigger_stripes/position_45.20/
 subscript gradient
+process bigger_stripes/position_45.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_45.50/
+prefix bigger_stripes/position_45.40/
 subscript gradient
+process bigger_stripes/position_45.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_45.75/
+prefix bigger_stripes/position_45.60/
 subscript gradient
+process bigger_stripes/position_45.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_45.80/
+subscript gradient
+process bigger_stripes/position_45.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_46.00/
 subscript gradient
+process bigger_stripes/position_46.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_46.25/
+prefix bigger_stripes/position_46.20/
 subscript gradient
+process bigger_stripes/position_46.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_46.50/
+prefix bigger_stripes/position_46.40/
 subscript gradient
+process bigger_stripes/position_46.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_46.75/
+prefix bigger_stripes/position_46.60/
 subscript gradient
+process bigger_stripes/position_46.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_46.80/
+subscript gradient
+process bigger_stripes/position_46.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_47.00/
 subscript gradient
+process bigger_stripes/position_47.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_47.25/
+prefix bigger_stripes/position_47.20/
 subscript gradient
+process bigger_stripes/position_47.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_47.50/
+prefix bigger_stripes/position_47.40/
 subscript gradient
+process bigger_stripes/position_47.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_47.75/
+prefix bigger_stripes/position_47.60/
 subscript gradient
+process bigger_stripes/position_47.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_47.80/
+subscript gradient
+process bigger_stripes/position_47.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_48.00/
 subscript gradient
+process bigger_stripes/position_48.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_48.25/
+prefix bigger_stripes/position_48.20/
 subscript gradient
+process bigger_stripes/position_48.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_48.50/
+prefix bigger_stripes/position_48.40/
 subscript gradient
+process bigger_stripes/position_48.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_48.75/
+prefix bigger_stripes/position_48.60/
 subscript gradient
+process bigger_stripes/position_48.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_48.80/
+subscript gradient
+process bigger_stripes/position_48.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_49.00/
 subscript gradient
+process bigger_stripes/position_49.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_49.25/
+prefix bigger_stripes/position_49.20/
 subscript gradient
+process bigger_stripes/position_49.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_49.50/
+prefix bigger_stripes/position_49.40/
 subscript gradient
+process bigger_stripes/position_49.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_49.75/
+prefix bigger_stripes/position_49.60/
 subscript gradient
+process bigger_stripes/position_49.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_49.80/
+subscript gradient
+process bigger_stripes/position_49.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_50.00/
 subscript gradient
+process bigger_stripes/position_50.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_50.25/
+prefix bigger_stripes/position_50.20/
 subscript gradient
+process bigger_stripes/position_50.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_50.50/
+prefix bigger_stripes/position_50.40/
 subscript gradient
+process bigger_stripes/position_50.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_50.75/
+prefix bigger_stripes/position_50.60/
 subscript gradient
+process bigger_stripes/position_50.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_50.80/
+subscript gradient
+process bigger_stripes/position_50.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_51.00/
 subscript gradient
+process bigger_stripes/position_51.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_51.25/
+prefix bigger_stripes/position_51.20/
 subscript gradient
+process bigger_stripes/position_51.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_51.50/
+prefix bigger_stripes/position_51.40/
 subscript gradient
+process bigger_stripes/position_51.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_51.75/
+prefix bigger_stripes/position_51.60/
 subscript gradient
+process bigger_stripes/position_51.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_51.80/
+subscript gradient
+process bigger_stripes/position_51.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_52.00/
 subscript gradient
+process bigger_stripes/position_52.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_52.25/
+prefix bigger_stripes/position_52.20/
 subscript gradient
+process bigger_stripes/position_52.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_52.50/
+prefix bigger_stripes/position_52.40/
 subscript gradient
+process bigger_stripes/position_52.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_52.75/
+prefix bigger_stripes/position_52.60/
 subscript gradient
+process bigger_stripes/position_52.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_52.80/
+subscript gradient
+process bigger_stripes/position_52.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_53.00/
 subscript gradient
+process bigger_stripes/position_53.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_53.25/
+prefix bigger_stripes/position_53.20/
 subscript gradient
+process bigger_stripes/position_53.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_53.50/
+prefix bigger_stripes/position_53.40/
 subscript gradient
+process bigger_stripes/position_53.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_53.75/
+prefix bigger_stripes/position_53.60/
 subscript gradient
+process bigger_stripes/position_53.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_53.80/
+subscript gradient
+process bigger_stripes/position_53.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_54.00/
 subscript gradient
+process bigger_stripes/position_54.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_54.25/
+prefix bigger_stripes/position_54.20/
 subscript gradient
+process bigger_stripes/position_54.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_54.50/
+prefix bigger_stripes/position_54.40/
 subscript gradient
+process bigger_stripes/position_54.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_54.75/
+prefix bigger_stripes/position_54.60/
 subscript gradient
+process bigger_stripes/position_54.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_54.80/
+subscript gradient
+process bigger_stripes/position_54.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_55.00/
 subscript gradient
+process bigger_stripes/position_55.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_55.25/
+prefix bigger_stripes/position_55.20/
 subscript gradient
+process bigger_stripes/position_55.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_55.50/
+prefix bigger_stripes/position_55.40/
 subscript gradient
+process bigger_stripes/position_55.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_55.75/
+prefix bigger_stripes/position_55.60/
 subscript gradient
+process bigger_stripes/position_55.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_55.80/
+subscript gradient
+process bigger_stripes/position_55.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_56.00/
 subscript gradient
+process bigger_stripes/position_56.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_56.25/
+prefix bigger_stripes/position_56.20/
 subscript gradient
+process bigger_stripes/position_56.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_56.50/
+prefix bigger_stripes/position_56.40/
 subscript gradient
+process bigger_stripes/position_56.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_56.75/
+prefix bigger_stripes/position_56.60/
 subscript gradient
+process bigger_stripes/position_56.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_56.80/
+subscript gradient
+process bigger_stripes/position_56.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_57.00/
 subscript gradient
+process bigger_stripes/position_57.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_57.25/
+prefix bigger_stripes/position_57.20/
 subscript gradient
+process bigger_stripes/position_57.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_57.50/
+prefix bigger_stripes/position_57.40/
 subscript gradient
+process bigger_stripes/position_57.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_57.75/
+prefix bigger_stripes/position_57.60/
 subscript gradient
+process bigger_stripes/position_57.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_57.80/
+subscript gradient
+process bigger_stripes/position_57.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_58.00/
 subscript gradient
+process bigger_stripes/position_58.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_58.25/
+prefix bigger_stripes/position_58.20/
 subscript gradient
+process bigger_stripes/position_58.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_58.50/
+prefix bigger_stripes/position_58.40/
 subscript gradient
+process bigger_stripes/position_58.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_58.75/
+prefix bigger_stripes/position_58.60/
 subscript gradient
+process bigger_stripes/position_58.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_58.80/
+subscript gradient
+process bigger_stripes/position_58.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_59.00/
 subscript gradient
+process bigger_stripes/position_59.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_59.25/
+prefix bigger_stripes/position_59.20/
 subscript gradient
+process bigger_stripes/position_59.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_59.50/
+prefix bigger_stripes/position_59.40/
 subscript gradient
+process bigger_stripes/position_59.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_59.75/
+prefix bigger_stripes/position_59.60/
 subscript gradient
+process bigger_stripes/position_59.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_59.80/
+subscript gradient
+process bigger_stripes/position_59.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_60.00/
 subscript gradient
+process bigger_stripes/position_60.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_60.25/
+prefix bigger_stripes/position_60.20/
 subscript gradient
+process bigger_stripes/position_60.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_60.50/
+prefix bigger_stripes/position_60.40/
 subscript gradient
+process bigger_stripes/position_60.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_60.75/
+prefix bigger_stripes/position_60.60/
 subscript gradient
+process bigger_stripes/position_60.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_60.80/
+subscript gradient
+process bigger_stripes/position_60.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_61.00/
 subscript gradient
+process bigger_stripes/position_61.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_61.25/
+prefix bigger_stripes/position_61.20/
 subscript gradient
+process bigger_stripes/position_61.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_61.50/
+prefix bigger_stripes/position_61.40/
 subscript gradient
+process bigger_stripes/position_61.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_61.75/
+prefix bigger_stripes/position_61.60/
 subscript gradient
+process bigger_stripes/position_61.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_61.80/
+subscript gradient
+process bigger_stripes/position_61.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_62.00/
 subscript gradient
+process bigger_stripes/position_62.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_62.25/
+prefix bigger_stripes/position_62.20/
 subscript gradient
+process bigger_stripes/position_62.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_62.50/
+prefix bigger_stripes/position_62.40/
 subscript gradient
+process bigger_stripes/position_62.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_62.75/
+prefix bigger_stripes/position_62.60/
 subscript gradient
+process bigger_stripes/position_62.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_62.80/
+subscript gradient
+process bigger_stripes/position_62.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_63.00/
 subscript gradient
+process bigger_stripes/position_63.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_63.25/
+prefix bigger_stripes/position_63.20/
 subscript gradient
+process bigger_stripes/position_63.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_63.50/
+prefix bigger_stripes/position_63.40/
 subscript gradient
+process bigger_stripes/position_63.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_63.75/
+prefix bigger_stripes/position_63.60/
 subscript gradient
+process bigger_stripes/position_63.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_63.80/
+subscript gradient
+process bigger_stripes/position_63.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_64.00/
 subscript gradient
+process bigger_stripes/position_64.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_64.25/
+prefix bigger_stripes/position_64.20/
 subscript gradient
+process bigger_stripes/position_64.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_64.50/
+prefix bigger_stripes/position_64.40/
 subscript gradient
+process bigger_stripes/position_64.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_64.75/
+prefix bigger_stripes/position_64.60/
 subscript gradient
+process bigger_stripes/position_64.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_64.80/
+subscript gradient
+process bigger_stripes/position_64.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_65.00/
 subscript gradient
+process bigger_stripes/position_65.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_65.25/
+prefix bigger_stripes/position_65.20/
 subscript gradient
+process bigger_stripes/position_65.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_65.50/
+prefix bigger_stripes/position_65.40/
 subscript gradient
+process bigger_stripes/position_65.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_65.75/
+prefix bigger_stripes/position_65.60/
 subscript gradient
+process bigger_stripes/position_65.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_65.80/
+subscript gradient
+process bigger_stripes/position_65.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_66.00/
 subscript gradient
+process bigger_stripes/position_66.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_66.25/
+prefix bigger_stripes/position_66.20/
 subscript gradient
+process bigger_stripes/position_66.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_66.50/
+prefix bigger_stripes/position_66.40/
 subscript gradient
+process bigger_stripes/position_66.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_66.75/
+prefix bigger_stripes/position_66.60/
 subscript gradient
+process bigger_stripes/position_66.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_66.80/
+subscript gradient
+process bigger_stripes/position_66.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_67.00/
 subscript gradient
+process bigger_stripes/position_67.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_67.25/
+prefix bigger_stripes/position_67.20/
 subscript gradient
+process bigger_stripes/position_67.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_67.50/
+prefix bigger_stripes/position_67.40/
 subscript gradient
+process bigger_stripes/position_67.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_67.75/
+prefix bigger_stripes/position_67.60/
 subscript gradient
+process bigger_stripes/position_67.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_67.80/
+subscript gradient
+process bigger_stripes/position_67.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_68.00/
 subscript gradient
+process bigger_stripes/position_68.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_68.25/
+prefix bigger_stripes/position_68.20/
 subscript gradient
+process bigger_stripes/position_68.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_68.50/
+prefix bigger_stripes/position_68.40/
 subscript gradient
+process bigger_stripes/position_68.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_68.75/
+prefix bigger_stripes/position_68.60/
 subscript gradient
+process bigger_stripes/position_68.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_68.80/
+subscript gradient
+process bigger_stripes/position_68.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_69.00/
 subscript gradient
+process bigger_stripes/position_69.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_69.25/
+prefix bigger_stripes/position_69.20/
 subscript gradient
+process bigger_stripes/position_69.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_69.50/
+prefix bigger_stripes/position_69.40/
 subscript gradient
+process bigger_stripes/position_69.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_69.75/
+prefix bigger_stripes/position_69.60/
 subscript gradient
+process bigger_stripes/position_69.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_69.80/
+subscript gradient
+process bigger_stripes/position_69.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_70.00/
 subscript gradient
+process bigger_stripes/position_70.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_70.25/
+prefix bigger_stripes/position_70.20/
 subscript gradient
+process bigger_stripes/position_70.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_70.50/
+prefix bigger_stripes/position_70.40/
 subscript gradient
+process bigger_stripes/position_70.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_70.75/
+prefix bigger_stripes/position_70.60/
 subscript gradient
+process bigger_stripes/position_70.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_70.80/
+subscript gradient
+process bigger_stripes/position_70.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_71.00/
 subscript gradient
+process bigger_stripes/position_71.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_71.25/
+prefix bigger_stripes/position_71.20/
 subscript gradient
+process bigger_stripes/position_71.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_71.50/
+prefix bigger_stripes/position_71.40/
 subscript gradient
+process bigger_stripes/position_71.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_71.75/
+prefix bigger_stripes/position_71.60/
 subscript gradient
+process bigger_stripes/position_71.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_71.80/
+subscript gradient
+process bigger_stripes/position_71.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_72.00/
 subscript gradient
+process bigger_stripes/position_72.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_72.25/
+prefix bigger_stripes/position_72.20/
 subscript gradient
+process bigger_stripes/position_72.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_72.50/
+prefix bigger_stripes/position_72.40/
 subscript gradient
+process bigger_stripes/position_72.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_72.75/
+prefix bigger_stripes/position_72.60/
 subscript gradient
+process bigger_stripes/position_72.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_72.80/
+subscript gradient
+process bigger_stripes/position_72.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_73.00/
 subscript gradient
+process bigger_stripes/position_73.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_73.25/
+prefix bigger_stripes/position_73.20/
 subscript gradient
+process bigger_stripes/position_73.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_73.50/
+prefix bigger_stripes/position_73.40/
 subscript gradient
+process bigger_stripes/position_73.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_73.75/
+prefix bigger_stripes/position_73.60/
 subscript gradient
+process bigger_stripes/position_73.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_73.80/
+subscript gradient
+process bigger_stripes/position_73.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_74.00/
 subscript gradient
+process bigger_stripes/position_74.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_74.25/
+prefix bigger_stripes/position_74.20/
 subscript gradient
+process bigger_stripes/position_74.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_74.50/
+prefix bigger_stripes/position_74.40/
 subscript gradient
+process bigger_stripes/position_74.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_74.75/
+prefix bigger_stripes/position_74.60/
 subscript gradient
+process bigger_stripes/position_74.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_74.80/
+subscript gradient
+process bigger_stripes/position_74.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_75.00/
 subscript gradient
+process bigger_stripes/position_75.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_75.25/
+prefix bigger_stripes/position_75.20/
 subscript gradient
+process bigger_stripes/position_75.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_75.50/
+prefix bigger_stripes/position_75.40/
 subscript gradient
+process bigger_stripes/position_75.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_75.75/
+prefix bigger_stripes/position_75.60/
 subscript gradient
+process bigger_stripes/position_75.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_75.80/
+subscript gradient
+process bigger_stripes/position_75.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_76.00/
 subscript gradient
+process bigger_stripes/position_76.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_76.25/
+prefix bigger_stripes/position_76.20/
 subscript gradient
+process bigger_stripes/position_76.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_76.50/
+prefix bigger_stripes/position_76.40/
 subscript gradient
+process bigger_stripes/position_76.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_76.75/
+prefix bigger_stripes/position_76.60/
 subscript gradient
+process bigger_stripes/position_76.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_76.80/
+subscript gradient
+process bigger_stripes/position_76.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_77.00/
 subscript gradient
+process bigger_stripes/position_77.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_77.25/
+prefix bigger_stripes/position_77.20/
 subscript gradient
+process bigger_stripes/position_77.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_77.50/
+prefix bigger_stripes/position_77.40/
 subscript gradient
+process bigger_stripes/position_77.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_77.75/
+prefix bigger_stripes/position_77.60/
 subscript gradient
+process bigger_stripes/position_77.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_77.80/
+subscript gradient
+process bigger_stripes/position_77.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_78.00/
 subscript gradient
+process bigger_stripes/position_78.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_78.25/
+prefix bigger_stripes/position_78.20/
 subscript gradient
+process bigger_stripes/position_78.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_78.50/
+prefix bigger_stripes/position_78.40/
 subscript gradient
+process bigger_stripes/position_78.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_78.75/
+prefix bigger_stripes/position_78.60/
 subscript gradient
+process bigger_stripes/position_78.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_78.80/
+subscript gradient
+process bigger_stripes/position_78.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_79.00/
 subscript gradient
+process bigger_stripes/position_79.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_79.25/
+prefix bigger_stripes/position_79.20/
 subscript gradient
+process bigger_stripes/position_79.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_79.50/
+prefix bigger_stripes/position_79.40/
 subscript gradient
+process bigger_stripes/position_79.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_79.75/
+prefix bigger_stripes/position_79.60/
 subscript gradient
+process bigger_stripes/position_79.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_79.80/
+subscript gradient
+process bigger_stripes/position_79.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_80.00/
 subscript gradient
+process bigger_stripes/position_80.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_80.25/
+prefix bigger_stripes/position_80.20/
 subscript gradient
+process bigger_stripes/position_80.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_80.50/
+prefix bigger_stripes/position_80.40/
 subscript gradient
+process bigger_stripes/position_80.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_80.75/
+prefix bigger_stripes/position_80.60/
 subscript gradient
+process bigger_stripes/position_80.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_80.80/
+subscript gradient
+process bigger_stripes/position_80.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_81.00/
 subscript gradient
+process bigger_stripes/position_81.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_81.25/
+prefix bigger_stripes/position_81.20/
 subscript gradient
+process bigger_stripes/position_81.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_81.50/
+prefix bigger_stripes/position_81.40/
 subscript gradient
+process bigger_stripes/position_81.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_81.75/
+prefix bigger_stripes/position_81.60/
 subscript gradient
+process bigger_stripes/position_81.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_81.80/
+subscript gradient
+process bigger_stripes/position_81.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_82.00/
 subscript gradient
+process bigger_stripes/position_82.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_82.25/
+prefix bigger_stripes/position_82.20/
 subscript gradient
+process bigger_stripes/position_82.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_82.50/
+prefix bigger_stripes/position_82.40/
 subscript gradient
+process bigger_stripes/position_82.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_82.75/
+prefix bigger_stripes/position_82.60/
 subscript gradient
+process bigger_stripes/position_82.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_82.80/
+subscript gradient
+process bigger_stripes/position_82.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_83.00/
 subscript gradient
+process bigger_stripes/position_83.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_83.25/
+prefix bigger_stripes/position_83.20/
 subscript gradient
+process bigger_stripes/position_83.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_83.50/
+prefix bigger_stripes/position_83.40/
 subscript gradient
+process bigger_stripes/position_83.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_83.75/
+prefix bigger_stripes/position_83.60/
 subscript gradient
+process bigger_stripes/position_83.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_83.80/
+subscript gradient
+process bigger_stripes/position_83.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_84.00/
 subscript gradient
+process bigger_stripes/position_84.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_84.25/
+prefix bigger_stripes/position_84.20/
 subscript gradient
+process bigger_stripes/position_84.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_84.50/
+prefix bigger_stripes/position_84.40/
 subscript gradient
+process bigger_stripes/position_84.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_84.75/
+prefix bigger_stripes/position_84.60/
 subscript gradient
+process bigger_stripes/position_84.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_84.80/
+subscript gradient
+process bigger_stripes/position_84.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_85.00/
 subscript gradient
+process bigger_stripes/position_85.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_85.25/
+prefix bigger_stripes/position_85.20/
 subscript gradient
+process bigger_stripes/position_85.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_85.50/
+prefix bigger_stripes/position_85.40/
 subscript gradient
+process bigger_stripes/position_85.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_85.75/
+prefix bigger_stripes/position_85.60/
 subscript gradient
+process bigger_stripes/position_85.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_85.80/
+subscript gradient
+process bigger_stripes/position_85.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_86.00/
 subscript gradient
+process bigger_stripes/position_86.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_86.25/
+prefix bigger_stripes/position_86.20/
 subscript gradient
+process bigger_stripes/position_86.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_86.50/
+prefix bigger_stripes/position_86.40/
 subscript gradient
+process bigger_stripes/position_86.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_86.75/
+prefix bigger_stripes/position_86.60/
 subscript gradient
+process bigger_stripes/position_86.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_86.80/
+subscript gradient
+process bigger_stripes/position_86.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_87.00/
 subscript gradient
+process bigger_stripes/position_87.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_87.25/
+prefix bigger_stripes/position_87.20/
 subscript gradient
+process bigger_stripes/position_87.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_87.50/
+prefix bigger_stripes/position_87.40/
 subscript gradient
+process bigger_stripes/position_87.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_87.75/
+prefix bigger_stripes/position_87.60/
 subscript gradient
+process bigger_stripes/position_87.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_87.80/
+subscript gradient
+process bigger_stripes/position_87.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_88.00/
 subscript gradient
+process bigger_stripes/position_88.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_88.25/
+prefix bigger_stripes/position_88.20/
 subscript gradient
+process bigger_stripes/position_88.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_88.50/
+prefix bigger_stripes/position_88.40/
 subscript gradient
+process bigger_stripes/position_88.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_88.75/
+prefix bigger_stripes/position_88.60/
 subscript gradient
+process bigger_stripes/position_88.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_88.80/
+subscript gradient
+process bigger_stripes/position_88.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_89.00/
 subscript gradient
+process bigger_stripes/position_89.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_89.25/
+prefix bigger_stripes/position_89.20/
 subscript gradient
+process bigger_stripes/position_89.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_89.50/
+prefix bigger_stripes/position_89.40/
 subscript gradient
+process bigger_stripes/position_89.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_89.75/
+prefix bigger_stripes/position_89.60/
 subscript gradient
+process bigger_stripes/position_89.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_89.80/
+subscript gradient
+process bigger_stripes/position_89.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_90.00/
 subscript gradient
+process bigger_stripes/position_90.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_90.25/
+prefix bigger_stripes/position_90.20/
 subscript gradient
+process bigger_stripes/position_90.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_90.50/
+prefix bigger_stripes/position_90.40/
 subscript gradient
+process bigger_stripes/position_90.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_90.75/
+prefix bigger_stripes/position_90.60/
 subscript gradient
+process bigger_stripes/position_90.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_90.80/
+subscript gradient
+process bigger_stripes/position_90.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_91.00/
 subscript gradient
+process bigger_stripes/position_91.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_91.25/
+prefix bigger_stripes/position_91.20/
 subscript gradient
+process bigger_stripes/position_91.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_91.50/
+prefix bigger_stripes/position_91.40/
 subscript gradient
+process bigger_stripes/position_91.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_91.75/
+prefix bigger_stripes/position_91.60/
 subscript gradient
+process bigger_stripes/position_91.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_91.80/
+subscript gradient
+process bigger_stripes/position_91.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_92.00/
 subscript gradient
+process bigger_stripes/position_92.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_92.25/
+prefix bigger_stripes/position_92.20/
 subscript gradient
+process bigger_stripes/position_92.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_92.50/
+prefix bigger_stripes/position_92.40/
 subscript gradient
+process bigger_stripes/position_92.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_92.75/
+prefix bigger_stripes/position_92.60/
 subscript gradient
+process bigger_stripes/position_92.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_92.80/
+subscript gradient
+process bigger_stripes/position_92.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_93.00/
 subscript gradient
+process bigger_stripes/position_93.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_93.25/
+prefix bigger_stripes/position_93.20/
 subscript gradient
+process bigger_stripes/position_93.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_93.50/
+prefix bigger_stripes/position_93.40/
 subscript gradient
+process bigger_stripes/position_93.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_93.75/
+prefix bigger_stripes/position_93.60/
 subscript gradient
+process bigger_stripes/position_93.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_93.80/
+subscript gradient
+process bigger_stripes/position_93.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_94.00/
 subscript gradient
+process bigger_stripes/position_94.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_94.25/
+prefix bigger_stripes/position_94.20/
 subscript gradient
+process bigger_stripes/position_94.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_94.50/
+prefix bigger_stripes/position_94.40/
 subscript gradient
+process bigger_stripes/position_94.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_94.75/
+prefix bigger_stripes/position_94.60/
 subscript gradient
+process bigger_stripes/position_94.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_94.80/
+subscript gradient
+process bigger_stripes/position_94.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_95.00/
 subscript gradient
+process bigger_stripes/position_95.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_95.25/
+prefix bigger_stripes/position_95.20/
 subscript gradient
+process bigger_stripes/position_95.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_95.50/
+prefix bigger_stripes/position_95.40/
 subscript gradient
+process bigger_stripes/position_95.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_95.75/
+prefix bigger_stripes/position_95.60/
 subscript gradient
+process bigger_stripes/position_95.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_95.80/
+subscript gradient
+process bigger_stripes/position_95.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_96.00/
 subscript gradient
+process bigger_stripes/position_96.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_96.25/
+prefix bigger_stripes/position_96.20/
 subscript gradient
+process bigger_stripes/position_96.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_96.50/
+prefix bigger_stripes/position_96.40/
 subscript gradient
+process bigger_stripes/position_96.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_96.75/
+prefix bigger_stripes/position_96.60/
 subscript gradient
+process bigger_stripes/position_96.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_96.80/
+subscript gradient
+process bigger_stripes/position_96.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_97.00/
 subscript gradient
+process bigger_stripes/position_97.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_97.25/
+prefix bigger_stripes/position_97.20/
 subscript gradient
+process bigger_stripes/position_97.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_97.50/
+prefix bigger_stripes/position_97.40/
 subscript gradient
+process bigger_stripes/position_97.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_97.75/
+prefix bigger_stripes/position_97.60/
 subscript gradient
+process bigger_stripes/position_97.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_97.80/
+subscript gradient
+process bigger_stripes/position_97.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_98.00/
 subscript gradient
+process bigger_stripes/position_98.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_98.25/
+prefix bigger_stripes/position_98.20/
 subscript gradient
+process bigger_stripes/position_98.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_98.50/
+prefix bigger_stripes/position_98.40/
 subscript gradient
+process bigger_stripes/position_98.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_98.75/
+prefix bigger_stripes/position_98.60/
 subscript gradient
+process bigger_stripes/position_98.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_98.80/
+subscript gradient
+process bigger_stripes/position_98.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_99.00/
 subscript gradient
+process bigger_stripes/position_99.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_99.25/
+prefix bigger_stripes/position_99.20/
 subscript gradient
+process bigger_stripes/position_99.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_99.50/
+prefix bigger_stripes/position_99.40/
 subscript gradient
+process bigger_stripes/position_99.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_99.75/
+prefix bigger_stripes/position_99.60/
 subscript gradient
+process bigger_stripes/position_99.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_99.80/
+subscript gradient
+process bigger_stripes/position_99.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_100.00/
 subscript gradient
+process bigger_stripes/position_100.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_100.25/
+prefix bigger_stripes/position_100.20/
 subscript gradient
+process bigger_stripes/position_100.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_100.50/
+prefix bigger_stripes/position_100.40/
 subscript gradient
+process bigger_stripes/position_100.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_100.75/
+prefix bigger_stripes/position_100.60/
 subscript gradient
+process bigger_stripes/position_100.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_100.80/
+subscript gradient
+process bigger_stripes/position_100.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_101.00/
 subscript gradient
+process bigger_stripes/position_101.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_101.25/
+prefix bigger_stripes/position_101.20/
 subscript gradient
+process bigger_stripes/position_101.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_101.50/
+prefix bigger_stripes/position_101.40/
 subscript gradient
+process bigger_stripes/position_101.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_101.75/
+prefix bigger_stripes/position_101.60/
 subscript gradient
+process bigger_stripes/position_101.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_101.80/
+subscript gradient
+process bigger_stripes/position_101.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_102.00/
 subscript gradient
+process bigger_stripes/position_102.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_102.25/
+prefix bigger_stripes/position_102.20/
 subscript gradient
+process bigger_stripes/position_102.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_102.50/
+prefix bigger_stripes/position_102.40/
 subscript gradient
+process bigger_stripes/position_102.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_102.75/
+prefix bigger_stripes/position_102.60/
 subscript gradient
+process bigger_stripes/position_102.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_102.80/
+subscript gradient
+process bigger_stripes/position_102.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_103.00/
 subscript gradient
+process bigger_stripes/position_103.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_103.25/
+prefix bigger_stripes/position_103.20/
 subscript gradient
+process bigger_stripes/position_103.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_103.50/
+prefix bigger_stripes/position_103.40/
 subscript gradient
+process bigger_stripes/position_103.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_103.75/
+prefix bigger_stripes/position_103.60/
 subscript gradient
+process bigger_stripes/position_103.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_103.80/
+subscript gradient
+process bigger_stripes/position_103.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_104.00/
 subscript gradient
+process bigger_stripes/position_104.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_104.25/
+prefix bigger_stripes/position_104.20/
 subscript gradient
+process bigger_stripes/position_104.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_104.50/
+prefix bigger_stripes/position_104.40/
 subscript gradient
+process bigger_stripes/position_104.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_104.75/
+prefix bigger_stripes/position_104.60/
 subscript gradient
+process bigger_stripes/position_104.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_104.80/
+subscript gradient
+process bigger_stripes/position_104.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_105.00/
 subscript gradient
+process bigger_stripes/position_105.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_105.25/
+prefix bigger_stripes/position_105.20/
 subscript gradient
+process bigger_stripes/position_105.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_105.50/
+prefix bigger_stripes/position_105.40/
 subscript gradient
+process bigger_stripes/position_105.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_105.75/
+prefix bigger_stripes/position_105.60/
 subscript gradient
+process bigger_stripes/position_105.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_105.80/
+subscript gradient
+process bigger_stripes/position_105.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_106.00/
 subscript gradient
+process bigger_stripes/position_106.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_106.25/
+prefix bigger_stripes/position_106.20/
 subscript gradient
+process bigger_stripes/position_106.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_106.50/
+prefix bigger_stripes/position_106.40/
 subscript gradient
+process bigger_stripes/position_106.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_106.75/
+prefix bigger_stripes/position_106.60/
 subscript gradient
+process bigger_stripes/position_106.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_106.80/
+subscript gradient
+process bigger_stripes/position_106.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_107.00/
 subscript gradient
+process bigger_stripes/position_107.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_107.25/
+prefix bigger_stripes/position_107.20/
 subscript gradient
+process bigger_stripes/position_107.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_107.50/
+prefix bigger_stripes/position_107.40/
 subscript gradient
+process bigger_stripes/position_107.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_107.75/
+prefix bigger_stripes/position_107.60/
 subscript gradient
+process bigger_stripes/position_107.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_107.80/
+subscript gradient
+process bigger_stripes/position_107.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_108.00/
 subscript gradient
+process bigger_stripes/position_108.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_108.25/
+prefix bigger_stripes/position_108.20/
 subscript gradient
+process bigger_stripes/position_108.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_108.50/
+prefix bigger_stripes/position_108.40/
 subscript gradient
+process bigger_stripes/position_108.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_108.75/
+prefix bigger_stripes/position_108.60/
 subscript gradient
+process bigger_stripes/position_108.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_108.80/
+subscript gradient
+process bigger_stripes/position_108.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_109.00/
 subscript gradient
+process bigger_stripes/position_109.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_109.25/
+prefix bigger_stripes/position_109.20/
 subscript gradient
+process bigger_stripes/position_109.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_109.50/
+prefix bigger_stripes/position_109.40/
 subscript gradient
+process bigger_stripes/position_109.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_109.75/
+prefix bigger_stripes/position_109.60/
 subscript gradient
+process bigger_stripes/position_109.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_109.80/
+subscript gradient
+process bigger_stripes/position_109.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_110.00/
 subscript gradient
+process bigger_stripes/position_110.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_110.25/
+prefix bigger_stripes/position_110.20/
 subscript gradient
+process bigger_stripes/position_110.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_110.50/
+prefix bigger_stripes/position_110.40/
 subscript gradient
+process bigger_stripes/position_110.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_110.75/
+prefix bigger_stripes/position_110.60/
 subscript gradient
+process bigger_stripes/position_110.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_110.80/
+subscript gradient
+process bigger_stripes/position_110.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_111.00/
 subscript gradient
+process bigger_stripes/position_111.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_111.25/
+prefix bigger_stripes/position_111.20/
 subscript gradient
+process bigger_stripes/position_111.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_111.50/
+prefix bigger_stripes/position_111.40/
 subscript gradient
+process bigger_stripes/position_111.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_111.75/
+prefix bigger_stripes/position_111.60/
 subscript gradient
+process bigger_stripes/position_111.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_111.80/
+subscript gradient
+process bigger_stripes/position_111.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_112.00/
 subscript gradient
+process bigger_stripes/position_112.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_112.25/
+prefix bigger_stripes/position_112.20/
 subscript gradient
+process bigger_stripes/position_112.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_112.50/
+prefix bigger_stripes/position_112.40/
 subscript gradient
+process bigger_stripes/position_112.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_112.75/
+prefix bigger_stripes/position_112.60/
 subscript gradient
+process bigger_stripes/position_112.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_112.80/
+subscript gradient
+process bigger_stripes/position_112.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_113.00/
 subscript gradient
+process bigger_stripes/position_113.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_113.25/
+prefix bigger_stripes/position_113.20/
 subscript gradient
+process bigger_stripes/position_113.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_113.50/
+prefix bigger_stripes/position_113.40/
 subscript gradient
+process bigger_stripes/position_113.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_113.75/
+prefix bigger_stripes/position_113.60/
 subscript gradient
+process bigger_stripes/position_113.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_113.80/
+subscript gradient
+process bigger_stripes/position_113.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_114.00/
 subscript gradient
+process bigger_stripes/position_114.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_114.25/
+prefix bigger_stripes/position_114.20/
 subscript gradient
+process bigger_stripes/position_114.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_114.50/
+prefix bigger_stripes/position_114.40/
 subscript gradient
+process bigger_stripes/position_114.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_114.75/
+prefix bigger_stripes/position_114.60/
 subscript gradient
+process bigger_stripes/position_114.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_114.80/
+subscript gradient
+process bigger_stripes/position_114.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_115.00/
 subscript gradient
+process bigger_stripes/position_115.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_115.25/
+prefix bigger_stripes/position_115.20/
 subscript gradient
+process bigger_stripes/position_115.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_115.50/
+prefix bigger_stripes/position_115.40/
 subscript gradient
+process bigger_stripes/position_115.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_115.75/
+prefix bigger_stripes/position_115.60/
 subscript gradient
+process bigger_stripes/position_115.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_115.80/
+subscript gradient
+process bigger_stripes/position_115.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_116.00/
 subscript gradient
+process bigger_stripes/position_116.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_116.25/
+prefix bigger_stripes/position_116.20/
 subscript gradient
+process bigger_stripes/position_116.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_116.50/
+prefix bigger_stripes/position_116.40/
 subscript gradient
+process bigger_stripes/position_116.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_116.75/
+prefix bigger_stripes/position_116.60/
 subscript gradient
+process bigger_stripes/position_116.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_116.80/
+subscript gradient
+process bigger_stripes/position_116.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_117.00/
 subscript gradient
+process bigger_stripes/position_117.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_117.25/
+prefix bigger_stripes/position_117.20/
 subscript gradient
+process bigger_stripes/position_117.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_117.50/
+prefix bigger_stripes/position_117.40/
 subscript gradient
+process bigger_stripes/position_117.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_117.75/
+prefix bigger_stripes/position_117.60/
 subscript gradient
+process bigger_stripes/position_117.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_117.80/
+subscript gradient
+process bigger_stripes/position_117.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_118.00/
 subscript gradient
+process bigger_stripes/position_118.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_118.25/
+prefix bigger_stripes/position_118.20/
 subscript gradient
+process bigger_stripes/position_118.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_118.50/
+prefix bigger_stripes/position_118.40/
 subscript gradient
+process bigger_stripes/position_118.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_118.75/
+prefix bigger_stripes/position_118.60/
 subscript gradient
+process bigger_stripes/position_118.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_118.80/
+subscript gradient
+process bigger_stripes/position_118.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_119.00/
 subscript gradient
+process bigger_stripes/position_119.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_119.25/
+prefix bigger_stripes/position_119.20/
 subscript gradient
+process bigger_stripes/position_119.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_119.50/
+prefix bigger_stripes/position_119.40/
 subscript gradient
+process bigger_stripes/position_119.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_119.75/
+prefix bigger_stripes/position_119.60/
 subscript gradient
+process bigger_stripes/position_119.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_119.80/
+subscript gradient
+process bigger_stripes/position_119.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_120.00/
 subscript gradient
+process bigger_stripes/position_120.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_120.25/
+prefix bigger_stripes/position_120.20/
 subscript gradient
+process bigger_stripes/position_120.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_120.50/
+prefix bigger_stripes/position_120.40/
 subscript gradient
+process bigger_stripes/position_120.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_120.75/
+prefix bigger_stripes/position_120.60/
 subscript gradient
+process bigger_stripes/position_120.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_120.80/
+subscript gradient
+process bigger_stripes/position_120.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_121.00/
 subscript gradient
+process bigger_stripes/position_121.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_121.25/
+prefix bigger_stripes/position_121.20/
 subscript gradient
+process bigger_stripes/position_121.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_121.50/
+prefix bigger_stripes/position_121.40/
 subscript gradient
+process bigger_stripes/position_121.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_121.75/
+prefix bigger_stripes/position_121.60/
 subscript gradient
+process bigger_stripes/position_121.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_121.80/
+subscript gradient
+process bigger_stripes/position_121.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_122.00/
 subscript gradient
+process bigger_stripes/position_122.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_122.25/
+prefix bigger_stripes/position_122.20/
 subscript gradient
+process bigger_stripes/position_122.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_122.50/
+prefix bigger_stripes/position_122.40/
 subscript gradient
+process bigger_stripes/position_122.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_122.75/
+prefix bigger_stripes/position_122.60/
 subscript gradient
+process bigger_stripes/position_122.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_122.80/
+subscript gradient
+process bigger_stripes/position_122.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_123.00/
 subscript gradient
+process bigger_stripes/position_123.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_123.25/
+prefix bigger_stripes/position_123.20/
 subscript gradient
+process bigger_stripes/position_123.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_123.50/
+prefix bigger_stripes/position_123.40/
 subscript gradient
+process bigger_stripes/position_123.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_123.75/
+prefix bigger_stripes/position_123.60/
 subscript gradient
+process bigger_stripes/position_123.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_123.80/
+subscript gradient
+process bigger_stripes/position_123.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_124.00/
 subscript gradient
+process bigger_stripes/position_124.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_124.25/
+prefix bigger_stripes/position_124.20/
 subscript gradient
+process bigger_stripes/position_124.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_124.50/
+prefix bigger_stripes/position_124.40/
 subscript gradient
+process bigger_stripes/position_124.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_124.75/
+prefix bigger_stripes/position_124.60/
 subscript gradient
+process bigger_stripes/position_124.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_124.80/
+subscript gradient
+process bigger_stripes/position_124.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_125.00/
 subscript gradient
+process bigger_stripes/position_125.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_125.25/
+prefix bigger_stripes/position_125.20/
 subscript gradient
+process bigger_stripes/position_125.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_125.50/
+prefix bigger_stripes/position_125.40/
 subscript gradient
+process bigger_stripes/position_125.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_125.75/
+prefix bigger_stripes/position_125.60/
 subscript gradient
+process bigger_stripes/position_125.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_125.80/
+subscript gradient
+process bigger_stripes/position_125.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_126.00/
 subscript gradient
+process bigger_stripes/position_126.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_126.25/
+prefix bigger_stripes/position_126.20/
 subscript gradient
+process bigger_stripes/position_126.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_126.50/
+prefix bigger_stripes/position_126.40/
 subscript gradient
+process bigger_stripes/position_126.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_126.75/
+prefix bigger_stripes/position_126.60/
 subscript gradient
+process bigger_stripes/position_126.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_126.80/
+subscript gradient
+process bigger_stripes/position_126.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_127.00/
 subscript gradient
+process bigger_stripes/position_127.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_127.25/
+prefix bigger_stripes/position_127.20/
 subscript gradient
+process bigger_stripes/position_127.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_127.50/
+prefix bigger_stripes/position_127.40/
 subscript gradient
+process bigger_stripes/position_127.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_127.75/
+prefix bigger_stripes/position_127.60/
 subscript gradient
+process bigger_stripes/position_127.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_127.80/
+subscript gradient
+process bigger_stripes/position_127.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_128.00/
 subscript gradient
+process bigger_stripes/position_128.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_128.25/
+prefix bigger_stripes/position_128.20/
 subscript gradient
+process bigger_stripes/position_128.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_128.50/
+prefix bigger_stripes/position_128.40/
 subscript gradient
+process bigger_stripes/position_128.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_128.75/
+prefix bigger_stripes/position_128.60/
 subscript gradient
+process bigger_stripes/position_128.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_128.80/
+subscript gradient
+process bigger_stripes/position_128.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_129.00/
 subscript gradient
+process bigger_stripes/position_129.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_129.25/
+prefix bigger_stripes/position_129.20/
 subscript gradient
+process bigger_stripes/position_129.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_129.50/
+prefix bigger_stripes/position_129.40/
 subscript gradient
+process bigger_stripes/position_129.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_129.75/
+prefix bigger_stripes/position_129.60/
 subscript gradient
+process bigger_stripes/position_129.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_129.80/
+subscript gradient
+process bigger_stripes/position_129.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_130.00/
 subscript gradient
+process bigger_stripes/position_130.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_130.25/
+prefix bigger_stripes/position_130.20/
 subscript gradient
+process bigger_stripes/position_130.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_130.50/
+prefix bigger_stripes/position_130.40/
 subscript gradient
+process bigger_stripes/position_130.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_130.75/
+prefix bigger_stripes/position_130.60/
 subscript gradient
+process bigger_stripes/position_130.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_130.80/
+subscript gradient
+process bigger_stripes/position_130.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_131.00/
 subscript gradient
+process bigger_stripes/position_131.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_131.25/
+prefix bigger_stripes/position_131.20/
 subscript gradient
+process bigger_stripes/position_131.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_131.50/
+prefix bigger_stripes/position_131.40/
 subscript gradient
+process bigger_stripes/position_131.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_131.75/
+prefix bigger_stripes/position_131.60/
 subscript gradient
+process bigger_stripes/position_131.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_131.80/
+subscript gradient
+process bigger_stripes/position_131.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_132.00/
 subscript gradient
+process bigger_stripes/position_132.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_132.25/
+prefix bigger_stripes/position_132.20/
 subscript gradient
+process bigger_stripes/position_132.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_132.50/
+prefix bigger_stripes/position_132.40/
 subscript gradient
+process bigger_stripes/position_132.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_132.75/
+prefix bigger_stripes/position_132.60/
 subscript gradient
+process bigger_stripes/position_132.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_132.80/
+subscript gradient
+process bigger_stripes/position_132.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_133.00/
 subscript gradient
+process bigger_stripes/position_133.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_133.25/
+prefix bigger_stripes/position_133.20/
 subscript gradient
+process bigger_stripes/position_133.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_133.50/
+prefix bigger_stripes/position_133.40/
 subscript gradient
+process bigger_stripes/position_133.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_133.75/
+prefix bigger_stripes/position_133.60/
 subscript gradient
+process bigger_stripes/position_133.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_133.80/
+subscript gradient
+process bigger_stripes/position_133.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_134.00/
 subscript gradient
+process bigger_stripes/position_134.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_134.25/
+prefix bigger_stripes/position_134.20/
 subscript gradient
+process bigger_stripes/position_134.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_134.50/
+prefix bigger_stripes/position_134.40/
 subscript gradient
+process bigger_stripes/position_134.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_134.75/
+prefix bigger_stripes/position_134.60/
 subscript gradient
+process bigger_stripes/position_134.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_134.80/
+subscript gradient
+process bigger_stripes/position_134.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_135.00/
 subscript gradient
+process bigger_stripes/position_135.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_135.25/
+prefix bigger_stripes/position_135.20/
 subscript gradient
+process bigger_stripes/position_135.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_135.50/
+prefix bigger_stripes/position_135.40/
 subscript gradient
+process bigger_stripes/position_135.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_135.75/
+prefix bigger_stripes/position_135.60/
 subscript gradient
+process bigger_stripes/position_135.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_135.80/
+subscript gradient
+process bigger_stripes/position_135.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_136.00/
 subscript gradient
+process bigger_stripes/position_136.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_136.25/
+prefix bigger_stripes/position_136.20/
 subscript gradient
+process bigger_stripes/position_136.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_136.50/
+prefix bigger_stripes/position_136.40/
 subscript gradient
+process bigger_stripes/position_136.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_136.75/
+prefix bigger_stripes/position_136.60/
 subscript gradient
+process bigger_stripes/position_136.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_136.80/
+subscript gradient
+process bigger_stripes/position_136.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_137.00/
 subscript gradient
+process bigger_stripes/position_137.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_137.25/
+prefix bigger_stripes/position_137.20/
 subscript gradient
+process bigger_stripes/position_137.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_137.50/
+prefix bigger_stripes/position_137.40/
 subscript gradient
+process bigger_stripes/position_137.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_137.75/
+prefix bigger_stripes/position_137.60/
 subscript gradient
+process bigger_stripes/position_137.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_137.80/
+subscript gradient
+process bigger_stripes/position_137.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_138.00/
 subscript gradient
+process bigger_stripes/position_138.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_138.25/
+prefix bigger_stripes/position_138.20/
 subscript gradient
+process bigger_stripes/position_138.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_138.50/
+prefix bigger_stripes/position_138.40/
 subscript gradient
+process bigger_stripes/position_138.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_138.75/
+prefix bigger_stripes/position_138.60/
 subscript gradient
+process bigger_stripes/position_138.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_138.80/
+subscript gradient
+process bigger_stripes/position_138.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_139.00/
 subscript gradient
+process bigger_stripes/position_139.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_139.25/
+prefix bigger_stripes/position_139.20/
 subscript gradient
+process bigger_stripes/position_139.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_139.50/
+prefix bigger_stripes/position_139.40/
 subscript gradient
+process bigger_stripes/position_139.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_139.75/
+prefix bigger_stripes/position_139.60/
 subscript gradient
+process bigger_stripes/position_139.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_139.80/
+subscript gradient
+process bigger_stripes/position_139.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_140.00/
 subscript gradient
+process bigger_stripes/position_140.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_140.25/
+prefix bigger_stripes/position_140.20/
 subscript gradient
+process bigger_stripes/position_140.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_140.50/
+prefix bigger_stripes/position_140.40/
 subscript gradient
+process bigger_stripes/position_140.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_140.75/
+prefix bigger_stripes/position_140.60/
 subscript gradient
+process bigger_stripes/position_140.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_140.80/
+subscript gradient
+process bigger_stripes/position_140.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_141.00/
 subscript gradient
+process bigger_stripes/position_141.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_141.25/
+prefix bigger_stripes/position_141.20/
 subscript gradient
+process bigger_stripes/position_141.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_141.50/
+prefix bigger_stripes/position_141.40/
 subscript gradient
+process bigger_stripes/position_141.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_141.75/
+prefix bigger_stripes/position_141.60/
 subscript gradient
+process bigger_stripes/position_141.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_141.80/
+subscript gradient
+process bigger_stripes/position_141.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_142.00/
 subscript gradient
+process bigger_stripes/position_142.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_142.25/
+prefix bigger_stripes/position_142.20/
 subscript gradient
+process bigger_stripes/position_142.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_142.50/
+prefix bigger_stripes/position_142.40/
 subscript gradient
+process bigger_stripes/position_142.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_142.75/
+prefix bigger_stripes/position_142.60/
 subscript gradient
+process bigger_stripes/position_142.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_142.80/
+subscript gradient
+process bigger_stripes/position_142.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_143.00/
 subscript gradient
+process bigger_stripes/position_143.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_143.25/
+prefix bigger_stripes/position_143.20/
 subscript gradient
+process bigger_stripes/position_143.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_143.50/
+prefix bigger_stripes/position_143.40/
 subscript gradient
+process bigger_stripes/position_143.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_143.75/
+prefix bigger_stripes/position_143.60/
 subscript gradient
+process bigger_stripes/position_143.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_143.80/
+subscript gradient
+process bigger_stripes/position_143.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_144.00/
 subscript gradient
+process bigger_stripes/position_144.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_144.25/
+prefix bigger_stripes/position_144.20/
 subscript gradient
+process bigger_stripes/position_144.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_144.50/
+prefix bigger_stripes/position_144.40/
 subscript gradient
+process bigger_stripes/position_144.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_144.75/
+prefix bigger_stripes/position_144.60/
 subscript gradient
+process bigger_stripes/position_144.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_144.80/
+subscript gradient
+process bigger_stripes/position_144.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_145.00/
 subscript gradient
+process bigger_stripes/position_145.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_145.25/
+prefix bigger_stripes/position_145.20/
 subscript gradient
+process bigger_stripes/position_145.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_145.50/
+prefix bigger_stripes/position_145.40/
 subscript gradient
+process bigger_stripes/position_145.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_145.75/
+prefix bigger_stripes/position_145.60/
 subscript gradient
+process bigger_stripes/position_145.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_145.80/
+subscript gradient
+process bigger_stripes/position_145.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_146.00/
 subscript gradient
+process bigger_stripes/position_146.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_146.25/
+prefix bigger_stripes/position_146.20/
 subscript gradient
+process bigger_stripes/position_146.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_146.50/
+prefix bigger_stripes/position_146.40/
 subscript gradient
+process bigger_stripes/position_146.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_146.75/
+prefix bigger_stripes/position_146.60/
 subscript gradient
+process bigger_stripes/position_146.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_146.80/
+subscript gradient
+process bigger_stripes/position_146.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_147.00/
 subscript gradient
+process bigger_stripes/position_147.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_147.25/
+prefix bigger_stripes/position_147.20/
 subscript gradient
+process bigger_stripes/position_147.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_147.50/
+prefix bigger_stripes/position_147.40/
 subscript gradient
+process bigger_stripes/position_147.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_147.75/
+prefix bigger_stripes/position_147.60/
 subscript gradient
+process bigger_stripes/position_147.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_147.80/
+subscript gradient
+process bigger_stripes/position_147.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_148.00/
 subscript gradient
+process bigger_stripes/position_148.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_148.25/
+prefix bigger_stripes/position_148.20/
 subscript gradient
+process bigger_stripes/position_148.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_148.50/
+prefix bigger_stripes/position_148.40/
 subscript gradient
+process bigger_stripes/position_148.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_148.75/
+prefix bigger_stripes/position_148.60/
 subscript gradient
+process bigger_stripes/position_148.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_148.80/
+subscript gradient
+process bigger_stripes/position_148.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_149.00/
 subscript gradient
+process bigger_stripes/position_149.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_149.25/
+prefix bigger_stripes/position_149.20/
 subscript gradient
+process bigger_stripes/position_149.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_149.50/
+prefix bigger_stripes/position_149.40/
 subscript gradient
+process bigger_stripes/position_149.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_149.75/
+prefix bigger_stripes/position_149.60/
 subscript gradient
+process bigger_stripes/position_149.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_149.80/
+subscript gradient
+process bigger_stripes/position_149.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_150.00/
 subscript gradient
+process bigger_stripes/position_150.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_150.25/
+prefix bigger_stripes/position_150.20/
 subscript gradient
+process bigger_stripes/position_150.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_150.50/
+prefix bigger_stripes/position_150.40/
 subscript gradient
+process bigger_stripes/position_150.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_150.75/
+prefix bigger_stripes/position_150.60/
 subscript gradient
+process bigger_stripes/position_150.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_150.80/
+subscript gradient
+process bigger_stripes/position_150.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_151.00/
 subscript gradient
+process bigger_stripes/position_151.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_151.25/
+prefix bigger_stripes/position_151.20/
 subscript gradient
+process bigger_stripes/position_151.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_151.50/
+prefix bigger_stripes/position_151.40/
 subscript gradient
+process bigger_stripes/position_151.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_151.75/
+prefix bigger_stripes/position_151.60/
 subscript gradient
+process bigger_stripes/position_151.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_151.80/
+subscript gradient
+process bigger_stripes/position_151.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_152.00/
 subscript gradient
+process bigger_stripes/position_152.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_152.25/
+prefix bigger_stripes/position_152.20/
 subscript gradient
+process bigger_stripes/position_152.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_152.50/
+prefix bigger_stripes/position_152.40/
 subscript gradient
+process bigger_stripes/position_152.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_152.75/
+prefix bigger_stripes/position_152.60/
 subscript gradient
+process bigger_stripes/position_152.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_152.80/
+subscript gradient
+process bigger_stripes/position_152.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_153.00/
 subscript gradient
+process bigger_stripes/position_153.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_153.25/
+prefix bigger_stripes/position_153.20/
 subscript gradient
+process bigger_stripes/position_153.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_153.50/
+prefix bigger_stripes/position_153.40/
 subscript gradient
+process bigger_stripes/position_153.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_153.75/
+prefix bigger_stripes/position_153.60/
 subscript gradient
+process bigger_stripes/position_153.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_153.80/
+subscript gradient
+process bigger_stripes/position_153.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_154.00/
 subscript gradient
+process bigger_stripes/position_154.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_154.25/
+prefix bigger_stripes/position_154.20/
 subscript gradient
+process bigger_stripes/position_154.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_154.50/
+prefix bigger_stripes/position_154.40/
 subscript gradient
+process bigger_stripes/position_154.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_154.75/
+prefix bigger_stripes/position_154.60/
 subscript gradient
+process bigger_stripes/position_154.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_154.80/
+subscript gradient
+process bigger_stripes/position_154.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_155.00/
 subscript gradient
+process bigger_stripes/position_155.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_155.25/
+prefix bigger_stripes/position_155.20/
 subscript gradient
+process bigger_stripes/position_155.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_155.50/
+prefix bigger_stripes/position_155.40/
 subscript gradient
+process bigger_stripes/position_155.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_155.75/
+prefix bigger_stripes/position_155.60/
 subscript gradient
+process bigger_stripes/position_155.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_155.80/
+subscript gradient
+process bigger_stripes/position_155.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_156.00/
 subscript gradient
+process bigger_stripes/position_156.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_156.25/
+prefix bigger_stripes/position_156.20/
 subscript gradient
+process bigger_stripes/position_156.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_156.50/
+prefix bigger_stripes/position_156.40/
 subscript gradient
+process bigger_stripes/position_156.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_156.75/
+prefix bigger_stripes/position_156.60/
 subscript gradient
+process bigger_stripes/position_156.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_156.80/
+subscript gradient
+process bigger_stripes/position_156.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_157.00/
 subscript gradient
+process bigger_stripes/position_157.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_157.25/
+prefix bigger_stripes/position_157.20/
 subscript gradient
+process bigger_stripes/position_157.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_157.50/
+prefix bigger_stripes/position_157.40/
 subscript gradient
+process bigger_stripes/position_157.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_157.75/
+prefix bigger_stripes/position_157.60/
 subscript gradient
+process bigger_stripes/position_157.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_157.80/
+subscript gradient
+process bigger_stripes/position_157.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_158.00/
 subscript gradient
+process bigger_stripes/position_158.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_158.25/
+prefix bigger_stripes/position_158.20/
 subscript gradient
+process bigger_stripes/position_158.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_158.50/
+prefix bigger_stripes/position_158.40/
 subscript gradient
+process bigger_stripes/position_158.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_158.75/
+prefix bigger_stripes/position_158.60/
 subscript gradient
+process bigger_stripes/position_158.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_158.80/
+subscript gradient
+process bigger_stripes/position_158.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_159.00/
 subscript gradient
+process bigger_stripes/position_159.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_159.25/
+prefix bigger_stripes/position_159.20/
 subscript gradient
+process bigger_stripes/position_159.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_159.50/
+prefix bigger_stripes/position_159.40/
 subscript gradient
+process bigger_stripes/position_159.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_159.75/
+prefix bigger_stripes/position_159.60/
 subscript gradient
+process bigger_stripes/position_159.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_159.80/
+subscript gradient
+process bigger_stripes/position_159.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_160.00/
 subscript gradient
+process bigger_stripes/position_160.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_160.25/
+prefix bigger_stripes/position_160.20/
 subscript gradient
+process bigger_stripes/position_160.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_160.50/
+prefix bigger_stripes/position_160.40/
 subscript gradient
+process bigger_stripes/position_160.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_160.75/
+prefix bigger_stripes/position_160.60/
 subscript gradient
+process bigger_stripes/position_160.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_160.80/
+subscript gradient
+process bigger_stripes/position_160.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_161.00/
 subscript gradient
+process bigger_stripes/position_161.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_161.25/
+prefix bigger_stripes/position_161.20/
 subscript gradient
+process bigger_stripes/position_161.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_161.50/
+prefix bigger_stripes/position_161.40/
 subscript gradient
+process bigger_stripes/position_161.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_161.75/
+prefix bigger_stripes/position_161.60/
 subscript gradient
+process bigger_stripes/position_161.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_161.80/
+subscript gradient
+process bigger_stripes/position_161.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_162.00/
 subscript gradient
+process bigger_stripes/position_162.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_162.25/
+prefix bigger_stripes/position_162.20/
 subscript gradient
+process bigger_stripes/position_162.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_162.50/
+prefix bigger_stripes/position_162.40/
 subscript gradient
+process bigger_stripes/position_162.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_162.75/
+prefix bigger_stripes/position_162.60/
 subscript gradient
+process bigger_stripes/position_162.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_162.80/
+subscript gradient
+process bigger_stripes/position_162.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_163.00/
 subscript gradient
+process bigger_stripes/position_163.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_163.25/
+prefix bigger_stripes/position_163.20/
 subscript gradient
+process bigger_stripes/position_163.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_163.50/
+prefix bigger_stripes/position_163.40/
 subscript gradient
+process bigger_stripes/position_163.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_163.75/
+prefix bigger_stripes/position_163.60/
 subscript gradient
+process bigger_stripes/position_163.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_163.80/
+subscript gradient
+process bigger_stripes/position_163.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_164.00/
 subscript gradient
+process bigger_stripes/position_164.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_164.25/
+prefix bigger_stripes/position_164.20/
 subscript gradient
+process bigger_stripes/position_164.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_164.50/
+prefix bigger_stripes/position_164.40/
 subscript gradient
+process bigger_stripes/position_164.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_164.75/
+prefix bigger_stripes/position_164.60/
 subscript gradient
+process bigger_stripes/position_164.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_164.80/
+subscript gradient
+process bigger_stripes/position_164.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_165.00/
 subscript gradient
+process bigger_stripes/position_165.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_165.25/
+prefix bigger_stripes/position_165.20/
 subscript gradient
+process bigger_stripes/position_165.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_165.50/
+prefix bigger_stripes/position_165.40/
 subscript gradient
+process bigger_stripes/position_165.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_165.75/
+prefix bigger_stripes/position_165.60/
 subscript gradient
+process bigger_stripes/position_165.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_165.80/
+subscript gradient
+process bigger_stripes/position_165.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_166.00/
 subscript gradient
+process bigger_stripes/position_166.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_166.25/
+prefix bigger_stripes/position_166.20/
 subscript gradient
+process bigger_stripes/position_166.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_166.50/
+prefix bigger_stripes/position_166.40/
 subscript gradient
+process bigger_stripes/position_166.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_166.75/
+prefix bigger_stripes/position_166.60/
 subscript gradient
+process bigger_stripes/position_166.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_166.80/
+subscript gradient
+process bigger_stripes/position_166.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_167.00/
 subscript gradient
+process bigger_stripes/position_167.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_167.25/
+prefix bigger_stripes/position_167.20/
 subscript gradient
+process bigger_stripes/position_167.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_167.50/
+prefix bigger_stripes/position_167.40/
 subscript gradient
+process bigger_stripes/position_167.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_167.75/
+prefix bigger_stripes/position_167.60/
 subscript gradient
+process bigger_stripes/position_167.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_167.80/
+subscript gradient
+process bigger_stripes/position_167.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_168.00/
 subscript gradient
+process bigger_stripes/position_168.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_168.25/
+prefix bigger_stripes/position_168.20/
 subscript gradient
+process bigger_stripes/position_168.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_168.50/
+prefix bigger_stripes/position_168.40/
 subscript gradient
+process bigger_stripes/position_168.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_168.75/
+prefix bigger_stripes/position_168.60/
 subscript gradient
+process bigger_stripes/position_168.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_168.80/
+subscript gradient
+process bigger_stripes/position_168.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_169.00/
 subscript gradient
+process bigger_stripes/position_169.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_169.25/
+prefix bigger_stripes/position_169.20/
 subscript gradient
+process bigger_stripes/position_169.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_169.50/
+prefix bigger_stripes/position_169.40/
 subscript gradient
+process bigger_stripes/position_169.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_169.75/
+prefix bigger_stripes/position_169.60/
 subscript gradient
+process bigger_stripes/position_169.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_169.80/
+subscript gradient
+process bigger_stripes/position_169.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_170.00/
 subscript gradient
+process bigger_stripes/position_170.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_170.25/
+prefix bigger_stripes/position_170.20/
 subscript gradient
+process bigger_stripes/position_170.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_170.50/
+prefix bigger_stripes/position_170.40/
 subscript gradient
+process bigger_stripes/position_170.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_170.75/
+prefix bigger_stripes/position_170.60/
 subscript gradient
+process bigger_stripes/position_170.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_170.80/
+subscript gradient
+process bigger_stripes/position_170.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_171.00/
 subscript gradient
+process bigger_stripes/position_171.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_171.25/
+prefix bigger_stripes/position_171.20/
 subscript gradient
+process bigger_stripes/position_171.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_171.50/
+prefix bigger_stripes/position_171.40/
 subscript gradient
+process bigger_stripes/position_171.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_171.75/
+prefix bigger_stripes/position_171.60/
 subscript gradient
+process bigger_stripes/position_171.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_171.80/
+subscript gradient
+process bigger_stripes/position_171.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_172.00/
 subscript gradient
+process bigger_stripes/position_172.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_172.25/
+prefix bigger_stripes/position_172.20/
 subscript gradient
+process bigger_stripes/position_172.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_172.50/
+prefix bigger_stripes/position_172.40/
 subscript gradient
+process bigger_stripes/position_172.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_172.75/
+prefix bigger_stripes/position_172.60/
 subscript gradient
+process bigger_stripes/position_172.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_172.80/
+subscript gradient
+process bigger_stripes/position_172.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_173.00/
 subscript gradient
+process bigger_stripes/position_173.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_173.25/
+prefix bigger_stripes/position_173.20/
 subscript gradient
+process bigger_stripes/position_173.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_173.50/
+prefix bigger_stripes/position_173.40/
 subscript gradient
+process bigger_stripes/position_173.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_173.75/
+prefix bigger_stripes/position_173.60/
 subscript gradient
+process bigger_stripes/position_173.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_173.80/
+subscript gradient
+process bigger_stripes/position_173.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_174.00/
 subscript gradient
+process bigger_stripes/position_174.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_174.25/
+prefix bigger_stripes/position_174.20/
 subscript gradient
+process bigger_stripes/position_174.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_174.50/
+prefix bigger_stripes/position_174.40/
 subscript gradient
+process bigger_stripes/position_174.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_174.75/
+prefix bigger_stripes/position_174.60/
 subscript gradient
+process bigger_stripes/position_174.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_174.80/
+subscript gradient
+process bigger_stripes/position_174.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_175.00/
 subscript gradient
+process bigger_stripes/position_175.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_175.25/
+prefix bigger_stripes/position_175.20/
 subscript gradient
+process bigger_stripes/position_175.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_175.50/
+prefix bigger_stripes/position_175.40/
 subscript gradient
+process bigger_stripes/position_175.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_175.75/
+prefix bigger_stripes/position_175.60/
 subscript gradient
+process bigger_stripes/position_175.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_175.80/
+subscript gradient
+process bigger_stripes/position_175.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_176.00/
 subscript gradient
+process bigger_stripes/position_176.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_176.25/
+prefix bigger_stripes/position_176.20/
 subscript gradient
+process bigger_stripes/position_176.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_176.50/
+prefix bigger_stripes/position_176.40/
 subscript gradient
+process bigger_stripes/position_176.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_176.75/
+prefix bigger_stripes/position_176.60/
 subscript gradient
+process bigger_stripes/position_176.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_176.80/
+subscript gradient
+process bigger_stripes/position_176.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_177.00/
 subscript gradient
+process bigger_stripes/position_177.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_177.25/
+prefix bigger_stripes/position_177.20/
 subscript gradient
+process bigger_stripes/position_177.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_177.50/
+prefix bigger_stripes/position_177.40/
 subscript gradient
+process bigger_stripes/position_177.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_177.75/
+prefix bigger_stripes/position_177.60/
 subscript gradient
+process bigger_stripes/position_177.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_177.80/
+subscript gradient
+process bigger_stripes/position_177.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_178.00/
 subscript gradient
+process bigger_stripes/position_178.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_178.25/
+prefix bigger_stripes/position_178.20/
 subscript gradient
+process bigger_stripes/position_178.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_178.50/
+prefix bigger_stripes/position_178.40/
 subscript gradient
+process bigger_stripes/position_178.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_178.75/
+prefix bigger_stripes/position_178.60/
 subscript gradient
+process bigger_stripes/position_178.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_178.80/
+subscript gradient
+process bigger_stripes/position_178.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_179.00/
 subscript gradient
+process bigger_stripes/position_179.00/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_179.25/
+prefix bigger_stripes/position_179.20/
 subscript gradient
+process bigger_stripes/position_179.20/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_179.50/
+prefix bigger_stripes/position_179.40/
 subscript gradient
+process bigger_stripes/position_179.40/
 status
-move 0.25
+move 0.20
 delay 2.000
-prefix bigger_stripes/position_179.75/
+prefix bigger_stripes/position_179.60/
 subscript gradient
+process bigger_stripes/position_179.60/
 status
-move 0.25
+move 0.20
+delay 2.000
+prefix bigger_stripes/position_179.80/
+subscript gradient
+process bigger_stripes/position_179.80/
+status
+move 0.20
 delay 2.000
 prefix bigger_stripes/position_180.00/
 subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_180.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_180.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_180.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_181.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_181.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_181.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_181.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_182.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_182.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_182.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_182.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_183.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_183.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_183.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_183.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_184.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_184.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_184.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_184.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_185.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_185.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_185.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_185.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_186.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_186.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_186.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_186.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_187.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_187.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_187.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_187.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_188.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_188.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_188.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_188.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_189.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_189.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_189.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_189.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_190.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_190.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_190.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_190.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_191.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_191.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_191.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_191.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_192.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_192.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_192.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_192.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_193.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_193.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_193.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_193.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_194.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_194.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_194.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_194.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_195.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_195.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_195.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_195.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_196.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_196.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_196.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_196.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_197.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_197.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_197.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_197.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_198.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_198.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_198.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_198.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_199.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_199.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_199.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_199.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_200.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_200.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_200.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_200.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_201.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_201.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_201.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_201.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_202.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_202.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_202.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_202.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_203.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_203.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_203.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_203.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_204.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_204.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_204.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_204.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_205.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_205.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_205.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_205.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_206.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_206.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_206.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_206.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_207.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_207.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_207.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_207.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_208.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_208.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_208.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_208.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_209.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_209.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_209.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_209.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_210.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_210.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_210.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_210.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_211.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_211.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_211.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_211.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_212.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_212.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_212.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_212.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_213.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_213.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_213.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_213.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_214.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_214.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_214.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_214.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_215.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_215.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_215.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_215.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_216.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_216.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_216.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_216.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_217.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_217.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_217.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_217.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_218.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_218.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_218.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_218.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_219.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_219.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_219.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_219.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_220.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_220.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_220.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_220.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_221.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_221.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_221.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_221.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_222.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_222.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_222.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_222.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_223.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_223.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_223.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_223.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_224.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_224.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_224.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_224.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_225.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_225.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_225.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_225.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_226.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_226.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_226.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_226.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_227.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_227.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_227.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_227.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_228.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_228.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_228.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_228.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_229.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_229.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_229.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_229.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_230.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_230.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_230.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_230.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_231.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_231.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_231.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_231.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_232.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_232.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_232.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_232.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_233.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_233.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_233.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_233.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_234.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_234.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_234.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_234.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_235.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_235.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_235.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_235.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_236.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_236.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_236.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_236.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_237.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_237.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_237.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_237.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_238.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_238.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_238.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_238.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_239.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_239.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_239.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_239.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_240.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_240.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_240.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_240.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_241.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_241.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_241.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_241.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_242.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_242.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_242.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_242.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_243.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_243.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_243.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_243.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_244.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_244.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_244.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_244.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_245.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_245.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_245.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_245.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_246.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_246.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_246.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_246.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_247.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_247.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_247.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_247.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_248.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_248.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_248.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_248.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_249.00/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_249.25/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_249.50/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_249.75/
-subscript gradient
-status
-move 0.25
-delay 2.000
-prefix bigger_stripes/position_250.00/
-subscript gradient
+process bigger_stripes/position_180.00/
 status

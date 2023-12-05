@@ -1,114 +1,137 @@
 prefix stage_calib/
 prefix stage_calib/position_0.00/
 subscript checker_center
+process stage_calib/position_0.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_5.00/
 subscript checker_center
+process stage_calib/position_5.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_10.00/
 subscript checker_center
+process stage_calib/position_10.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_15.00/
 subscript checker_center
+process stage_calib/position_15.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_20.00/
 subscript checker_center
+process stage_calib/position_20.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_25.00/
 subscript checker_center
+process stage_calib/position_25.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_30.00/
 subscript checker_center
+process stage_calib/position_30.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_35.00/
 subscript checker_center
+process stage_calib/position_35.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_40.00/
 subscript checker_center
+process stage_calib/position_40.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_45.00/
 subscript checker_center
+process stage_calib/position_45.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_50.00/
 subscript checker_center
+process stage_calib/position_50.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_55.00/
 subscript checker_center
+process stage_calib/position_55.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_60.00/
 subscript checker_center
+process stage_calib/position_60.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_65.00/
 subscript checker_center
+process stage_calib/position_65.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_70.00/
 subscript checker_center
+process stage_calib/position_70.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_75.00/
 subscript checker_center
+process stage_calib/position_75.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_80.00/
 subscript checker_center
+process stage_calib/position_80.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_85.00/
 subscript checker_center
+process stage_calib/position_85.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_90.00/
 subscript checker_center
+process stage_calib/position_90.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_95.00/
 subscript checker_center
+process stage_calib/position_95.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_100.00/
 subscript checker_center
+process stage_calib/position_100.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_105.00/
 subscript checker_center
+process stage_calib/position_105.00/
 status
 move 5.00
 delay 2.000
 prefix stage_calib/position_110.00/
 subscript checker_center
+process stage_calib/position_110.00/
 status
